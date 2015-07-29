@@ -607,21 +607,21 @@ class rmi_nbp(SimpleFormulaColumn):
 
 @reference_formula
 class rsa(DatedFormulaColumn):
-    calculate_output = calculate_output_add
+    category = ARITHMETIC
     column = FloatCol
-    label = u"Revenu de solidarité active"
     entity_class = Familles
+    label = u"Revenu de solidarité active"
+    period_unit = MONTH
 
     @dated_function(start = date(2009, 06, 1))
     def function(self, simulation, period):
-        period = period.start.offset('first-of', 'month').period('month')
         rsa_majore = simulation.calculate('rsa_majore', period)
         rsa_non_majore = simulation.calculate('rsa_non_majore', period)
         rsa_non_calculable = simulation.calculate('rsa_non_calculable', period)
 
         rsa = (1 - rsa_non_calculable) * max_(rsa_majore, rsa_non_majore)
 
-        return period, rsa
+        return rsa
 
 
 @reference_formula
