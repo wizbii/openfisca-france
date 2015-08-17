@@ -1,0 +1,12 @@
+- name: "Recherche d'une valeur connue pour une variable d'état mensuelle appellée pour une année"
+  # voir model/tests/test.py
+  period: "2015"
+  familles:
+    parents: ["parent1"]
+  individus:
+    - id: "parent1"
+      age: 40
+      test_resident_paris:
+        2015-04: True
+  output_variables:
+    test_eligib_aide_Paris: True

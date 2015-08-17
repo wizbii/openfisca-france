@@ -1,0 +1,38 @@
+- name: "Ajout implicite d'une variable mensuelle arithmétique sur une année"
+  # voir model/tests/test.py
+  period: "2015"
+  familles:
+    parents: ["parent1"]
+  individus:
+    - id: "parent1"
+      age: 40
+      test_salaire:
+        2015-01: 200
+        2015-02: 200
+        2015-03: 200
+        2015-04: 200
+        2015-05: 200
+        2015-06: 200
+        2015-07: 200
+        2015-08: 200
+        2015-09: 200
+        2015-10: 200
+        2015-11: 200
+        2015-12: 200
+  output_variables:
+    test_revenus: 2400
+
+- name: "Ajout implicite d'une variable mensuelle arithmétique sur plusieurs mois"
+  # voir model/tests/test.py
+  period: "2015-12"
+  familles:
+    parents: ["parent1"]
+  individus:
+    - id: "parent1"
+      age: 40
+      test_salaire:
+        2015-09: 200
+        2015-10: 200
+        2015-11: 200
+  output_variables:
+    test_revenus_3dm: 600
