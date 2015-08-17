@@ -50,11 +50,28 @@ class test_revenus(SimpleFormulaColumn):
     column = FloatCol
     label = u"Revenus"
     entity_class = Individus
+    period_unit = YEAR
+    category = ARITHMETIC
+
 
     def function(self, simulation, period):
         this_year = period.start.offset('first-of', 'year').period('year')
         salaire = simulation.calculate('test_salaire', this_year)
         return  salaire
+
+@reference_formula
+class test_division_illegale(SimpleFormulaColumn):
+    column = FloatCol
+    label = u"Revenus - division illégale"
+    entity_class = Individus
+    period_unit = MONTH
+    category = ARITHMETIC
+
+    def function(self, simulation, period):
+        this_month = period.start.offset('first-of', 'month').period('month')
+        revenus = simulation.calculate('test_revenus', this_month)
+        return revenus
+
 
 @reference_formula
 class test_revenus_3dm(SimpleFormulaColumn):

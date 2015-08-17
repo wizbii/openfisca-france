@@ -1,0 +1,16 @@
+- name: "Raise exception"
+  # voir model/tests/test.py
+  period: "2015"
+  familles:
+    parents: ["parent1"]
+  individus:
+    - id: "parent1"
+      age: 40
+      test_revenus:
+        2015: 20000
+  output_variables:
+    test_division_illegale: 0
+
+    #Devrait planter
+
+
