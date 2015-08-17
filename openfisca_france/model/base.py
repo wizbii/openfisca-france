@@ -27,6 +27,7 @@ from openfisca_core.formulas import (
     set_input_divide_by_period,
     SimpleFormulaColumn,
     STATE,
+    YEAR,
     )
 
 from ..entities import entity_class_by_symbol, Familles, FoyersFiscaux, Individus, Menages
@@ -84,6 +85,7 @@ __all__ = [
     'StrCol',
     'TAUX_DE_PRIME',
     'VOUS',
+    'YEAR',
     ]
 
 CAT = Enum([
