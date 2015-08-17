@@ -26,6 +26,7 @@ from openfisca_core.formulas import (
     set_input_dispatch_by_period,
     set_input_divide_by_period,
     SimpleFormulaColumn,
+    STATE,
     )
 
 from ..entities import entity_class_by_symbol, Familles, FoyersFiscaux, Individus, Menages
@@ -79,6 +80,7 @@ __all__ = [
     'set_input_dispatch_by_period',
     'set_input_divide_by_period',
     'SimpleFormulaColumn',
+    'STATE',
     'StrCol',
     'TAUX_DE_PRIME',
     'VOUS',
