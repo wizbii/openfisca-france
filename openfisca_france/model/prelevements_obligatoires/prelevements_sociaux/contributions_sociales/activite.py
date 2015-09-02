@@ -180,6 +180,7 @@ class forfait_social(SimpleFormulaColumn):
 @reference_formula
 class salaire_imposable(SimpleFormulaColumn):
     base_function = requested_period_added_value
+    # TODO Put cerfa_field and val_type first level attrs
     column = FloatCol(
         cerfa_field = {
             QUIFOY['vous']: u"1AJ",

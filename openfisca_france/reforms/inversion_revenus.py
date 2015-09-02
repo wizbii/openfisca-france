@@ -32,9 +32,7 @@ from openfisca_core import columns, formulas, reforms
 from scipy.optimize import fsolve
 
 from .. import entities
-
-
-# log = logging.getLogger(__name__)
+from ..model.base import QUIFOY
 
 
 def brut_to_target(target_name = None, period = None, simulation = None, **input_array_by_name):
@@ -52,10 +50,32 @@ def build_reform(tax_benefit_system):
         )
 
     Reform.input_variable(
+        cerfa_field = {
+            QUIFOY['vous']: u"1AJ",
+            QUIFOY['conj']: u"1BJ",
+            QUIFOY['pac1']: u"1CJ",
+            QUIFOY['pac2']: u"1DJ",
+            QUIFOY['pac3']: u"1EJ",
+            },
         column = columns.FloatCol,
         entity_class = entities.Individus,
         label = u'Salaire imposable utilisé pour remonter au salaire brut',
         name = 'salaire_imposable_pour_inversion',
+        val_type = 'monetary',
+        )
+
+    Reform.input_variable(
+        cerfa_field = {
+            QUIFOY['vous']: u"1AP",
+            QUIFOY['conj']: u"1BP",
+            QUIFOY['pac1']: u"1CP",
+            QUIFOY['pac2']: u"1DP",
+            QUIFOY['pac3']: u"1EP",
+            },
+        column = columns.IntCol,
+        label = u'Autres revenus imposables (chômage, préretraite)',
+        name = 'choi',
+        val_type = 'monetary',
         )
 
     @Reform.formula
