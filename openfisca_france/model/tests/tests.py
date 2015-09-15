@@ -72,6 +72,22 @@ class test_division_illegale(SimpleFormulaColumn):
         revenus = simulation.calculate('test_revenus', this_month)
         return revenus
 
+@reference_formula
+class test_division_legale(SimpleFormulaColumn):
+    column = FloatCol
+    label = u"Revenus - division légale"
+    entity_class = Individus
+    period_unit = MONTH
+    category = ARITHMETIC
+
+    def function(self, simulation, period):
+        this_month = period.start.offset('first-of', 'month').period('month')
+
+        # import ipdb
+        # ipdb.set_trace()
+        revenus = simulation.calculate_divide('test_revenus', this_month)
+        return revenus
+
 
 @reference_formula
 class test_revenus_3dm(SimpleFormulaColumn):
