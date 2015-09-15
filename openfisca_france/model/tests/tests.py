@@ -79,9 +79,36 @@ class test_division_legale(SimpleFormulaColumn):
     category = ARITHMETIC
 
     def function(self, simulation, period):
+        revenus = simulation.calculate_divide('test_revenus', period.this_month)
+        return revenus
+
+
+@reference_formula
+class test_calculate_divide_illegal(SimpleFormulaColumn):
+    column = FloatCol
+    label = u"Revenus - test add divide"
+    entity_class = Individus
+    period_unit = MONTH
+    category = ARITHMETIC
+
+    def function(self, simulation, period):
         # import ipdb
         # ipdb.set_trace()
-        revenus = simulation.calculate_divide('test_revenus', period.this_month)
+        revenus = simulation.calculate_divide('test_revenus', period.last_3_months)
+        return revenus
+
+@reference_formula
+class test_add_divide(SimpleFormulaColumn):
+    column = FloatCol
+    label = u"Revenus - test add divide"
+    entity_class = Individus
+    period_unit = MONTH
+    category = ARITHMETIC
+
+    def function(self, simulation, period):
+        # import ipdb
+        # ipdb.set_trace()
+        revenus = simulation.calculate_add_divide('test_revenus', period.last_3_months)
         return revenus
 
 

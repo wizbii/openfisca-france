@@ -10,3 +10,17 @@
         2015: 24000
   output_variables:
     test_division_legale: 2000
+
+- name: "Calculate_add_divide"
+  # voir model/tests/test.py
+  period: "2015-02"
+  familles:
+    parents: ["parent1"]
+  individus:
+    - id: "parent1"
+      age: 40
+      test_revenus:
+        2014: 24000
+        2015: 24000
+  output_variables:
+    test_add_divide: 6000
