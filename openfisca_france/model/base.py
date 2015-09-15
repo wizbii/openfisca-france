@@ -17,7 +17,6 @@ from openfisca_core.formulas import (
     last_duration_last_value,
     make_reference_formula_decorator,
     missing_value,
-    MONTH,
     PersonToEntityColumn,
     reference_input_variable,
     requested_period_added_value,
@@ -27,8 +26,12 @@ from openfisca_core.formulas import (
     set_input_divide_by_period,
     SimpleFormulaColumn,
     STATE,
-    YEAR,
-    )
+)
+
+from openfisca_core.periods import (
+    MONTH,
+    YEAR
+)
 
 from ..entities import entity_class_by_symbol, Familles, FoyersFiscaux, Individus, Menages
 
