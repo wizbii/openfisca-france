@@ -55,8 +55,7 @@ class test_revenus(SimpleFormulaColumn):
 
 
     def function(self, simulation, period):
-        this_year = period.start.offset('first-of', 'year').period('year')
-        salaire = simulation.calculate('test_salaire', this_year)
+        salaire = simulation.calculate('test_salaire', period.this_year)
         return  salaire
 
 @reference_formula
@@ -68,8 +67,7 @@ class test_division_illegale(SimpleFormulaColumn):
     category = ARITHMETIC
 
     def function(self, simulation, period):
-        this_month = period.start.offset('first-of', 'month').period('month')
-        revenus = simulation.calculate('test_revenus', this_month)
+        revenus = simulation.calculate('test_revenus', period.this_month)
         return revenus
 
 @reference_formula
@@ -81,11 +79,9 @@ class test_division_legale(SimpleFormulaColumn):
     category = ARITHMETIC
 
     def function(self, simulation, period):
-        this_month = period.start.offset('first-of', 'month').period('month')
-
         # import ipdb
         # ipdb.set_trace()
-        revenus = simulation.calculate_divide('test_revenus', this_month)
+        revenus = simulation.calculate_divide('test_revenus', period.this_month)
         return revenus
 
 
@@ -96,8 +92,7 @@ class test_revenus_3dm(SimpleFormulaColumn):
     entity_class = Individus
 
     def function(self, simulation, period):
-        last_3_months = period.start.period('month', 3).offset(-3)
-        salaire = simulation.calculate('test_salaire', last_3_months)
+        salaire = simulation.calculate('test_salaire', period.last_3_months)
         return  salaire
 
 
@@ -110,7 +105,6 @@ class test_eligib_aide_Paris(SimpleFormulaColumn):
     entity_class = Individus
 
     def function(self, simulation, period):
-        this_year = period.start.offset('first-of', 'year').period('year')
-        resident_paris = simulation.calculate('test_resident_paris', this_year)
+        resident_paris = simulation.calculate('test_resident_paris', period.this_year)
         return  resident_paris
 
