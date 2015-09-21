@@ -1,5 +1,0 @@
-- name: "RSA - Célibataire sans revenus"
-  period: 2014
-  absolute_error_margin: 0.5
-  output_variables:
-    rsa: 999
