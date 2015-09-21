@@ -245,6 +245,7 @@ class rev_microsocial(SimpleFormulaColumn):
     label = u"Revenu net des cotisations sociales pour le régime microsocial"
     start_date = date(2009, 1, 1)
     url = u"http://www.apce.com/pid6137/regime-micro-social.html"
+    period_unit = YEAR
 
     def function(self, simulation, period):
         period = period.start.offset('first-of', 'year').period('year')
