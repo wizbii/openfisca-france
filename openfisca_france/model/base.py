@@ -19,13 +19,16 @@ from openfisca_core.formulas import (
     missing_value,
     PersonToEntityColumn,
     reference_input_variable,
-    requested_period_added_value,
-    requested_period_default_value,
-    requested_period_last_value,
     set_input_dispatch_by_period,
     set_input_divide_by_period,
     SimpleFormulaColumn,
     STATE,
+)
+
+from openfisca_core.base_functions import (
+    requested_period_added_value,
+    requested_period_default_value,
+    requested_period_last_value,
 )
 
 from openfisca_core.periods import (
