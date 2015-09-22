@@ -3,8 +3,31 @@
 from datetime import date
 import functools
 
-from openfisca_core.columns import (AgeCol, BoolCol, build_column, DateCol, EnumCol, FixedStrCol, FloatCol, IntCol,
-    PeriodSizeIndependentIntCol, StrCol)
+from openfisca_core.columns import (
+    AgeCol,
+    BoolCol,
+    build_column,
+    DateCol,
+    EnumCol,
+    FixedStrCol,
+    FloatCol,
+    IntCol,
+    PeriodSizeIndependentIntCol,
+    StrCol
+)
+columns_import = [
+    'AgeCol',
+    'BoolCol',
+    'build_column',
+    'DateCol',
+    'EnumCol',
+    'FixedStrCol',
+    'FloatCol',
+    'IntCol',
+    'PeriodSizeIndependentIntCol',
+    'StrCol'
+]
+
 from openfisca_core.enumerations import Enum
 from openfisca_core.formulas import (
     ARITHMETIC,
@@ -38,12 +61,26 @@ from openfisca_core.periods import (
 
 from ..entities import entity_class_by_symbol, Familles, FoyersFiscaux, Individus, Menages
 
+from numpy import (
+    absolute as abs_,
+    logical_and as and_,
+    logical_not as not_,
+    logical_or as or_,
+    maximum as max_,
+    minimum as min_,
+    )
+
+numpy_imports = [
+    'abs_',
+    'and_',
+    'not_',
+    'or_',
+    'max_',
+    'min_',
+    ]
 
 __all__ = [
-    'AgeCol',
     'ARITHMETIC',
-    'BoolCol',
-    'build_column',
     'calculate_output_add',
     'calculate_output_add_divide',
     'calculate_output_divide',
@@ -52,19 +89,14 @@ __all__ = [
     'CONJ',
     'CREF',
     'date',
-    'DateCol',
     'dated_function',
     'DatedFormulaColumn',
     'ENFS',
     'EntityToPersonColumn',
     'Enum',
-    'EnumCol',
     'Familles',
-    'FixedStrCol',
-    'FloatCol',
     'FoyersFiscaux',
     'Individus',
-    'IntCol',
     'last_duration_last_value',
     'Menages',
     'missing_value',
@@ -73,7 +105,6 @@ __all__ = [
     'PAC2',
     'PAC3',
     'PART',
-    'PeriodSizeIndependentIntCol',
     'PersonToEntityColumn',
     'PREF',
     'QUIFAM',
@@ -88,11 +119,10 @@ __all__ = [
     'set_input_divide_by_period',
     'SimpleFormulaColumn',
     'STATE',
-    'StrCol',
     'TAUX_DE_PRIME',
     'VOUS',
     'YEAR',
-    ]
+    ] + numpy_imports + columns_import
 
 CAT = Enum([
     'prive_non_cadre',
