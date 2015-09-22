@@ -4,11 +4,9 @@ from __future__ import division
 
 import logging
 
-from numpy import (datetime64, logical_and as and_, logical_not as not_, logical_or as or_, logical_xor as xor_,
-    maximum as max_, minimum as min_, round)
+from numpy import datetime64
 
 from ...base import *  # noqa analysis:ignore
-
 
 log = logging.getLogger(__name__)
 
@@ -395,7 +393,7 @@ class salcho_imp(SimpleFormulaColumn):
         abatpro = simulation.legislation_at(period.start).ir.tspr.abatpro
 
         abattement_minimum = abatpro.min * not_(chomeur_longue_duree) + abatpro.min2 * chomeur_longue_duree
-        abatfor = round(min_(max_(abatpro.taux * rev_sal, abattement_minimum), abatpro.max))
+        abatfor = round_(min_(max_(abatpro.taux * rev_sal, abattement_minimum), abatpro.max))
         return period, (frais_reels > abatfor) * (rev_sal - frais_reels) + (frais_reels <= abatfor) * max_(0, rev_sal - abatfor)
 
 
@@ -473,10 +471,10 @@ class pen_net(SimpleFormulaColumn):
     #            AO + BO + CO + DO + EO )
     #    penv2 = (d11-f11> abatpen.max)*(penv + (d11-f11-abatpen.max)) + (d11-f11<= abatpen.max)*penv
     #    Plus d'abatement de 20% en 2006
-        return period, max_(0, rev_pen - round(max_(abatpen.taux * rev_pen , abatpen.min)))
+        return period, max_(0, rev_pen - round_(max_(abatpen.taux * rev_pen , abatpen.min)))
 
 
-#    return max_(0, rev_pen - min_(round(max_(abatpen.taux*rev_pen , abatpen.min)), abatpen.max))  le max se met au niveau du foyer
+#    return max_(0, rev_pen - min_(round_(max_(abatpen.taux*rev_pen , abatpen.min)), abatpen.max))  le max se met au niveau du foyer
 
 @reference_formula
 class indu_plaf_abat_pen(SimpleFormulaColumn):
@@ -580,7 +578,7 @@ class rto_net(SimpleFormulaColumn):
         f1dw = simulation.calculate('f1dw', period)
         abatviag = simulation.legislation_at(period.start).ir.tspr.abatviag
 
-        return period, round(abatviag.taux1 * f1aw + abatviag.taux2 * f1bw + abatviag.taux3 * f1cw + abatviag.taux4 * f1dw)
+        return period, round_(abatviag.taux1 * f1aw + abatviag.taux2 * f1bw + abatviag.taux3 * f1cw + abatviag.taux4 * f1dw)
 
 
 @reference_formula
@@ -1328,7 +1326,7 @@ class cont_rev_loc(SimpleFormulaColumn):
         f4bl = simulation.calculate('f4bl', period)
         crl = simulation.legislation_at(period.start).ir.crl
 
-        return period, round(crl.taux * (f4bl >= crl.seuil) * f4bl)
+        return period, round_(crl.taux * (f4bl >= crl.seuil) * f4bl)
 
 
 @reference_formula
@@ -1494,7 +1492,7 @@ class plus_values(DatedFormulaColumn):
                plus_values.taux3 * f3vi +
                plus_values.taux4 * f3vf)
 
-        return period, round(out)
+        return period, round_(out)
 
     @dated_function(start = date(2008, 1, 1), stop = date(2011, 12, 31))
     def function_20080101_20111231(self, simulation, period):  # f3sd is in f3vd holder
@@ -1533,7 +1531,7 @@ class plus_values(DatedFormulaColumn):
         rdp += f3vd
         out += plus_values.taux1 * f3vd
 
-        return period, round(out)
+        return period, round_(out)
 
     @dated_function(start = date(2012, 1, 1), stop = date(2012, 12, 31))
     def function_20120101_20121231(self, simulation, period):  # f3sd is in f3vd holder
@@ -1576,7 +1574,7 @@ class plus_values(DatedFormulaColumn):
         out = (plus_values.taux2 * (f3vd + f3sd) + plus_values.taux3 * (f3vi + f3si) +
             plus_values.taux4 * (f3vf + f3sf) + plus_values.taux1 * max_(0, f3vg - f3vh) + plus_values.pvce * rpns_pvce)
                 # TODO: chek this rpns missing ?
-        return period, round(out)
+        return period, round_(out)
 
     @dated_function(start = date(2013, 1, 1), stop = date(2015, 12, 31))
     def function_20130101_20151231(self, simulation, period):  # f3sd is in f3vd holder
@@ -1622,7 +1620,7 @@ class plus_values(DatedFormulaColumn):
         out = (plus_values.taux2 * (f3vd + f3sd) + plus_values.taux3 * (f3vi + f3si) +
             plus_values.taux4 * (f3vf + f3sf) + plus_values.taux1 * max_(0, - f3vh) + plus_values.pvce * (rpns_pvce + f3sa))
         # TODO: chek this 3VG
-        return period, round(out)
+        return period, round_(out)
 
 
 @reference_formula
@@ -1929,7 +1927,7 @@ class fon(SimpleFormulaColumn):
         f4be = simulation.calculate('f4be', period)
         microfoncier = simulation.legislation_at(period.start).ir.microfoncier
 
-        return period, f4ba - f4bb - f4bc + round(f4be * (1 - microfoncier.taux))
+        return period, f4ba - f4bb - f4bc + round_(f4be * (1 - microfoncier.taux))
 
 
 @reference_formula
@@ -2240,7 +2238,7 @@ class ric(SimpleFormulaColumn):
             mbic_impv + mbic_imps + mbic_exon,
             max_(
                 microentreprise.vente.min,
-                round(
+                round_(
                     mbic_impv * microentreprise.vente.taux + mbic_imps * microentreprise.servi.taux + mbic_exon * taux
                     )
                 )
@@ -2302,7 +2300,7 @@ class rac(SimpleFormulaColumn):
         cond = (macc_impv > 0) & (macc_imps == 0)
         taux = microentreprise.vente.taux * cond + microentreprise.servi.taux * not_(cond)
 
-        cacc = min_(macc_impv + macc_imps + macc_exon + mncn_impo, max_(microentreprise.vente.min, round(
+        cacc = min_(macc_impv + macc_imps + macc_exon + mncn_impo, max_(microentreprise.vente.min, round_(
             macc_impv * microentreprise.vente.taux
             + macc_imps * microentreprise.servi.taux + macc_exon * taux
             + mncn_impo * microentreprise.specialbnc.taux)))
@@ -2347,7 +2345,7 @@ class rnc(SimpleFormulaColumn):
                 + abnc_impo + nbnc_impo
                 - abnc_defi - nbnc_defi)
 
-        cbnc = min_(mbnc_exon + mbnc_impo, max_(specialbnc.min, round((mbnc_exon + mbnc_impo) * specialbnc.taux)))
+        cbnc = min_(mbnc_exon + mbnc_impo, max_(specialbnc.min, round_((mbnc_exon + mbnc_impo) * specialbnc.taux)))
 
         return period, zbnc - cbnc
 

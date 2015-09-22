@@ -4,9 +4,6 @@ from __future__ import division
 
 import logging
 
-from numpy import maximum as max_, minimum as min_
-
-
 from ....base import *  # noqa analysis:ignore
 from .base import montant_csg_crds
 

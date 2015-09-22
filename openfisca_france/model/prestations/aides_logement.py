@@ -7,8 +7,7 @@ import json
 import logging
 import pkg_resources
 
-from numpy import (ceil, fromiter, int16, logical_not as not_, logical_or as or_, logical_and as and_, maximum as max_,
-    minimum as min_, round)
+from numpy import (fromiter, int16)
 
 import openfisca_france
 
@@ -86,7 +85,7 @@ class aide_logement_base_ressources_eval_forfaitaire(SimpleFormulaColumn):
         # Application de l'abattement pour frais professionnels
         params_abattement = simulation.legislation_at(period.start).ir.tspr.abatpro
         somme_salaires_mois_precedent = 12 * salaire_imposable
-        montant_abattement = round(
+        montant_abattement = round_(
             min_(
                 max_(params_abattement.taux * somme_salaires_mois_precedent, params_abattement.min),
                 params_abattement.max
@@ -114,7 +113,7 @@ class aide_logement_abattement_chomage_indemnise(SimpleFormulaColumn):
         abattement = and_(chomage_net_m_1 > 0, chomage_net_m_2 > 0) * taux_abattement * revenus_activite_pro
 
         params_abattement_frais_pro = simulation.legislation_at(period.start).ir.tspr.abatpro
-        abattement = round((1 - params_abattement_frais_pro.taux) * abattement)
+        abattement = round_((1 - params_abattement_frais_pro.taux) * abattement)
 
         return period, abattement
 
@@ -135,7 +134,7 @@ class aide_logement_abattement_depart_retraite(SimpleFormulaColumn):
         abattement = 0.3 * activite_n_2 * (retraite_n_2 == 0) * retraite
 
         params_abattement_frais_pro = simulation.legislation_at(period.start).ir.tspr.abatpro
-        abattement = round((1 - params_abattement_frais_pro.taux) * abattement)
+        abattement = round_((1 - params_abattement_frais_pro.taux) * abattement)
 
         return period, abattement
 
@@ -266,7 +265,7 @@ class aide_logement_montant_brut(SimpleFormulaColumn):
 
         def loyer_retenu():
             # loyer mensuel réel, multiplié par 2/3 pour les meublés
-            L1 = round((statut_occupation == 5) * loyer * 2 / 3 + (statut_occupation != 5) * loyer, 2)
+            L1 = round_((statut_occupation == 5) * loyer * 2 / 3 + (statut_occupation != 5) * loyer, 2)
 
             # taux à appliquer sur le loyer plafond
             taux_loyer_plafond = (and_(not_(coloc), not_(chambre)) * 1
@@ -298,7 +297,7 @@ class aide_logement_montant_brut(SimpleFormulaColumn):
                 )
 
             L2 = Lz1 * (zone_apl == 1) + Lz2 * (zone_apl == 2) + Lz3 * (zone_apl == 3)
-            L2 = round(L2 * taux_loyer_plafond, 2)
+            L2 = round_(L2 * taux_loyer_plafond, 2)
 
             # loyer retenu
             L = min_(L1, L2)
@@ -343,7 +342,7 @@ class aide_logement_montant_brut(SimpleFormulaColumn):
                 al.R2.taux5 * bmaf * (al_pac > 2) * (al_pac - 2)
                 )
 
-            Ro = round(12 * (R1 - R2) * (1 - al.autres.abat_sal))
+            Ro = round_(12 * (R1 - R2) * (1 - al.autres.abat_sal))
 
             Rp = max_(0, R - Ro)
 
@@ -429,7 +428,7 @@ class aide_logement_montant(SimpleFormulaColumn):
         period = period.start.offset('first-of', 'month').period('month')
         aide_logement_montant_brut = simulation.calculate('aide_logement_montant_brut', period)
         crds_logement = simulation.calculate('crds_logement', period)
-        montant = round(aide_logement_montant_brut + crds_logement, 2)
+        montant = round_(aide_logement_montant_brut + crds_logement, 2)
 
         return period, montant
 

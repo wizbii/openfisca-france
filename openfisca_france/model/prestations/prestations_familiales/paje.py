@@ -2,7 +2,7 @@
 
 from __future__ import division
 
-from numpy import (round, floor, maximum as max_, minimum as min_, logical_not as not_, datetime64)
+from numpy import datetime64
 
 from ...base import *  # noqa analysis:ignore
 from .base_ressource import nb_enf, age_en_mois_benjamin
@@ -203,7 +203,7 @@ class paje_naissance(SimpleFormulaColumn):
         age_en_mois = self.split_by_roles(age_en_mois_holder, roles = ENFS)
 
         bmaf = P.af.bmaf
-        nais_prime = round(100 * P.paje.nais.prime_tx * bmaf) / 100
+        nais_prime = round_(100 * P.paje.nais.prime_tx * bmaf) / 100
         # Versée au 7e mois de grossesse dans l'année
         # donc les enfants concernés sont les enfants qui ont -2 mois
         nbnais = 0
@@ -685,8 +685,8 @@ class apje_temp(SimpleFormulaColumn):
         nbenf = nb_enf(age, smic55, 0, P.apje.age - 1)
         bmaf = P.af.bmaf
         bmaf_n_2 = P_n_2.af.bmaf
-        base = round(P.apje.taux * bmaf, 2)
-        base2 = round(P.apje.taux * bmaf_n_2, 2)
+        base = round_(P.apje.taux * bmaf, 2)
+        base2 = round_(P.apje.taux * bmaf_n_2, 2)
 
         plaf_tx = (nbenf > 0) + P.apje.plaf_tx1 * min_(nbenf, 2) + P.apje.plaf_tx2 * max_(nbenf - 2, 0)
         majo = isol | biact
@@ -725,7 +725,7 @@ class ape(SimpleFormulaColumn):
         cf_montant = simulation.calculate('cf_montant', period)
 
         ape = (apje_temp < ape_temp) * (cf_montant < ape_temp) * ape_temp
-        return period, round(ape, 2)
+        return period, round_(ape, 2)
 
 
 @reference_formula
@@ -744,4 +744,4 @@ class apje(SimpleFormulaColumn):
         cf_montant = simulation.calculate('cf_montant', period)
 
         apje = (cf_montant < apje_temp) * (ape_temp < apje_temp) * apje_temp
-        return period, round(apje, 2)
+        return period, round_(apje, 2)

@@ -2,8 +2,6 @@
 
 from __future__ import division
 
-from numpy import zeros, logical_not as not_, logical_or as or_
-
 from ..base import *  # noqa analysis:ignore
 
 

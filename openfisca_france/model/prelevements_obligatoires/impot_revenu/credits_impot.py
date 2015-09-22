@@ -4,7 +4,7 @@ from __future__ import division
 
 import logging
 
-from numpy import logical_not as not_, maximum as max_, minimum as min_, around, logical_or as or_
+from numpy import around
 
 from ...base import *  # noqa analysis:ignore
 

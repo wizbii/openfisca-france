@@ -2,8 +2,6 @@
 
 from __future__ import division
 
-from numpy import (round, maximum as max_, minimum as min_, logical_not as not_, logical_or as or_)
-
 from ...base import *  # noqa analysis:ignore
 
 
@@ -309,4 +307,4 @@ class cf(SimpleFormulaColumn):
         residence_mayotte = simulation.calculate('residence_mayotte', period)
 
         cf_brut = (paje_base_montant < cf_montant) * (apje_temp <= cf_montant) * (ape_temp <= cf_montant) * cf_montant
-        return period, not_(residence_mayotte) * round(cf_brut, 2)
+        return period, not_(residence_mayotte) * round_(cf_brut, 2)

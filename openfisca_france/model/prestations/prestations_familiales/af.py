@@ -2,9 +2,6 @@
 
 from __future__ import division
 
-from numpy import round, maximum as max_, logical_not as not_, logical_or as or_
-
-
 from ...base import *  # noqa analysis:ignore
 from .base_ressource import nb_enf
 
@@ -118,7 +115,7 @@ class af_base(SimpleFormulaColumn):
         plus_de_deux_enfants = (af_nbenf >= 2) * pfam.taux.enf2
         plus_de_trois_enfants = max_(af_nbenf - 2, 0) * pfam.taux.enf3
         taux_total = un_seul_enfant + plus_de_deux_enfants + plus_de_trois_enfants
-        montant_base = eligibilite * round(pfam.bmaf * taux_total, 2)
+        montant_base = eligibilite * round_(pfam.bmaf * taux_total, 2)
 
         af_taux_modulation = simulation.calculate('af_taux_modulation', period)
         montant_base_module = montant_base * af_taux_modulation
@@ -345,7 +342,7 @@ class af_forf(SimpleFormulaColumn):
         P = simulation.legislation_at(period.start).fam.af
 
         bmaf = P.bmaf
-        af_forfait = round(bmaf * P.taux.forfait, 2)
+        af_forfait = round_(bmaf * P.taux.forfait, 2)
         af_forf = ((af_nbenf >= 2) * af_forf_nbenf) * af_forfait
 
         af_forf_taux_modulation = simulation.calculate('af_forf_taux_modulation', period)

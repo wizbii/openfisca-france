@@ -2,8 +2,6 @@
 
 from __future__ import division
 
-from numpy import floor, logical_not as not_
-
 from .base import *  # noqa analysis:ignore
 
 

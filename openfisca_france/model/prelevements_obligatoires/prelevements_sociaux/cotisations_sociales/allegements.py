@@ -5,8 +5,7 @@ from __future__ import division
 
 from functools import partial
 from numpy import (
-    busday_count as original_busday_count, datetime64, logical_not as not_, logical_or as or_, maximum as max_,
-    minimum as min_, round as round_, timedelta64
+    busday_count as original_busday_count, datetime64, round as round_, timedelta64
     )
 
 import logging

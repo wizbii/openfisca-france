@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from numpy import maximum as max_, minimum as min_
-
 from ...base import *  # noqa analysis:ignore
 
 
