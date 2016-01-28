@@ -194,8 +194,7 @@ class pension_civile_salarie(Variable):
         traitement_indiciaire_brut = simulation.calculate('traitement_indiciaire_brut', period)  # TODO: check nbi
         type_sal = simulation.calculate('type_sal', period)
         _P = simulation.legislation_at(period.start)
-
-        sal =  _P.cotsoc.cotisations_salarie
+        sal = _P.cotsoc.cotisations_salarie
         terr_or_hosp = (
             type_sal == CAT['public_titulaire_territoriale']) | (type_sal == CAT['public_titulaire_hospitaliere'])
         pension_civile_salarie = (
@@ -247,9 +246,11 @@ class rafp_salarie(Variable):
         indemnite_residence = simulation.calculate('indemnite_residence', period)
         _P = simulation.legislation_at(period.start)
 
-        eligible = ((type_sal == CAT['public_titulaire_etat'])
-                     + (type_sal == CAT['public_titulaire_territoriale'])
-                     + (type_sal == CAT['public_titulaire_hospitaliere']))
+        eligible = (
+            (type_sal == CAT['public_titulaire_etat']) +
+            (type_sal == CAT['public_titulaire_territoriale']) +
+            (type_sal == CAT['public_titulaire_hospitaliere'])
+            )
 
         plaf_ass = _P.cotsoc.sal.fonc.etat.rafp_plaf_assiette
         base_imposable = primes_fonction_publique + supp_familial_traitement + indemnite_residence

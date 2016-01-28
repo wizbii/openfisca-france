@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-from numpy import maximum as max_, minimum as min_
-
 from ...base import *  # noqa analysis:ignore
 
 
@@ -13,7 +11,7 @@ from ...base import *  # noqa analysis:ignore
 # Taxe sur la cession à titre onéreux de terrains nus rendus constructibles (CGI, art.1605 nonies)
 # 2048-IMM-SD
 ########################################################################
-#TODO: create new function for f3VV (new legislation : non-resident_45%)
+# TODO: create new function for f3VV (new legislation : non-resident_45%)
 
 # def _plus_value_brute(prix_pv_immo, charges_pv_immo, frais_pv_immo, prix_acqu_immo,
 #                       charges_aqu_immo, frais_acqu_immo, const_acqu_immo, voirie_acqu_immo):
@@ -23,7 +21,8 @@ from ...base import *  # noqa analysis:ignore
 #     # CESSION
 #     prix_cess_immo = 0    # 10;  PRIX DE CESSION OU INDEMNITE D’EXPROPRIATION = €
 #     charges_cess_immo = 0 # 11. CHARGES ET INDEMNITES SUPPORTEES PAR L’ACQUEREUR + €
-#     frais_cess_immo =0    # 12. FRAIS ET TAXES SUPPORTES PAR LE VENDEUR (NOTAMMENT FRAIS DE REPRESENTATION FISCALE) - €
+# 12. FRAIS ET TAXES SUPPORTES PAR LE VENDEUR (NOTAMMENT FRAIS DE REPRESENTATION FISCALE) - €
+#     frais_cess_immo =0
 #
 #     # 13. PRIX DE CESSION CORRIGE (LIGNE 10 + LIGNE 11 – LIGNE 12) = = €
 #     prix_cess_corr = prix_cess_immo + charges_cess_immo - frais_cess_immo
@@ -35,9 +34,10 @@ from ...base import *  # noqa analysis:ignore
 #                          # * A TITRE GRATUIT (MONTANT REEL) + €
 #                          # * A TITRE ONEREUX (MONTANT REEL OU FIXE A 7,5% DU PRIX D’ACQUISITION) + €
 #     const_acqu_immo = 0  # 23. DEPENSES DE CONSTRUCTION, RECONSTRUCTION, AGRANDISSEMENT OU AMELIORATION + €
-#                          # (MONTANT REEL OU FIXE A 15% DU PRIX D’ACQUISITION SI IMMEUBLE BATI DETENU DEPUIS PLUS DE 5 ANS).
+# (MONTANT REEL OU FIXE A 15% DU PRIX D’ACQUISITION SI IMMEUBLE BATI DETENU DEPUIS PLUS DE 5 ANS).
 #     voirie_acqu_immo = 0 # 24. FRAIS DE VOIRIE, RESEAUX ET DISTRIBUTION + €
-#     valeur_venale  = prix_acqu_immo + charges_aqu_immo + frais_acqu_immo + const_acqu_immo + voirie_acqu_immo # 25. PRIX D’ACQUISITION OU VALEUR VENALE CORRIGE (LIGNE 20 + LIGNE 21 + LIGNE 22 + LIGNE 23 + LIGNE 24) = - €
+#     valeur_venale  = prix_acqu_immo + charges_aqu_immo + frais_acqu_immo + const_acqu_immo + voirie_acqu_immo
+# 25. PRIX D’ACQUISITION OU VALEUR VENALE CORRIGE (LIGNE 20 + LIGNE 21 + LIGNE 22 + LIGNE 23 + LIGNE 24) = - €
 #     return prix_cess_corr-valeur_venale
 #
 #
@@ -89,15 +89,15 @@ class ir_pv_immo(Variable):
         # 61. MONTANT DU PAR LES PERSONNES PHYSIQUES RESIDENTES DE FRANCE OU D’UN AUTRE ETAT MEMBRE DE L’EEE(1)
         # (VOIR TABLEAU PAGE 3).
         # if resident
-        impo = pv_immo.taux*f3vz
+        impo = pv_immo.taux * f3vz
     #    62. MONTANT DU PAR LES AUTRES NON-RESIDENTS (VOIR TABLEAU PAGE 3 ET REMPLIR PAGE 4 SI NECESSAIRE)
     #    IMPOSITION A 33,1/3% DES PERSONNES PHYSIQUES [(LIGNE 50 OU LIGNE 53) X 33,1/3%] = = €
     #    IMPOSITION A 15% OU 19% OU 33,1/3% DES PERSONNES MORALES NON ASSUJETTIES A L’IR, ETABLIES DANS UN ETAT
     #    MEMBRE DE L’EEE(1) (LIGNE 300 X 15% OU 19% OU 33,1/3%) = = €
-    #IMPOSITION A 50% DES PERSONNES PHYSIQUES OU MORALES RESIDENTES D’UN ETNC(2)
-    #[(LIGNE 50 OU (LIGNE 54 + LIGNE 300)) X 50%] = = €
+    # IMPOSITION A 50% DES PERSONNES PHYSIQUES OU MORALES RESIDENTES D’UN ETNC(2)
+    # [(LIGNE 50 OU (LIGNE 54 + LIGNE 300)) X 50%] = = €
 
-    #63. ABATTEMENT REPRESENTATIF DU FORFAIT FORESTIER (SI LE CEDANT EST UNE PERSONNE PHYSIQUE RESIDENTE) - €
-    #64. MONTANT DE L’IMPOT DU APRES ABATTEMENT [(LIGNE 61 + LIGNE 62) – LIGNE 63] = = €
-    #(POUR L’APPLICATION DES PRELEVEMENTS SOCIAUX CI-DESSOUS, CF. TABLEAU « RAPPEL DES TAUX D’IMPOSITION » PAGE 5) :
+    # 63. ABATTEMENT REPRESENTATIF DU FORFAIT FORESTIER (SI LE CEDANT EST UNE PERSONNE PHYSIQUE RESIDENTE) - €
+    # 64. MONTANT DE L’IMPOT DU APRES ABATTEMENT [(LIGNE 61 + LIGNE 62) – LIGNE 63] = = €
+    # (POUR L’APPLICATION DES PRELEVEMENTS SOCIAUX CI-DESSOUS, CF. TABLEAU « RAPPEL DES TAUX D’IMPOSITION » PAGE 5) :
         return period, -impo

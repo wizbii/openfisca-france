@@ -4,7 +4,7 @@ from __future__ import division
 
 import logging
 
-from numpy import maximum as max_, minimum as min_
+from numpy import maximum as max_
 
 
 from ....base import *  # noqa analysis:ignore
@@ -208,7 +208,8 @@ class crds_retraite(Variable):
     column = FloatCol
     entity_class = Individus
     label = u"CRDS sur les pensions de retraite"
-    url = u"http://www.pensions.bercy.gouv.fr/vous-%C3%AAtes-retrait%C3%A9-ou-pensionn%C3%A9/le-calcul-de-ma-pension/les-pr%C3%A9l%C3%A8vements-effectu%C3%A9s-sur-ma-pension"  # noqa
+    url = u"http://www.pensions.bercy.gouv.fr/vous-%C3%AAtes-retrait%C3%A9-ou-pensionn%C3%A9/le-calcul-de-ma-pension/"
+    "les-pr%C3%A9l%C3%A8vements-effectu%C3%A9s-sur-ma-pension"
 
     def function(self, simulation, period):
         period = period.this_month
@@ -234,7 +235,8 @@ class casa(DatedVariable):
     def function_2013(self, simulation, period):
         period = period.this_month
         rstbrut = simulation.calculate('rstbrut', period)
-        rfr_holder = simulation.compute('rfr', period.start.offset('first-of', 'year').offset(-2, 'year').period('year'))
+        rfr_period = period.start.offset('first-of', 'year').offset(-2, 'year').period('year')
+        rfr_holder = simulation.compute('rfr', rfr_period)
         taux_csg_remplacement = simulation.calculate('taux_csg_remplacement', period)
         law = simulation.legislation_at(period.start)
 

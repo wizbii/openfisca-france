@@ -33,7 +33,7 @@ def main():
         ('1AJ', '15000'),
         ('pre_situation_famille', 'C'),
         ('pre_situation_residence', 'M'),
-#        ('simplifie', '1'),
+        # ('simplifie', '1'),
         ]))
 
     page_doc = etree.parse(response, etree.HTMLParser())
@@ -103,7 +103,7 @@ def main():
 #            raise KeyError(u'Unexpected code {} = {}'.format(code, value).encode('utf-8'))
 
     for element in page_doc.xpath('//input[@type="hidden"][@name]'):
-        tag = element.tag.lower()
+        # tag = element.tag.lower()
         parent = element.getparent()
         parent_tag = parent.tag.lower()
         if parent_tag == 'table':

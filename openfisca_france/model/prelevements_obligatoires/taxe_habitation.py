@@ -2,7 +2,7 @@
 
 from __future__ import division
 
-from numpy import logical_not as not_, maximum as max_, minimum as min_
+from numpy import logical_not as not_, maximum as max_
 
 from ..base import *  # noqa analysis:ignore
 
@@ -21,7 +21,8 @@ class exonere_taxe_habitation(Variable):
         Eligibilité:
         - âgé de plus de 60 ans, non soumis à l'impôt de solidarité sur la fortune (ISF) en n-1
         - veuf quel que soit votre âge et non soumis à l'impôt de solidarité sur la fortune (ISF) n-1
-        - titulaire de l'allocation de solidarité aux personnes âgées (Aspa)  ou de l'allocation supplémentaire d'invalidité (Asi),
+        - titulaire de l'allocation de solidarité aux personnes âgées (Aspa)
+          ou de l'allocation supplémentaire d'invalidité (Asi),
         bénéficiaire de l'allocation aux adultes handicapés (AAH),
         atteint d'une infirmité ou d'une invalidité vous empêchant de subvenir à vos besoins par votre travail.
         """
@@ -61,39 +62,40 @@ class taxe_habitation(Variable):
     column = FloatCol(default = 0)
     entity_class = Menages
     label = u"Taxe d'habitation"
-    url = "http://www.impots.gouv.fr/portal/dgi/public/particuliers.impot?espId=1&pageId=part_taxe_habitation&impot=TH&sfid=50"
+    url = "http://www.impots.gouv.fr/portal/dgi/public/particuliers.impot?" \
+        "espId=1&pageId=part_taxe_habitation&impot=TH&sfid=50"
 
     def function(self, simulation, period):
         period = period.start.offset('first-of', 'month').period('year')
         exonere_taxe_habitation = simulation.calculate('exonere_taxe_habitation', period)
-        nombre_enfants_a_charge_menage = simulation.calculate('nombre_enfants_a_charge_menage', period)
-        nombre_enfants_majeurs_celibataires_sans_enfant = simulation.calculate('nombre_enfants_majeurs_celibataires_sans_enfant', period)
+        # nombre_enfants_a_charge_menage = simulation.calculate('nombre_enfants_a_charge_menage', period)
+        # nombre_enfants_majeurs_celibataires_sans_enfant = simulation.calculate(
+        #     'nombre_enfants_majeurs_celibataires_sans_enfant', period)
         rfr_n_1_holder = simulation.compute('rfr_n_1', period)
 
         rfr_n_1 = self.cast_from_entity_to_role(rfr_n_1_holder, role = VOUS)
         rfr_n_1 = self.sum_by_entity(rfr_n_1)
 
-
         # Variables TODO: à inclure dans la fonction
-        valeur_locative_brute = 0
-        valeur_locative_moyenne = 0  # déped de la collectivité)
+        # valeur_locative_brute = 0
+        # valeur_locative_moyenne = 0  # déped de la collectivité)
 
         # Paramètres: à inclure dans param.xml
-        taux_minimal_2_premiers = .1  # minimun depusi 2011
-        majoration_2_premiers = 0
-        taux_minimal_3_et_plus = .15
-        majoration_3_et_plus = 0
+        # taux_minimal_2_premiers = .1  # minimun depusi 2011
+        # majoration_2_premiers = 0
+        # taux_minimal_3_et_plus = .15
+        # majoration_3_et_plus = 0
 
-        abattement_general_base_forfaitaire = 0  # si non nul le taux suivant est nul
-        taux_abattement_general_base = .1  # entre 1% et 15% depuis 2011
+        # abattement_general_base_forfaitaire = 0  # si non nul le taux suivant est nul
+        # taux_abattement_general_base = .1  # entre 1% et 15% depuis 2011
 
-        taux_special_modeste = 0
-        seuil_elig_special_modeste = 1.3  # 130 % de la valeur locative moyenne
-        seuil_elig_special_modeste_add = .1  # 10% par personne à charge en garde exclusive et 5% en garde altennée
+        # taux_special_modeste = 0
+        # seuil_elig_special_modeste = 1.3  # 130 % de la valeur locative moyenne
+        # seuil_elig_special_modeste_add = .1  # 10% par personne à charge en garde exclusive et 5% en garde altennée
 
-        taux_special_invalide = .1  # 10% si l'abattement est voté est en vigueur
+        # taux_special_invalide = .1  # 10% si l'abattement est voté est en vigueur
 
-        taux_imposition = .10  # TODO: taux d'imposition voté par les colloc
+        # taux_imposition = .10  # TODO: taux d'imposition voté par les colloc
 
         # abattements pour l'habitation principale
 
@@ -102,7 +104,8 @@ class taxe_habitation(Variable):
         # * les enfants du contribuable, de son conjoint ou les enfants recueillis qui sont pris en compte pour le
         # calcul de l’impôt sur le revenu (2). Ne sont pas concernés ceux pour lesquels le redevable déduit de ses
         # revenus imposables une pension alimentaire ;
-        pac_enf = nombre_enfants_a_charge_menage + nombre_enfants_majeurs_celibataires_sans_enfant  # TODO: inclure ceux du conjoint non présent sur la feuille d'impôt ? gestion des gardes alternées
+        # TODO: inclure ceux du conjoint non présent sur la feuille d'impôt ? gestion des gardes alternées
+        # pac_enf = nombre_enfants_a_charge_menage + nombre_enfants_majeurs_celibataires_sans_enfant
 
         # * les ascendants du contribuable et ceux de son conjoint remplissant les 3 conditions suivantes :
         # – être âgés de plus de 70 ans ou infirmes (c’est-à-dire ne pouvant subvenir par leur travail aux nécessités
@@ -111,40 +114,47 @@ class taxe_habitation(Variable):
         # – et disposer d’un revenu fiscal de référence pour l’année précédente n’excédant pas la limite prévue à
         # l’article 1417-I du CGI (voir page 94).
 
-        pac_asc = 0  # TODO
+        # pac_asc = 0  # TODO
 
-        taux_2_premiers = taux_minimal_2_premiers + majoration_2_premiers
-        taux_3_et_plus = taux_minimal_3_et_plus + majoration_3_et_plus
+        # taux_2_premiers = taux_minimal_2_premiers + majoration_2_premiers
+        # taux_3_et_plus = taux_minimal_3_et_plus + majoration_3_et_plus
 
-        abattement_obligatoire = (min_(pac_enf + pac_asc, 2) * taux_2_premiers
-           + max_(pac_enf + pac_asc - 2, 0) * taux_3_et_plus) * valeur_locative_moyenne
+        # abattement_obligatoire = (min_(pac_enf + pac_asc, 2) * taux_2_premiers
+        #    + max_(pac_enf + pac_asc - 2, 0) * taux_3_et_plus) * valeur_locative_moyenne
 
         #   abattements facultatifs à la base :
         #     abattement faculattif général
 
-        abattement_general = abattement_general_base_forfaitaire + taux_abattement_general_base * valeur_locative_moyenne
+        # abattement_general = abattement_general_base_forfaitaire + taux_abattement_general_base * \
+        #     valeur_locative_moyenne
 
-        #     abattement facultatif dit spécial en faveur des personnes dont le « revenu fiscal de référence » n’excède pas certaines limites
+        # abattement facultatif dit spécial en faveur des personnes dont le « revenu fiscal de référence »
+        # n’excède pas certaines limites
 
-        # Il est institué à l’initiative des communes et EPCI à fiscalité propre ; il est indépendant de l’abattement géné-
-        # ral à la base avec lequel il peut se cumuler. Il ne s’applique pas dans les départements d’outre-mer.
+        # Il est institué à l’initiative des communes et EPCI à fiscalité propre ; il est indépendant de l’abattement
+        # général à la base avec lequel il peut se cumuler. Il ne s’applique pas dans les départements d’outre-mer.
         # Son taux peut être fixé, selon la décision des communes et EPCI à fiscalité propre qui en décident
         # l’application, à une valeur entière comprise entre 1 et 15 % de la valeur locative moyenne des habitations
         # (pour rappel, jusqu’en 2011, les taux pouvaient être fixés à 5 %, 10 % ou 15 %)
         #
         # Pour bénéficier de cet abattement, les contribuables doivent remplir deux conditions :
 
-        abattement_special_modeste = (valeur_locative_brute <= ((seuil_elig_special_modeste + seuil_elig_special_modeste_add * (pac_enf + pac_asc)) * valeur_locative_moyenne)
-     #       ) * (rfr_n_1 <= 100  # TODO
-            ) * taux_special_modeste * valeur_locative_moyenne
+        # abattement_special_modeste = (
+        #     valeur_locative_brute <= (
+        #         (seuil_elig_special_modeste + seuil_elig_special_modeste_add * (pac_enf + pac_asc)) *
+        #         valeur_locative_moyenne
+        #         )
+        #     # ) * (rfr_n_1 <= 100  # TODO
+        #     ) * taux_special_modeste * valeur_locative_moyenne
 
-        #     abattement facultatif en faveur des personnes handicapées ou invalides.
-        abattement_special_invalide = 0 * taux_special_invalide  # Tous les habitants doivent êtres invalides
+        # abattement facultatif en faveur des personnes handicapées ou invalides.
+        # abattement_special_invalide = 0 * taux_special_invalide  # Tous les habitants doivent êtres invalides
 
-        base_nette = valeur_locative_brute - (
-            abattement_obligatoire + abattement_general + abattement_special_modeste + abattement_special_invalide)
+        # base_nette = valeur_locative_brute - (
+        #     abattement_obligatoire + abattement_general + abattement_special_modeste + abattement_special_invalide
+        #     )
 
-        cotisation_brute = base_nette * taux_imposition
+        # cotisation_brute = base_nette * taux_imposition
 
         # Frais de gestion
         #     FRAIS DE GESTION DE LA
@@ -164,10 +174,9 @@ class taxe_habitation(Variable):
         # taxes spéciales d’équipement (TSE).
         # (1) Dont frais de dégrèvement et de non-valeurs : 2 %.
         # (2) Dont frais de dégrèvement et de non-valeurs : 3,6 %.
-        frais_gestion = 0
+        # frais_gestion = 0
 
         # Prélèvement pour base élevée et sur les résidences secondaires
-        prelevement_residence_secondaire = 0  # TODO
-
+        # prelevement_residence_secondaire = 0  # TODO
 
         return period, - exonere_taxe_habitation * 0

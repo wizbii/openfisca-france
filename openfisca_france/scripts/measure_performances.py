@@ -121,18 +121,18 @@ def main():
 
     print 'salaire_imposable'
 
-    test_irpp(2010, -1181, salaire_imposable =  20000)
-    test_irpp(2010, -7934, salaire_imposable =  50000)
-    test_irpp(2010, -42338, salaire_imposable =  150000)
-    test_irpp(2011, -1181, salaire_imposable =  20000)
-    test_irpp(2011, -7934, salaire_imposable =  50000)
-    test_irpp(2011, -42338, salaire_imposable =  150000)
-    test_irpp(2012, -1181, salaire_imposable =  20000)
-    test_irpp(2012, -7934, salaire_imposable =  50000)
-    test_irpp(2012, -43222, salaire_imposable =  150000)
-    test_irpp(2013, -1170, salaire_imposable =  20000)
-    test_irpp(2013, -7889, salaire_imposable =  50000)
-    test_irpp(2013, -43076, salaire_imposable =  150000)
+    test_irpp(2010, -1181, salaire_imposable = 20000)
+    test_irpp(2010, -7934, salaire_imposable = 50000)
+    test_irpp(2010, -42338, salaire_imposable = 150000)
+    test_irpp(2011, -1181, salaire_imposable = 20000)
+    test_irpp(2011, -7934, salaire_imposable = 50000)
+    test_irpp(2011, -42338, salaire_imposable = 150000)
+    test_irpp(2012, -1181, salaire_imposable = 20000)
+    test_irpp(2012, -7934, salaire_imposable = 50000)
+    test_irpp(2012, -43222, salaire_imposable = 150000)
+    test_irpp(2013, -1170, salaire_imposable = 20000)
+    test_irpp(2013, -7889, salaire_imposable = 50000)
+    test_irpp(2013, -43076, salaire_imposable = 150000)
 
     print 'rst'
 

@@ -47,7 +47,7 @@ def _get_page_name(form_element):
                     if input.attrib['type'] == 'radio']
     inputs_not_radio = [input for input in inputs if input not in inputs_radio]
 
-    ## regroupe les inputs radio:
+    # regroupe les inputs radio:
     input_radio_names = [input.attrib['name'] for input in inputs_radio]
     for radio_name in set(input_radio_names):
         name_page += radio_name
@@ -57,6 +57,7 @@ def _get_page_name(form_element):
         name_page += name
 
     return name_page
+
 
 def _get_a_page(form_element):
     ''' determine la page sur laquelles on est
@@ -74,7 +75,7 @@ def _get_a_page(form_element):
                     if input.attrib['type'] == 'radio']
     inputs_not_radio = [input for input in inputs if input not in inputs_radio]
 
-    ## regroupe les inputs radio:
+    # regroupe les inputs radio:
     input_radio_names = [input.attrib['name'] for input in inputs_radio]
     for radio_name in set(input_radio_names):
         choices = [input.attrib['value'] for input in inputs_radio
@@ -88,16 +89,16 @@ def _get_a_page(form_element):
             if name == 'CODEPOS':
                 values = ['75012']
             if name == 'MTLOY':  # généraliser à MT dans le nom ?
-                values = [str(100*x) for x in range(1, 10)]
+                values = [str(100 * x) for x in range(1, 10)]
             if 'dt' in name:  # dtNaiss
-                values = ['04/06/' + str(1920 + 10*x) for x in range(10)]
+                values = ['04/06/' + str(1920 + 10 * x) for x in range(10)]
             if 'Nbr' in name:   # Enfant
                 values = [str(x) for x in range(4)]
             if name == 'MTMENEVAFOR':
-                values = [str(1+100*x) for x in range(15)]
+                values = [str(1 + 100 * x) for x in range(15)]
             if 'Ress' in name:
                 if 'RessSal' in name or 'RessCho' in name:
-                    values = [str(1000*x) for x in range(20)]
+                    values = [str(1000 * x) for x in range(20)]
                 else:  # if 'RessFR' in name or 'RessIJ' in name:
                     values = ['0']
             if values == []:
@@ -116,14 +117,12 @@ def _get_a_page(form_element):
     return Page(page_question)
 
 
-
 class Formulaire(object):
 
     def __init__(self, url, pages):
         self.url = url
         self.pages = pages
         self.pages_collections = {}
-
 
     def set_choice(self, choices):
         ''' met une serie de réponse pour le formulaire
@@ -144,11 +143,9 @@ class Formulaire(object):
 
         self.check_pages()
 
-
     def check_pages(self):
         for page in self.pages:
             page.check_page()
-
 
     def init(self):
         # premiere page
@@ -159,7 +156,6 @@ class Formulaire(object):
         form_element = tree.xpath('//form')[1]
         return response, form_element
 
-
     def get_a_tree(self):
         response, form_element = self.init()
         init = {'BCCommencer': 'Commencer', 'conditionsSimuLog': 'true'}
@@ -168,7 +164,7 @@ class Formulaire(object):
         while 'droit à une aide au logement' not in html:
             # on cherche la page, ou bien on la crée
             name_page = _get_page_name(form_element)
-            if 'otre conjoint'  in html.title(): 
+            if 'otre conjoint' in html.title():
                 print 'Votre conjoint'
                 import pdb
                 pdb.set_trace()
@@ -181,23 +177,21 @@ class Formulaire(object):
                 page_question = self.pages_collections[name_page]
                 print name_page
                 page_question.set_next_choices()
-                
 
             parameters = page_question.get_parameters()
             parameters["BCContinuer"] = "Continuer"
             response, form_element, html = go_to_next_page(parameters, response, form_element)
-            
-#            if 'droit à une aide au logement'  in html:
+
+        # if 'droit à une aide au logement'  in html:
         look = html[:(html.index('&euro') - 1)]
         montant = re.findall("\d+.\d+", look[-10:])[0]
         montant = montant.replace(',', '.')
         montant = float(montant)
         print montant
-            
+
         print ('fin de boucle')
         import pdb
         pdb.set_trace()
-
 
     def get_parameters_serie(self):
         return [page.get_parameters() for page in self.pages]
@@ -219,7 +213,6 @@ class Formulaire(object):
 
         for input_element in form_element.xpath('.//input'):
             print etree.tostring(input_element)
-
 
 
 class Page(object):
@@ -264,8 +257,6 @@ class Page(object):
             initialise et quand on a fait le tour des possibilités sinon '''
         return all([question.choice == question.possible_choices[0]
                     for question in self.questions])
-
-
 
 
 class Question(object):

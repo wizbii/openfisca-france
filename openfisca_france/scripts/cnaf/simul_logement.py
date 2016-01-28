@@ -11,9 +11,7 @@ page0 = Page([conditions, BCCommencer])
 CODEPOS = Question("CODEPOS", 'int')  # TODO:
 page1 = Page([CODEPOS, BCContinuer])
 
-logOcc = Question("logOcc", ["loc", "etudiant", "foy",
-                             "accpart", "accpp",
-                            ])
+logOcc = Question("logOcc", ["loc", "etudiant", "foy", "accpart", "accpp"])
 doubleRes = Question("doubleRes", ['false', 'true'])
 page2 = Page([logOcc, doubleRes, BCContinuer])
 
@@ -74,25 +72,19 @@ if __name__ == '__main__':
                'oui', '01/04/1980', '05/03/1975', 'non', 'non', '2', '0',
                'oui', 'oui',
                'cho',
-               'sup2m', 'ass']     
-    
-    
+               'sup2m', 'ass']
+
     logement.set_choice(exemple)
     logement.fill_in()
 
-#for sitPro in rsaSitPro.possible_choices:
+# for sitPro in rsaSitPro.possible_choices:
 #    exemple[-1] = sitPro
 #    rsa.set_choice(exemple)
 #    print('********* ' + sitPro)
 #    rsa.fill_in()
 
-#continue = "EtudiantSalarie",
+# continue = "EtudiantSalarie",
 
-
-
-#print html_page
+# print html_page
 #
-#print etree.tostring(form_element)
-
-
-
+# print etree.tostring(form_element)

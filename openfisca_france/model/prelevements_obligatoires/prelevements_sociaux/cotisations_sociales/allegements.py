@@ -111,10 +111,7 @@ class credit_impot_competitivite_emploi(DatedVariable):
         stagiaire = simulation.calculate('stagiaire', period)
         cotsoc = simulation.legislation_at(period.start).cotsoc
         taux_cice = taux_exo_cice(assiette_allegement, smic_proratise, cotsoc)
-        credit_impot_competitivite_emploi = (
-            taux_cice
-            * assiette_allegement
-            )
+        credit_impot_competitivite_emploi = taux_cice * assiette_allegement
         non_cumul = (jeune_entreprise_innovante == 0 + stagiaire) > 0
 
         return period, credit_impot_competitivite_emploi * non_cumul

@@ -21,12 +21,12 @@ build_column('f6de', IntCol(entity = 'foy',
 
 # Pensions alimentaires
 build_column('f6gi', IntCol(entity = 'foy',
-                label = u"Pensions alimentaires versées à des enfants majeurs (décision de justice définitive avant 2006): 1er enfant",
+                label = u"Pensions alimentaires versées à des enfants majeurs (décision de justice définitive avant 2006): 1er enfant",  # noqa
                 val_type = "monetary",
                 cerfa_field = u'6GI'))
 
 build_column('f6gj', IntCol(entity = 'foy',
-                label = u"Pensions alimentaires versées à des enfants majeurs (décision de justice définitive avant 2006): 2eme enfant",
+                label = u"Pensions alimentaires versées à des enfants majeurs (décision de justice définitive avant 2006): 2eme enfant",  # noqa
                 val_type = "monetary",
                 cerfa_field = u'6GJ'))
 
@@ -43,7 +43,7 @@ build_column('f6em', IntCol(entity = 'foy',
                 cerfa_field = u'6EM'))
 
 build_column('f6gp', IntCol(entity = 'foy',
-                label = u"Autres pensions alimentaires versées décision de justice définitive avant 2006 (mineurs, ascendants)",
+                label = u"Autres pensions alimentaires versées décision de justice définitive avant 2006 (mineurs, ascendants)",  # noqa
                 val_type = "monetary",
                 cerfa_field = u'6GP'))
 
@@ -96,11 +96,13 @@ build_column('f6ss', IntCol(entity = 'ind',
 
 # Souscriptions en faveur du cinéma ou de l’audiovisuel
 build_column('f6aa', IntCol(entity = 'foy',
-                label = u"Souscriptions en faveur du cinéma ou de l’audiovisuel",
-                val_type = "monetary",
-                start = date(2005, 1, 1),
-                end = date(2006, 12, 31),
-                cerfa_field = u'6AA'))  # TODO: ancien numéro de case, antérieur à 2008 ....au moins! vérifier pour 07-06-05 ect...probablement avant 2005 (autre nom en 12 et 13)
+    label = u"Souscriptions en faveur du cinéma ou de l’audiovisuel",
+    val_type = "monetary",
+    start = date(2005, 1, 1),
+    end = date(2006, 12, 31),
+    cerfa_field = u'6AA'))
+# TODO: ancien numéro de case, antérieur à 2008 ....au moins!
+# vérifier pour 07-06-05 ect...probablement avant 2005 (autre nom en 12 et 13)
 
 # Souscriptions au capital des SOFIPÊCHE
 build_column('f6cc', IntCol(entity = 'foy',
@@ -108,22 +110,24 @@ build_column('f6cc', IntCol(entity = 'foy',
                 val_type = "monetary",
                 cerfa_field = u'CC',
                 start = date(2005, 1, 1),
-                end = date(2005, 12, 31)))  # ancien numéro de case, antérieur à 2008 ....au moins vérifier pour 07-06-05 ect...probablement avant 2005 (autre nom en  12 et13)
+                end = date(2005, 12, 31)))
+# ancien numéro de case, antérieur à 2008 ....au moins vérifier pour 07-06-05 ect...
+# probablement avant 2005 (autre nom en  12 et13)
 
 
 # Investissements DOM-TOM dans le cadre d’une entreprise < = 2005
 # ou Versements sur un compte épargne codéveloppement
 build_column('f6eh', IntCol(entity = 'foy',
-                label = u"",
-                val_type = "monetary",
-                start = date(2005, 1, 1),
-                end = date(2005, 12, 31),
-                cerfa_field = u'EH'))  # TODO: vérifier date de début et de fin de cette case (rien en 12 et 13)
+    label = u"",
+    val_type = "monetary",
+    start = date(2005, 1, 1),
+    end = date(2005, 12, 31),
+    cerfa_field = u'EH'))  # TODO: vérifier date de début et de fin de cette case (rien en 12 et 13)
 
 # Pertes en capital consécutives à la souscription au capital de sociétés
 # nouvelles ou de sociétés en difficulté
 build_column('f6da', IntCol(entity = 'foy',
-                label = u"Pertes en capital consécutives à la souscription au capital de sociétés nouvelles ou de sociétés en difficulté",
+                label = u"Pertes en capital consécutives à la souscription au capital de sociétés nouvelles ou de sociétés en difficulté",  # noqa
                 val_type = "monetary",
                 start = date(2005, 1, 1),
                 end = date(2005, 12, 31),
@@ -132,35 +136,36 @@ build_column('f6da', IntCol(entity = 'foy',
 
 # Dépenses de grosses réparations effectuées par les nus propriétaires
 build_column('f6cb', IntCol(entity = 'foy',
-                label = u"Dépenses de grosses réparations effectuées par les nus-propriétaires (dépenses réalisées au cours de l'année de perception des revenus)",
+                label = u"Dépenses de grosses réparations effectuées par les nus-propriétaires (dépenses réalisées au cours de l'année de perception des revenus)",  # noqa
                 val_type = "monetary",
                 start = date(2009, 1, 1),
                 cerfa_field = u'6CB'))
-                                       # TODO: before 2006 wasPertes en capital consécutives à la souscription au capital de sociétés nouvelles ou de sociétés en difficulté (cases CB et DA de la déclaration complémentaire)
+# TODO: before 2006 wasPertes en capital consécutives à la souscription au capital de sociétés nouvelles
+# ou de sociétés en difficulté (cases CB et DA de la déclaration complémentaire)
 
 build_column('f6hj', IntCol(entity = 'foy',
-                label = u"Dépenses de grosses réparations effectuées par les nus-propriétaires: report des dépenses des années antérieures",
-                val_type = "monetary",
-                start = date(2010, 1, 1),
-                cerfa_field = u'6HJ'))
+    label = u"Dépenses de grosses réparations effectuées par les nus-propriétaires: report des dépenses des années antérieures",  # noqa
+    val_type = "monetary",
+    start = date(2010, 1, 1),
+    cerfa_field = u'6HJ'))
 
 build_column('f6hk', IntCol(entity = 'foy',
-                label = u"Dépenses de grosses réparations effectuées par les nus-propriétaires: report des dépenses des années antérieures",
-                val_type = "monetary",
-                start = date(2011, 1, 1),
-                cerfa_field = u'6HK'))
+    label = u"dépenses de grosses réparations effectuées par les nus-propriétaires: report des dépenses des années antérieures",  # noqa
+    val_type = "monetary",
+    start = date(2011, 1, 1),
+    cerfa_field = u'6HK'))
 
 build_column('f6hl', IntCol(entity = 'foy',
-                label = u"Dépenses de grosses réparations effectuées par les nus-propriétaires: report des dépenses des années antérieures",
-                val_type = "monetary",
-                start = date(2012, 1, 1),
-                cerfa_field = u'6HL'))
+    label = u"Dépenses de grosses réparations effectuées par les nus-propriétaires: report des dépenses des années antérieures",  # noqa
+    val_type = "monetary",
+    start = date(2012, 1, 1),
+    cerfa_field = u'6HL'))
 
 build_column('f6hm', IntCol(entity = 'foy',
-                label = u"Dépenses de grosses réparations effectuées par les nus-propriétaires: report des dépenses des années antérieures",
-                val_type = "monetary",
-                start = date(2013, 1, 1),
-                cerfa_field = u'6HM'))
+    label = u"Dépenses de grosses réparations effectuées par les nus-propriétaires: report des dépenses des années antérieures",  # noqa
+    val_type = "monetary",
+    start = date(2013, 1, 1),
+    cerfa_field = u'6HM'))
 
 # Sommes à rajouter au revenu imposable
 build_column('f6gh', IntCol(entity = 'foy',
@@ -170,32 +175,32 @@ build_column('f6gh', IntCol(entity = 'foy',
 
 # Deficits antérieurs
 build_column('f6fa', IntCol(entity = 'foy',
-                label = u"Deficits globaux des années antérieures non encore déduits les années précédentes: année de perception des revenus -6",
+                label = u"Deficits globaux des années antérieures non encore déduits les années précédentes: année de perception des revenus -6",  # noqa
                 val_type = "monetary",
                 cerfa_field = u'6FA'))
 
 build_column('f6fb', IntCol(entity = 'foy',
-                label = u"Deficits globaux des années antérieures non encore déduits: année de perception des revenus -5",
+                label = u"Deficits globaux des années antérieures non encore déduits: année de perception des revenus -5",  # noqa
                 val_type = "monetary",
                 cerfa_field = u'6FB'))
 
 build_column('f6fc', IntCol(entity = 'foy',
-                label = u"Deficits globaux des années antérieures non encore déduits: année de perception des revenus -4",
+                label = u"Deficits globaux des années antérieures non encore déduits: année de perception des revenus -4",  # noqa
                 val_type = "monetary",
                 cerfa_field = u'6FC'))
 
 build_column('f6fd', IntCol(entity = 'foy',
-                label = u"Deficits globaux des années antérieures non encore déduits: année de perception des revenus -3",
+                label = u"Deficits globaux des années antérieures non encore déduits: année de perception des revenus -3",  # noqa
                 val_type = "monetary",
                 cerfa_field = u'6FD'))
 
 build_column('f6fe', IntCol(entity = 'foy',
-                label = u"Deficits globaux des années antérieures non encore déduits: année de perception des revenus -2",
+                label = u"Deficits globaux des années antérieures non encore déduits: année de perception des revenus -2",  # noqa
                 val_type = "monetary",
                 cerfa_field = u'6FE'))
 
 build_column('f6fl', IntCol(entity = 'foy',
-                label = u"Deficits globaux des années antérieures non encore déduits: année de perception des revenus -1",
+                label = u"Deficits globaux des années antérieures non encore déduits: année de perception des revenus -1",  # noqa
                 val_type = "monetary",
                 cerfa_field = u'6FL'))
 

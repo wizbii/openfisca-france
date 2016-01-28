@@ -26,14 +26,14 @@ class stage_gratification(Variable):
     column = FloatCol
     entity_class = Individus
     label = u"Gratification de stage"
-    start_date = date(2014, 11, 1)  # TODO: remove when updating legislation backwards
+    start_date = date(2014, 11, 1)  # TODO: remove when updating legislation backwards
 
     def function(self, simulation, period):
         period = period.this_month
         stage_duree_heures = simulation.calculate('stage_duree_heures', period)
         stage_gratification_taux = simulation.calculate('stage_gratification_taux', period)
         stagiaire = simulation.calculate('stagiaire', period)
-        plafond_securite_sociale_horaire = simulation.legislation_at(period.start).cotsoc.gen.plafond_securite_sociale_horaire
+        plafond_securite_sociale_horaire = simulation.legislation_at(period.start).cotsoc.gen.plafond_securite_sociale_horaire  # noqa
         # TODO: move to legislation parameters file
         stage_gratification_taux_min = .1375  # depuis le 1er décembre 2014
         # .15 à partir de 2015-09-01
@@ -45,7 +45,7 @@ class stage_gratification_reintegration(Variable):
     column = FloatCol
     entity_class = Individus
     label = u"Part de la gratification de stage réintégrée à l'assiette des cotisations et contributions sociales"
-    start_date = date(2014, 11, 1)  # TODO: remove when updating legislation backwards
+    start_date = date(2014, 11, 1)  # TODO: remove when updating legislation backwards
 
     def function(self, simulation, period):
         period = period.this_month
@@ -97,7 +97,7 @@ class exoneration_cotisations_employeur_stagiaire(Variable):
                 round_base_decimals = 2,
                 )
             for bareme_name in ['agffnc', 'agffc', 'chomfg', 'assedic']
-        )
+            )
         exoneration += agirc_employeur + agirc_gmp_employeur + arrco_employeur
         return period, - exoneration * stagiaire
 

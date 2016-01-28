@@ -2,6 +2,7 @@
 
 from ....base import CAT
 
+
 def apply_bareme_for_relevant_type_sal(
         bareme_by_type_sal_name,
         bareme_name,
@@ -15,6 +16,7 @@ def apply_bareme_for_relevant_type_sal(
     assert type_sal is not None
     assert base is not None
     assert plafond_securite_sociale is not None
+
     def iter_cotisations():
         for type_sal_name, type_sal_index in CAT:
             if type_sal_name not in bareme_by_type_sal_name:  # to deal with public_titulaire_militaire
@@ -101,8 +103,10 @@ def compute_cotisation_anticipee(simulation, period, cotisation_type = None, bar
             )
     if period.start.month == 12:
         assert variable_name is not None
+        # December variable_name depends on variable_name in the past 11 months.
+        # We need to explicitely allow this recursion.
         cumul = simulation.calculate_add(variable_name, period.start.offset('first-of', 'month').offset(
-            -11, 'month').period('month', 11), max_nb_cycles = 1) # December variable_name depends on variable_name in the past 11 months. We need to explicitely allow this recursion.
+            -11, 'month').period('month', 11), max_nb_cycles = 1)
 
         return compute_cotisation(
             simulation,

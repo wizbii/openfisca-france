@@ -8,25 +8,25 @@ from ..base import *  # noqa analysis:ignore
 
 # Variables apparaissant dans la feuille de déclaration de patrimoine soumis à l'ISF
 
-## Immeubles bâtis
-build_column('b1ab', IntCol(entity = 'foy', label = u"Valeur de la résidence principale avant abattement", val_type = "monetary"))
-build_column('b1ac', IntCol(entity = 'foy', label = u"Valeur des autres immeubles avant abattement", val_type = "monetary"))
+# Immeubles bâtis
+build_column('b1ab', IntCol(entity = 'foy', label = u"Valeur de la résidence principale avant abattement", val_type = "monetary"))  # noqa
+build_column('b1ac', IntCol(entity = 'foy', label = u"Valeur des autres immeubles avant abattement", val_type = "monetary"))  # noqa
 
-## non bâtis
-build_column('b1bc', IntCol(entity = 'foy', label = u"Immeubles non bâtis : bois, fôrets et parts de groupements forestiers", val_type = "monetary"))
-build_column('b1be', IntCol(entity = 'foy', label = u"Immeubles non bâtis : biens ruraux loués à long termes", val_type = "monetary"))
-build_column('b1bh', IntCol(entity = 'foy', label = u"Immeubles non bâtis : parts de groupements fonciers agricoles et de groupements agricoles fonciers", val_type = "monetary"))
-build_column('b1bk', IntCol(entity = 'foy', label = u"Immeubles non bâtis : autres biens", val_type = "monetary"))
+# non bâtis
+build_column('b1bc', IntCol(entity = 'foy', label = u"Immeubles non bâtis : bois, fôrets et parts de groupements forestiers", val_type = "monetary"))  # noqa
+build_column('b1be', IntCol(entity = 'foy', label = u"Immeubles non bâtis : biens ruraux loués à long termes", val_type = "monetary"))  # noqa
+build_column('b1bh', IntCol(entity = 'foy', label = u"Immeubles non bâtis : parts de groupements fonciers agricoles et de groupements agricoles fonciers", val_type = "monetary"))  # noqa
+build_column('b1bk', IntCol(entity = 'foy', label = u"Immeubles non bâtis : autres biens", val_type = "monetary"))  # noqa
 
-## droits sociaux- valeurs mobilières-liquidités- autres meubles
-build_column('b1cl', IntCol(entity = 'foy', label = u"Parts et actions détenues par les salariés et mandataires sociaux", val_type = "monetary"))
-build_column('b1cb', IntCol(entity = 'foy', label = u"Parts et actions de sociétés avec engagement de conservation de 6 ans minimum", val_type = "monetary"))
-build_column('b1cd', IntCol(entity = 'foy', label = u"Droits sociaux de sociétés dans lesquelles vous exercez une fonction ou une activité", val_type = "monetary"))
-build_column('b1ce', IntCol(entity = 'foy', label = u"Autres valeurs mobilières", val_type = "monetary"))
-build_column('b1cf', IntCol(entity = 'foy', label = u"Liquidités", val_type = "monetary"))
-build_column('b1cg', IntCol(entity = 'foy', label = u"Autres biens meubles", val_type = "monetary"))
+# droits sociaux- valeurs mobilières-liquidités- autres meubles
+build_column('b1cl', IntCol(entity = 'foy', label = u"Parts et actions détenues par les salariés et mandataires sociaux", val_type = "monetary"))  # noqa
+build_column('b1cb', IntCol(entity = 'foy', label = u"Parts et actions de sociétés avec engagement de conservation de 6 ans minimum", val_type = "monetary"))  # noqa
+build_column('b1cd', IntCol(entity = 'foy', label = u"Droits sociaux de sociétés dans lesquelles vous exercez une fonction ou une activité", val_type = "monetary"))  # noqa
+build_column('b1ce', IntCol(entity = 'foy', label = u"Autres valeurs mobilières", val_type = "monetary"))  # noqa
+build_column('b1cf', IntCol(entity = 'foy', label = u"Liquidités", val_type = "monetary"))  # noqa
+build_column('b1cg', IntCol(entity = 'foy', label = u"Autres biens meubles", val_type = "monetary"))  # noqa
 
-build_column('b1co', IntCol(entity = 'foy', label = u"Autres biens meubles : contrats d'assurance-vie", val_type = "monetary"))
+build_column('b1co', IntCol(entity = 'foy', label = u"Autres biens meubles : contrats d'assurance-vie", val_type = "monetary"))  # noqa
 
 #    b1ch
 #    b1ci
@@ -34,29 +34,29 @@ build_column('b1co', IntCol(entity = 'foy', label = u"Autres biens meubles : con
 #    b1ck
 
 
-## passifs et autres réductions
-build_column('b2gh', IntCol(entity = 'foy', label = u"Total du passif et autres déductions", val_type = "monetary"))
+# passifs et autres réductions
+build_column('b2gh', IntCol(entity = 'foy', label = u"Total du passif et autres déductions", val_type = "monetary"))  # noqa
 
-## réductions
-build_column('b2mt', IntCol(entity = 'foy', label = u"Réductions pour investissements directs dans une société", val_type = "monetary"))
-build_column('b2ne', IntCol(entity = 'foy', label = u"Réductions pour investissements directs dans une société", val_type = "monetary"))
-build_column('b2mv', IntCol(entity = 'foy', label = u"Réductions pour investissements par sociétés interposées, holdings" , val_type = "monetary"))
-build_column('b2nf', IntCol(entity = 'foy', label = u"Réductions pour investissements par sociétés interposées, holdings", val_type = "monetary"))
-build_column('b2mx', IntCol(entity = 'foy', label = u"Réductions pour investissements par le biais de FIP", val_type = "monetary"))
-build_column('b2na', IntCol(entity = 'foy', label = u"Réductions pour investissements par le biais de FCPI ou FCPR", val_type = "monetary"))
-build_column('b2nc', IntCol(entity = 'foy', label = u"Réductions pour dons à certains organismes d'intérêt général", val_type = "monetary"))
+# réductions
+build_column('b2mt', IntCol(entity = 'foy', label = u"Réductions pour investissements directs dans une société", val_type = "monetary"))  # noqa
+build_column('b2ne', IntCol(entity = 'foy', label = u"Réductions pour investissements directs dans une société", val_type = "monetary"))  # noqa
+build_column('b2mv', IntCol(entity = 'foy', label = u"Réductions pour investissements par sociétés interposées, holdings", val_type = "monetary"))  # noqa
+build_column('b2nf', IntCol(entity = 'foy', label = u"Réductions pour investissements par sociétés interposées, holdings", val_type = "monetary"))  # noqa
+build_column('b2mx', IntCol(entity = 'foy', label = u"Réductions pour investissements par le biais de FIP", val_type = "monetary"))  # noqa
+build_column('b2na', IntCol(entity = 'foy', label = u"Réductions pour investissements par le biais de FCPI ou FCPR", val_type = "monetary"))  # noqa
+build_column('b2nc', IntCol(entity = 'foy', label = u"Réductions pour dons à certains organismes d'intérêt général", val_type = "monetary"))  # noqa
 
-##  montant impôt acquitté hors de France
-build_column('b4rs', IntCol(entity = 'foy', label = u"Montant de l'impôt acquitté hors de France", val_type = "monetary"))
+# montant impôt acquitté hors de France
+build_column('b4rs', IntCol(entity = 'foy', label = u"Montant de l'impôt acquitté hors de France", val_type = "monetary"))  # noqa
 
-## BOUCLIER FISCAL
+# BOUCLIER FISCAL
 
-build_column('rev_or', IntCol(entity = 'foy', label = u"", val_type = "monetary"))
-build_column('rev_exo', IntCol(entity = 'foy', label = u"", val_type = "monetary"))
+build_column('rev_or', IntCol(entity = 'foy', label = u"", val_type = "monetary"))  # noqa
+build_column('rev_exo', IntCol(entity = 'foy', label = u"", val_type = "monetary"))  # noqa
 
-build_column('tax_fonc', IntCol(entity = 'foy', label = u"Taxe foncière", val_type = "monetary"))
-build_column('restit_imp', IntCol(entity = 'foy', label = u"", val_type = "monetary"))
-build_column('etr', IntCol())
+build_column('tax_fonc', IntCol(entity = 'foy', label = u"Taxe foncière", val_type = "monetary"))  # noqa
+build_column('restit_imp', IntCol(entity = 'foy', label = u"", val_type = "monetary"))  # noqa
+build_column('etr', IntCol())  # noqa
 
 
 # Calcul de l'impôt de solidarité sur la fortune
@@ -124,7 +124,7 @@ class isf_actions_sal(Variable):  # # non présent en 2005##
         b1cl = simulation.calculate('b1cl', period)
         P = simulation.legislation_at(period.start).isf.droits_soc
 
-        return period,  b1cl * P.taux1
+        return period, b1cl * P.taux1
 
 
 class isf_droits_sociaux(Variable):
@@ -516,23 +516,22 @@ class bouclier_rev(Variable):
         rbg = simulation.calculate('rbg', period)
         maj_cga = simulation.calculate('maj_cga', period)
         csg_deduc = simulation.calculate('csg_deduc', period)
-        rvcm_plus_abat = simulation.calculate('rvcm_plus_abat', period)
+        # rvcm_plus_abat = simulation.calculate('rvcm_plus_abat', period)
         rev_cap_lib = simulation.calculate('rev_cap_lib', period)
-        rev_exo = simulation.calculate('rev_exo', period)
+        # rev_exo = simulation.calculate('rev_exo', period)
         rev_or = simulation.calculate('rev_or', period)
         cd_penali = simulation.calculate('cd_penali', period)
         cd_eparet = simulation.calculate('cd_eparet', period)
-
 
         # TODO: réintégrer les déficits antérieur
         # TODO: intégrer les revenus soumis au prélèvement libératoire
         # deficit_ante =
 
-        # # Revenus
-        frac_rvcm_rfr = 0.7 * rvcm_plus_abat  # TODO: UNUSED ?
-        # # revenus distribués?
-        # # A majorer de l'abatt de 40% - montant brut en cas de PFL
-        # # pour le calcul de droit à restitution : prendre 0.7*montant_brut_rev_dist_soumis_au_barème
+        # Revenus
+        # frac_rvcm_rfr = 0.7 * rvcm_plus_abat  # TODO: UNUSED ?
+        # revenus distribués?
+        # A majorer de l'abatt de 40% - montant brut en cas de PFL
+        # pour le calcul de droit à restitution : prendre 0.7*montant_brut_rev_dist_soumis_au_barème
         # rev_bar = rbg - maj_cga - csg_deduc - deficit_ante
         rev_bar = rbg - maj_cga - csg_deduc
 
@@ -600,14 +599,12 @@ class bouclier_imp_gen(Variable):  # # ajouter CSG- CRDS
         # # ajouter Prelèvements sources/ libé
         # # ajouter crds rstd
         # # impôt sur les plus-values immo et cession de fonds de commerce
-        imp1 = cotsoc_lib + cotsoc_bar + csg_deductible_salaire + csg_deductible_chomage + crds_salaire + csg_deductible_retraite + imp_lib
-        '''
-        Impôts payés en l'année 'n' au titre des revenus réalisés sur l'année 'n'
-        '''
-        imp2 = irpp + isf_tot + taxe_habitation + tax_fonc + csg_imposable_salaire + csg_imposable_chomage + csg_imposable_retraite
-        '''
-        Impôts payés en l'année 'n' au titre des revenus réalisés en 'n-1'
-        '''
+        imp1 = cotsoc_lib + cotsoc_bar + csg_deductible_salaire + csg_deductible_chomage + crds_salaire + \
+            csg_deductible_retraite + imp_lib
+        # Impôts payés en l'année 'n' au titre des revenus réalisés sur l'année 'n'
+        imp2 = irpp + isf_tot + taxe_habitation + tax_fonc + csg_imposable_salaire + csg_imposable_chomage + \
+            csg_imposable_retraite
+        # Impôts payés en l'année 'n' au titre des revenus réalisés en 'n-1'
         return period, imp1 + imp2
 
 

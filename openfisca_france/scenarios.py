@@ -363,8 +363,8 @@ class Scenario(scenarios.AbstractScenario):
                                     # autre parent de cette famille.
                                     famille[u'parents'].append(individu_id)
                                     familles_individus_id.remove(individu_id)
-                        elif menage_role == u'enfants' and (menage['personne_de_reference'] is not None
-                                or menage[u'conjoint'] is not None):
+                        elif menage_role == u'enfants' and (menage['personne_de_reference'] is not None or
+                                menage[u'conjoint'] is not None):
                             for other_id in (menage['personne_de_reference'], menage[u'conjoint']):
                                 if other_id is None:
                                     continue
@@ -450,8 +450,8 @@ class Scenario(scenarios.AbstractScenario):
                                     # comme autre déclarant de ce foyer fiscal.
                                     foyer_fiscal[u'declarants'].append(individu_id)
                                     foyers_fiscaux_individus_id.remove(individu_id)
-                        elif menage_role == u'enfants' and (menage['personne_de_reference'] is not None
-                                or menage[u'conjoint'] is not None):
+                        elif menage_role == u'enfants' and (menage['personne_de_reference'] is not None or
+                                menage[u'conjoint'] is not None):
                             for other_id in (menage['personne_de_reference'], menage[u'conjoint']):
                                 if other_id is None:
                                     continue
@@ -608,9 +608,12 @@ class Scenario(scenarios.AbstractScenario):
                                     enfants = conv.uniform_sequence(
                                         conv.test(
                                             lambda individu_id:
-                                                individu_by_id[individu_id].get('invalide', False)
-                                                or find_age(individu_by_id[individu_id], period.start.date,
-                                                    default = 0) <= 25,
+                                                individu_by_id[individu_id].get('invalide', False) or
+                                                find_age(
+                                                    individu_by_id[individu_id],
+                                                    period.start.date,
+                                                    default = 0,
+                                                    ) <= 25,
                                             error = u"Une personne à charge d'un foyer fiscal doit avoir moins de"
                                                     u" 25 ans ou être invalide",
                                             ),
@@ -656,9 +659,12 @@ class Scenario(scenarios.AbstractScenario):
                                     personnes_a_charge = conv.uniform_sequence(
                                         conv.test(
                                             lambda individu_id:
-                                                individu_by_id[individu_id].get('invalide', False)
-                                                or find_age(individu_by_id[individu_id], period.start.date,
-                                                    default = 0) <= 25,
+                                                individu_by_id[individu_id].get('invalide', False) or
+                                                find_age(
+                                                    individu_by_id[individu_id],
+                                                    period.start.date,
+                                                    default = 0,
+                                                    ) <= 25,
                                             error = u"Une personne à charge d'un foyer fiscal doit avoir moins de"
                                                     u" 25 ans ou être invalide",
                                             ),

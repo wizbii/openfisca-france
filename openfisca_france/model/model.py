@@ -40,7 +40,7 @@ from .prelevements_obligatoires.prelevements_sociaux.cotisations_sociales import
     travail_totaux,
     )
 
-from .prelevements_obligatoires.prelevements_sociaux import taxes_salaires_main_oeuvre # noqa analysis:ignore
+from .prelevements_obligatoires.prelevements_sociaux import taxes_salaires_main_oeuvre  # noqa analysis:ignore
 
 from .prestations import (  # noqa analysis:ignore
     aides_logement,
@@ -64,7 +64,7 @@ from prestations.prestations_familiales import (  # noqa analysis:ignore
     cf,
     )
 
-from revenus import autres
+from revenus import autres  # noqa analysis:ignore
 
 from revenus.activite import (  # noqa analysis:ignore
     non_salarie,

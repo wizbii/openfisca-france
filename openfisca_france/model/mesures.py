@@ -59,13 +59,13 @@ class typ_men(Variable):
         _3_kid = af_nbenf >= 3
 
         return period, (0 * (isol & _0_kid) +  # Célibataire
-                1 * (not_(isol) & _0_kid) +  # Couple sans enfants
-                2 * (not_(isol) & _1_kid) +  # Couple un enfant
-                3 * (not_(isol) & _2_kid) +  # Couple deux enfants
-                4 * (not_(isol) & _3_kid) +  # Couple trois enfants et plus
-                5 * (isol & _1_kid) +  # Famille monoparentale un enfant
-                6 * (isol & _2_kid) +  # Famille monoparentale deux enfants
-                7 * (isol & _3_kid))  # Famille monoparentale trois enfants et plus
+            1 * (not_(isol) & _0_kid) +  # Couple sans enfants
+            2 * (not_(isol) & _1_kid) +  # Couple un enfant
+            3 * (not_(isol) & _2_kid) +  # Couple deux enfants
+            4 * (not_(isol) & _3_kid) +  # Couple trois enfants et plus
+            5 * (isol & _1_kid) +  # Famille monoparentale un enfant
+            6 * (isol & _2_kid) +  # Famille monoparentale deux enfants
+            7 * (isol & _3_kid))  # Famille monoparentale trois enfants et plus
 
 
 class revdisp(Variable):
@@ -330,7 +330,8 @@ class pfam(Variable):
     column = FloatCol(default = 0)
     entity_class = Familles
     label = u"Total des prestations familiales"
-    url = "http://www.social-sante.gouv.fr/informations-pratiques,89/fiches-pratiques,91/prestations-familiales,1885/les-prestations-familiales,12626.html"
+    url = "http://www.social-sante.gouv.fr/informations-pratiques,89/fiches-pratiques,91/prestations-familiales,1885/"
+    "les-prestations-familiales,12626.html"
 
     def function(self, simulation, period):
         '''
@@ -497,7 +498,8 @@ class prelsoc_cap(Variable):
     column = FloatCol(default = 0)
     entity_class = Individus
     label = u"Prélèvements sociaux sur les revenus du capital"
-    url = "http://www.impots.gouv.fr/portal/dgi/public/particuliers.impot?pageId=part_ctrb_soc&paf_dm=popup&paf_gm=content&typePage=cpr02&sfid=501&espId=1&impot=CS"
+    url = "http://www.impots.gouv.fr/portal/dgi/public/particuliers.impot?"
+    "pageId=part_ctrb_soc&paf_dm=popup&paf_gm=content&typePage=cpr02&sfid=501&espId=1&impot=CS"
 
     def function(self, simulation, period):
         """

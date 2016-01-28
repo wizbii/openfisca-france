@@ -193,7 +193,8 @@ def main():
 #            path = tuple(path),
 #            start = start,
 #            ))
-#    print yaml.dump(openfisca_infos_by_value, allow_unicode = True, default_flow_style = False, indent = 2, width = 120)
+    # print yaml.dump(openfisca_infos_by_value, allow_unicode = True, default_flow_style = False, indent = 2,
+    #    width = 120)
 
 #    ipp_count = {}
 #    for path, start, value in iter_openfisca_values(tax_benefit_system.legislation_json):
@@ -231,8 +232,8 @@ def main():
             starts_by_openfisca_path_by_ipp_path.setdefault(ipp_path, {}).setdefault(tuple(path), set()).add(start)
 
 #    for openfisca_path, starts_by_ipp_path in sorted(starts_by_ipp_path_by_openfisca_path.iteritems()):
-##        if len(starts_by_ipp_path) == 1:
-##            print u'.'.join(openfisca_path), '->', u' / '.join(starts_by_ipp_path.keys()[0])
+#        if len(starts_by_ipp_path) == 1:
+#            print u'.'.join(openfisca_path), '->', u' / '.join(starts_by_ipp_path.keys()[0])
 #        if len(starts_by_ipp_path) > 1:
 #            print u'.'.join(openfisca_path), '->', starts_by_ipp_path
 
@@ -242,11 +243,11 @@ def main():
 #                unicode(fragment)
 #                for fragment in starts_by_openfisca_path.keys()[0]
 #                )
-##        if len(starts_by_openfisca_path) > 1:
-##            print u' / '.join(ipp_path), '->', u'.'.join(
-##                unicode(fragment)
-##                for fragment in starts_by_openfisca_path.keys()[0]
-##                )
+#        if len(starts_by_openfisca_path) > 1:
+#            print u' / '.join(ipp_path), '->', u'.'.join(
+#                unicode(fragment)
+#                for fragment in starts_by_openfisca_path.keys()[0]
+#                )
 
     openfisca_path_by_ipp_tree = collections.OrderedDict()
     for ipp_path, starts_by_openfisca_path in sorted(starts_by_openfisca_path_by_ipp_path.iteritems()):

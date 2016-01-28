@@ -46,7 +46,7 @@ rsa = Formulaire(url, [Page([]), page0, page1, page2, page3, page4, page_rev])
 def check_formulaire(formulaire):
     if formulaire["seulOuCouple"] == "COUPLE":
         assert formulaire["DateIsole"] == ""
-        
+
 if __name__ == '__main__':
     exemple = ["FranceMetro",
                'SEUL', "01/06/2003",
@@ -56,19 +56,14 @@ if __name__ == '__main__':
     rsa.set_choice(exemple)
     rsa.fill_in()
 
-#for sitPro in rsaSitPro.possible_choices:
+# for sitPro in rsaSitPro.possible_choices:
 #    exemple[-1] = sitPro
 #    rsa.set_choice(exemple)
 #    print('********* ' + sitPro)
 #    rsa.fill_in()
 
-#continue = "EtudiantSalarie",
+# continue = "EtudiantSalarie",
 
-
-
-#print html_page
+# print html_page
 #
-#print etree.tostring(form_element)
-
-
-
+# print etree.tostring(form_element)

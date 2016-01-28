@@ -9,7 +9,6 @@ commune depcom code.
 
 import argparse
 import csv
-import json
 import logging
 import os
 import sys
@@ -26,16 +25,16 @@ def main():
     args = parser.parse_args()
     logging.basicConfig(level = logging.DEBUG if args.verbose else logging.WARNING)
 
-    taux_by_commune_depcom = {}
+    # taux_by_commune_depcom = {}
     with open(args.versement_transport_file) as versement_transport_file:
         csv_reader = csv.DictReader(versement_transport_file, delimiter = ';')
         for row in csv_reader:
             # Do not decode row as we read only ASCII.
             print row
             # if row['ACTUAL'] in ('2', '5'):
-                # subcommune_depcom = row['DEP'] + row['COM']
-                # commune_depcom = row['POLE']
-                # commune_depcom_by_subcommune_depcom[subcommune_depcom] = commune_depcom
+            #     subcommune_depcom = row['DEP'] + row['COM']
+            #     commune_depcom = row['POLE']
+            #     commune_depcom_by_subcommune_depcom[subcommune_depcom] = commune_depcom
 
 #    print json.dumps(taux_by_commune_depcom, encoding = 'utf-8', ensure_ascii = False, indent = 2)
     return 0

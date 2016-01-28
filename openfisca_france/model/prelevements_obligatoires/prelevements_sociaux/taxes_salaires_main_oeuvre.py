@@ -12,6 +12,10 @@ from numpy import fromiter, logical_or as or_, round as round_
 import openfisca_france
 from ...base import *  # noqa analysis:ignore
 
+# Helpers
+
+from .cotisations_sociales.base import apply_bareme
+
 
 log = logging.getLogger(__name__)
 
@@ -23,9 +27,6 @@ taux_smt_by_depcom = None
 # check hsup everywhere !
 # versement transport dépdendant de la localité (décommenter et compléter)
 
-# Helpers
-
-from .cotisations_sociales.base import apply_bareme
 
 # Cotisations proprement dites
 

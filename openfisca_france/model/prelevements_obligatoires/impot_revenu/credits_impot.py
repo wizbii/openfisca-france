@@ -63,8 +63,8 @@ class credits_impot(DatedVariable):
         prlire = simulation.calculate('prlire', period)
         quaenv = simulation.calculate('quaenv', period)
 
-        return period, (accult + acqgpl + aidmob + aidper + assloy + ci_garext + creimp + divide + direpa + drbail + jeunes +
-                mecena + preetu + prlire + quaenv)
+        return period, (accult + acqgpl + aidmob + aidper + assloy + ci_garext + creimp + divide + direpa + drbail +
+            jeunes + mecena + preetu + prlire + quaenv)
 
     @dated_function(start = date(2007, 1, 1), stop = date(2007, 12, 31))
     def function_20070101_20071231(self, simulation, period):
@@ -88,8 +88,8 @@ class credits_impot(DatedVariable):
         quaenv = simulation.calculate('quaenv', period)
         saldom2 = simulation.calculate('saldom2', period)
 
-        return period, (accult + acqgpl + aidmob + aidper + assloy + ci_garext + creimp + divide + direpa + drbail + inthab +
-                jeunes + mecena + preetu + prlire + quaenv + saldom2)
+        return period, (accult + acqgpl + aidmob + aidper + assloy + ci_garext + creimp + divide + direpa + drbail +
+            inthab + jeunes + mecena + preetu + prlire + quaenv + saldom2)
 
     @dated_function(start = date(2008, 1, 1), stop = date(2008, 12, 31))
     def function_20080101_20081231(self, simulation, period):
@@ -113,8 +113,8 @@ class credits_impot(DatedVariable):
         quaenv = simulation.calculate('quaenv', period)
         saldom2 = simulation.calculate('saldom2', period)
 
-        return period, (accult + aidmob + aidper + assloy + ci_garext + creimp + creimp_exc_2008 + divide + direpa + drbail +
-                inthab + jeunes + mecena + preetu + prlire + quaenv + saldom2)
+        return period, (accult + aidmob + aidper + assloy + ci_garext + creimp + creimp_exc_2008 + divide + direpa +
+            drbail + inthab + jeunes + mecena + preetu + prlire + quaenv + saldom2)
 
     @dated_function(start = date(2009, 1, 1), stop = date(2009, 12, 31))
     def function_20090101_20091231(self, simulation, period):
@@ -135,8 +135,8 @@ class credits_impot(DatedVariable):
         quaenv = simulation.calculate('quaenv', period)
         saldom2 = simulation.calculate('saldom2', period)
 
-        return period, (accult + aidper + assloy + ci_garext + creimp + divide + direpa + drbail + inthab + mecena + preetu +
-                prlire + quaenv + saldom2)
+        return period, (accult + aidper + assloy + ci_garext + creimp + divide + direpa + drbail + inthab + mecena +
+            preetu + prlire + quaenv + saldom2)
 
     @dated_function(start = date(2010, 1, 1), stop = date(2010, 12, 31))
     def function_20100101_20101231(self, simulation, period):
@@ -151,7 +151,7 @@ class credits_impot(DatedVariable):
         direpa = simulation.calculate('direpa', period)
         drbail = simulation.calculate('drbail', period)
         inthab = simulation.calculate('inthab', period)
-        jeunes = simulation.calculate('jeunes', period)
+        # jeunes = simulation.calculate('jeunes', period)
         mecena = simulation.calculate('mecena', period)
         percvm = simulation.calculate('percvm', period)
         preetu = simulation.calculate('preetu', period)
@@ -159,8 +159,8 @@ class credits_impot(DatedVariable):
         quaenv = simulation.calculate('quaenv', period)
         saldom2 = simulation.calculate('saldom2', period)
 
-        return period, (accult + aidper + assloy + autent + ci_garext + creimp + direpa + drbail + inthab + mecena + percvm +
-                preetu + prlire + quaenv + saldom2)
+        return period, (accult + aidper + assloy + autent + ci_garext + creimp + direpa + drbail + inthab + mecena +
+            percvm + preetu + prlire + quaenv + saldom2)
 
     @dated_function(start = date(2011, 1, 1), stop = date(2011, 12, 31))
     def function_20110101_20111231(self, simulation, period):
@@ -181,8 +181,8 @@ class credits_impot(DatedVariable):
         quaenv = simulation.calculate('quaenv', period)
         saldom2 = simulation.calculate('saldom2', period)
 
-        return period, (accult + aidper + assloy + autent + ci_garext + creimp + direpa + drbail + inthab + mecena + preetu +
-                prlire + quaenv + saldom2)
+        return period, (accult + aidper + assloy + autent + ci_garext + creimp + direpa + drbail + inthab + mecena +
+            preetu + prlire + quaenv + saldom2)
 
     @dated_function(start = date(2012, 1, 1), stop = date(2012, 12, 31))
     def function_20120101_20121231(self, simulation, period):
@@ -204,8 +204,8 @@ class credits_impot(DatedVariable):
         quaenv = simulation.calculate('quaenv', period)
         saldom2 = simulation.calculate('saldom2', period)
 
-        return period, (accult + aidper + assloy + autent + ci_garext + cotsyn + creimp + direpa + drbail + inthab + mecena +
-                preetu + prlire + quaenv + saldom2)
+        return period, (accult + aidper + assloy + autent + ci_garext + cotsyn + creimp + direpa + drbail + inthab +
+            mecena + preetu + prlire + quaenv + saldom2)
 
     @dated_function(start = date(2013, 1, 1), stop = date(2013, 12, 31))
     def function_20130101_20131231(self, simulation, period):
@@ -227,8 +227,8 @@ class credits_impot(DatedVariable):
         quaenv = simulation.calculate('quaenv', period)
         saldom2 = simulation.calculate('saldom2', period)
 
-        return period, (accult + aidper + assloy + autent + ci_garext + cotsyn + creimp + direpa + drbail + inthab + mecena +
-                preetu + prlire + quaenv + saldom2)
+        return period, (accult + aidper + assloy + autent + ci_garext + cotsyn + creimp + direpa + drbail + inthab +
+            mecena + preetu + prlire + quaenv + saldom2)
 
 
 class nb_pac2(Variable):
@@ -333,7 +333,7 @@ class aidper(DatedVariable):
         max0 = (P.max * (1 + marpac) +
             P.pac1 * (n >= 1) + P.pac2 * (n >= 2) + P.pac3 * (max_(n - 2, 0)) +
             ((n >= 2) * P.pac3 * nbH +
-            (n == 1) * (P.pac2 + (nbH > 1) * P.pac3 * (nbH - 1) ) * (nbH >= 1) +
+            (n == 1) * (P.pac2 + (nbH > 1) * P.pac3 * (nbH - 1)) * (nbH >= 1) +
             (n == 0) * (P.pac1 + (nbH > 1) * P.pac2 * (nbH - 1) + (nbH > 2) * P.pac3 * (nbH - 2)) * (nbH >= 1)) / 2)
 
         return period, P.taux_wi * min_(f7wi, max0)
@@ -355,16 +355,15 @@ class aidper(DatedVariable):
 
         P = _P.ir.credits_impot.aidper
 
-        n = nb_pac2 - nbH/2
+        n = nb_pac2 - nbH / 2
         max0 = (P.max * (1 + marpac) +
             P.pac1 * (n >= 1) + P.pac2 * (n >= 2) + P.pac3 * (max_(n - 2, 0)) +
             ((n >= 2) * P.pac3 * nbH +
-            (n == 1) * (P.pac2 + (nbH > 1) * P.pac3 * (nbH - 1) ) * (nbH >= 1) +
+            (n == 1) * (P.pac2 + (nbH > 1) * P.pac3 * (nbH - 1)) * (nbH >= 1) +
             (n == 0) * (P.pac1 + (nbH > 1) * P.pac2 * (nbH - 1) + (nbH > 2) * P.pac3 * (nbH - 2)) * (nbH >= 1)) / 2)
 
         max1 = max_(0, max0 - f7wj)
-        return period, (P.taux_wj * min_(f7wj, max0) +
-                    P.taux_wi * min_(f7wi, max1))
+        return period, (P.taux_wj * min_(f7wj, max0) + P.taux_wi * min_(f7wi, max1))
 
     @dated_function(start = date(2006, 1, 1), stop = date(2009, 12, 31))
     def function_20060101_20091231(self, simulation, period):
@@ -410,7 +409,8 @@ class aidper(DatedVariable):
 
         max1 = max_(0, max0 - f7wl - f7sf)
         max2 = max_(0, max1 - f7wj)
-        return period, P.taux_wl * min_(f7wl+f7sf, max0) + P.taux_wj * min_(f7wj, max1)  + P.taux_wi * min_(f7wi, max2)
+        return period, P.taux_wl * min_(f7wl + f7sf, max0) + P.taux_wj * min_(f7wj, max1) + \
+            P.taux_wi * min_(f7wi, max2)
 
     @dated_function(start = date(2012, 1, 1), stop = date(2012, 12, 31))
     def function_20120101_20121231(self, simulation, period):
@@ -429,14 +429,14 @@ class aidper(DatedVariable):
         _P = simulation.legislation_at(period.start)
 
         P = _P.ir.credits_impot.aidper
-        # On ne contrôle pas que 7WR ne dépasse pas le plafond (ça dépend du nombre de logements (7sa) et de la nature des
-        #travaux, c'est un peu le bordel)
+        # On ne contrôle pas que 7WR ne dépasse pas le plafond (ça dépend du nombre de logements (7sa)
+        # et de la nature des travaux, c'est un peu le bordel)
         max00 = P.max * (1 + marpac)
         max0 = max00 + P.pac1 * nb_pac2
-        max1 = max_(0, max0 - max_(0,f7wl-max00))
+        max1 = max_(0, max0 - max_(0, f7wl - max00))
         max2 = max_(0, max1 - f7wj)
         return period, (P.taux_wr * f7wr + P.taux_wl * min_(f7wl, max00) + P.taux_wl * max_(f7wl - max00, 0) +
-                P.taux_wj * min_(f7wj, max1)  + P.taux_wi * min_(f7wi, max2))
+                P.taux_wj * min_(f7wj, max1) + P.taux_wi * min_(f7wi, max2))
 
     @dated_function(start = date(2013, 1, 1), stop = date(2013, 12, 31))
     def function_20130101_20131231(self, simulation, period):
@@ -455,13 +455,13 @@ class aidper(DatedVariable):
 
         P = _P.ir.credits_impot.aidper
         # On ne contrôle pas que 7WR ne dépasse pas le plafond (ça dépend du nombre de logements et de la nature des
-        #travaux, c'est un peu le bordel)
+        # travaux, c'est un peu le bordel)
         max00 = P.max * (1 + marpac)
         max0 = max00 + P.pac1 * nb_pac2
-        max1 = max_(0, max0 - max_(0,f7wl-max00))
+        max1 = max_(0, max0 - max_(0, f7wl - max00))
 
-        return period, (P.taux_wr * f7wr + P.taux_wl * min_(f7wl, max00) + P.taux_wl * max_(f7wl - max00, 0) + P.taux_wj *
-                min_(f7wj, max1))
+        return period, (P.taux_wr * f7wr + P.taux_wl * min_(f7wl, max00) + P.taux_wl * max_(f7wl - max00, 0) +
+            P.taux_wj * min_(f7wj, max1))
 
 
 class assloy(Variable):
@@ -546,10 +546,10 @@ class creimp_exc_2008(Variable):
         mohist = simulation.calculate('mohist', period)
         elig_creimp_exc_2008 = simulation.calculate('elig_creimp_exc_2008', period)
 
-        #TODO: gérer les DOM-TOM, corriger les formules, inclure 7KA
+        # TODO: gérer les DOM-TOM, corriger les formules, inclure 7KA
         rpp = rni / nbptr
-        return period, (elig_creimp_exc_2008 * (mohist < 10700) * (rpp <= 12475) * around((2/3) * min_(12475, iai) * (rpp < 11674) +
-                (rpp > 11673) * max_(0, 8317 * (12475 - rpp) / 802)))
+        return period, (elig_creimp_exc_2008 * (mohist < 10700) * (rpp <= 12475) *
+            around((2 / 3) * min_(12475, iai) * (rpp < 11674) + (rpp > 11673) * max_(0, 8317 * (12475 - rpp) / 802)))
 
 
 class creimp(DatedVariable):
@@ -609,7 +609,8 @@ class creimp(DatedVariable):
         f8tz = simulation.calculate('f8tz', period)
         f8uz = simulation.calculate('f8uz', period)
 
-        return period, (f2ab + f8ta + f8tb + f8tc + f8td_2002_2005 + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz + f8uz)
+        return period, (f2ab + f8ta + f8tb + f8tc + f8td_2002_2005 + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz +
+            f8uz)
 
     @dated_function(start = date(2005, 1, 1), stop = date(2005, 12, 31))
     def function_20050101_20051231(self, simulation, period):
@@ -633,8 +634,8 @@ class creimp(DatedVariable):
         f8wc = simulation.calculate('f8wc', period)
         f8we = simulation.calculate('f8we', period)
 
-        return period,  (f2ab + f8ta + f8tb + f8tc + f8td_2002_2005 + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz + f8uz + f8wa +
-                f8wb + f8wc + f8we)
+        return period, (f2ab + f8ta + f8tb + f8tc + f8td_2002_2005 + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz +
+            f8uz + f8wa + f8wb + f8wc + f8we)
 
     @dated_function(start = date(2006, 1, 1), stop = date(2006, 12, 31))
     def function_20060101_20061231(self, simulation, period):
@@ -662,8 +663,8 @@ class creimp(DatedVariable):
         f8wt = simulation.calculate('f8wt', period)
         f8wu = simulation.calculate('f8wu', period)
 
-        return period,  (f2ab + f8ta + f8tb + f8tc + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz + f8uz + f8wa + f8wb + f8wc +
-                f8wd + f8we + f8wr + f8ws + f8wt + f8wu)
+        return period, (f2ab + f8ta + f8tb + f8tc + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz + f8uz + f8wa +
+            f8wb + f8wc + f8wd + f8we + f8wr + f8ws + f8wt + f8wu)
 
     @dated_function(start = date(2007, 1, 1), stop = date(2007, 12, 31))
     def function_20070101_20071231(self, simulation, period):
@@ -692,8 +693,8 @@ class creimp(DatedVariable):
         f8wv = simulation.calculate('f8wv', period)
         f8wx = simulation.calculate('f8wx', period)
 
-        return period,  (f2ab + f8ta + f8tb + f8tc + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz + f8uz + f8wa + f8wb + f8wc +
-                f8wd + f8wr + f8ws + f8wt + f8wu + f8wv + f8wx)
+        return period, (f2ab + f8ta + f8tb + f8tc + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz + f8uz + f8wa +
+            f8wb + f8wc + f8wd + f8wr + f8ws + f8wt + f8wu + f8wv + f8wx)
 
     @dated_function(start = date(2008, 1, 1), stop = date(2008, 12, 31))
     def function_20080101_20081231(self, simulation, period):
@@ -715,7 +716,6 @@ class creimp(DatedVariable):
         f8wb = simulation.calculate('f8wb', period)
         f8wc = simulation.calculate('f8wc', period)
         f8wd = simulation.calculate('f8wd', period)
-        f8we = simulation.calculate('f8we', period)
         f8wr = simulation.calculate('f8wr', period)
         f8ws = simulation.calculate('f8ws', period)
         f8wt = simulation.calculate('f8wt', period)
@@ -723,8 +723,8 @@ class creimp(DatedVariable):
         f8wv = simulation.calculate('f8wv', period)
         f8wx = simulation.calculate('f8wx', period)
 
-        return period,  (f2ab + f8ta + f8tb + f8tc + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz + f8uz + f8wa + f8wb + f8wc +
-                f8wd + f8wr + f8ws + f8wt + f8wu + f8wv + f8wx)
+        return period, (f2ab + f8ta + f8tb + f8tc + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz + f8uz + f8wa +
+            f8wb + f8wc + f8wd + f8wr + f8ws + f8wt + f8wu + f8wv + f8wx)
 
     @dated_function(start = date(2009, 1, 1), stop = date(2009, 12, 31))
     def function_20090101_20091231(self, simulation, period):
@@ -752,8 +752,8 @@ class creimp(DatedVariable):
         f8wv = simulation.calculate('f8wv', period)
         f8wx = simulation.calculate('f8wx', period)
 
-        return period,  (f2ab + f8ta + f8tb + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz + f8uz + f8wa + f8wb + f8wd +
-                f8we + f8wr + f8ws + f8wt + f8wu + f8wv + f8wx)
+        return period, (f2ab + f8ta + f8tb + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz + f8uz + f8wa + f8wb +
+            f8wd + f8we + f8wr + f8ws + f8wt + f8wu + f8wv + f8wx)
 
     @dated_function(start = date(2010, 1, 1), stop = date(2011, 12, 31))
     def function_20100101_20111231(self, simulation, period):
@@ -780,8 +780,8 @@ class creimp(DatedVariable):
         f8wu = simulation.calculate('f8wu', period)
         f8wv = simulation.calculate('f8wv', period)
 
-        return period, (f2ab + f8ta + f8tb + f8tc + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz + f8uz + f8wa + f8wb + f8wd +
-        f8we + f8wr + f8wt + f8wu + f8wv)
+        return period, (f2ab + f8ta + f8tb + f8tc + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tz + f8uz + f8wa +
+            f8wb + f8wd + f8we + f8wr + f8wt + f8wu + f8wv)
 
     @dated_function(start = date(2012, 1, 1), stop = date(2012, 12, 31))
     def function_20120101_20121231(self, simulation, period):
@@ -809,8 +809,8 @@ class creimp(DatedVariable):
         f8wu = simulation.calculate('f8wu', period)
         f8wv = simulation.calculate('f8wv', period)
 
-        return period, (f2ab + f8ta + f8tb + f8tc +f8te - f8tf + f8tg + f8th + f8to - f8tp + f8ts + f8tz + f8uz + f8wa + f8wb +
-                f8wd + f8we + f8wr + f8wt + f8wu + f8wv)
+        return period, (f2ab + f8ta + f8tb + f8tc + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8ts + f8tz + f8uz +
+            f8wa + f8wb + f8wd + f8we + f8wr + f8wt + f8wu + f8wv)
 
     @dated_function(start = date(2013, 1, 1), stop = date(2013, 12, 31))
     def function_20130101_20131231(self, simulation, period):
@@ -841,8 +841,8 @@ class creimp(DatedVariable):
         f8wt = simulation.calculate('f8wt', period)
         f8wu = simulation.calculate('f8wu', period)
 
-        return period, (f2ab + f2ck + f8ta + f8tb + f8tc + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tl + f8ts + f8tz + f8uw +
-                f8uz + f8wa + f8wb + f8wc + f8wd + f8we + f8wr + f8wt + f8wu)
+        return period, (f2ab + f2ck + f8ta + f8tb + f8tc + f8te - f8tf + f8tg + f8th + f8to - f8tp + f8tl + f8ts +
+            f8tz + f8uw + f8uz + f8wa + f8wb + f8wc + f8wd + f8we + f8wr + f8wt + f8wu)
 
 
 class direpa(Variable):
@@ -1129,12 +1129,12 @@ class jeunes_ind(Variable):
         age = simulation.calculate('age', period)
         nbptr_holder = simulation.compute('nbptr', period)
         rfr_holder = simulation.compute('rfr', period)
-        salaire_imposable =  simulation.calculate_add('salaire_imposable', period)
+        # salaire_imposable =  simulation.calculate_add('salaire_imposable', period)
         marpac_holder = simulation.compute('marpac', period)
         elig_creimp_jeunes = simulation.calculate('elig_creimp_jeunes', period)
         _P = simulation.legislation_at(period.start)
 
-        #TODO: vérifier si les jeunes sous le foyer fiscal de leurs parents sont éligibles
+        # TODO: vérifier si les jeunes sous le foyer fiscal de leurs parents sont éligibles
 
         P = _P.ir.credits_impot.jeunes
         rfr = self.cast_from_entity_to_roles(rfr_holder)
@@ -1150,7 +1150,7 @@ class jeunes_ind(Variable):
         return period, elig_creimp_jeunes * elig * max_(25, montant)  # D'après  le document num. 2041 GY
 
 
-                                # somme calculée sur formulaire 2041
+# somme calculée sur formulaire 2041
 
 
 class mecena(Variable):
@@ -1358,15 +1358,17 @@ class quaenv(DatedVariable):
         max7 = max_(0, max6 - f7wh)
         max8 = max_(0, max7 - f7sb)
 
-        return period, or_(not_(f7we), rfr < 45000) * (P.taux_wf * min_(f7wf, max0) +
-                    P.taux_se * min_(f7se, max1) +
-                    P.taux_wk * min_(f7wk, max2) +
-                    P.taux_sd * min_(f7sd, max3) +
-                    P.taux_wg * min_(f7wg, max4) +
-                    P.taux_sc * min_(f7sc, max5) +
-                    P.taux_wh * min_(f7wh, max6) +
-                    P.taux_sb * min_(f7sb, max7) +
-                    P.taux_wq * min_(f7wq, max8))
+        return period, or_(not_(f7we), rfr < 45000) * (
+            P.taux_wf * min_(f7wf, max0) +
+            P.taux_se * min_(f7se, max1) +
+            P.taux_wk * min_(f7wk, max2) +
+            P.taux_sd * min_(f7sd, max3) +
+            P.taux_wg * min_(f7wg, max4) +
+            P.taux_sc * min_(f7sc, max5) +
+            P.taux_wh * min_(f7wh, max6) +
+            P.taux_sb * min_(f7sb, max7) +
+            P.taux_wq * min_(f7wq, max8)
+            )
 
     @dated_function(start = date(2010, 1, 1), stop = date(2011, 12, 31))
     def function_20100101_20111231(self, simulation, period):
@@ -1402,14 +1404,14 @@ class quaenv(DatedVariable):
         max6 = max_(0, max5 - f7sb)
         max7 = max_(0, max6 - f7wq)
         return period, not_(f7wg) * or_(not_(f7we), (rfr < 45000)) * (
-                    P.taux_wf * min_(f7wf, max0) +
-                    P.taux_se * min_(f7se, max1) +
-                    P.taux_wk * min_(f7wk, max2) +
-                    P.taux_sd * min_(f7sd, max3) +
-                    P.taux_wh * min_(f7wh, max4) +
-                    P.taux_sb * min_(f7sb, max5) +
-                    P.taux_wq * min_(f7wq, max6) +
-                    P.taux_sh * min_(f7sh, max7))
+            P.taux_wf * min_(f7wf, max0) +
+            P.taux_se * min_(f7se, max1) +
+            P.taux_wk * min_(f7wk, max2) +
+            P.taux_sd * min_(f7sd, max3) +
+            P.taux_wh * min_(f7wh, max4) +
+            P.taux_sb * min_(f7sb, max5) +
+            P.taux_wq * min_(f7wq, max6) +
+            P.taux_sh * min_(f7sh, max7))
 
     @dated_function(start = date(2012, 1, 1), stop = date(2012, 12, 31))
     def function_20120101_20121231(self, simulation, period):
@@ -1445,10 +1447,10 @@ class quaenv(DatedVariable):
         f7sv = simulation.calculate('f7sv', period)
         f7sw = simulation.calculate('f7sw', period)
         f7sz = simulation.calculate('f7sz', period)
-        f7wc = simulation.calculate('f7wc', period)
+        # f7wc = simulation.calculate('f7wc', period)
         f7we = simulation.calculate('f7we', period)
         f7wg = simulation.calculate('f7wg', period)
-        f7wh = simulation.calculate('f7wh', period)
+        # f7wh = simulation.calculate('f7wh', period)
         f7wk = simulation.calculate('f7wk', period)
         marpac = simulation.calculate('marpac', period)
         nb_pac2 = simulation.calculate('nb_pac2', period)
@@ -1474,24 +1476,29 @@ class quaenv(DatedVariable):
         max6 = max_(0, max5 - quaenv_bouquet * (f7sd + f7sj))
         max7 = max_(0, max6 - quaenv_bouquet * (f7sf + f7si + f7su + f7sw))
         max8 = max_(0, max7 - quaenv_bouquet * (f7sm))
-        montant = (quaenv_bouquet * (
-                        min_(max8, P.taux10 * (f7sk + f7sl)) +
-                        min_(max7, P.taux11 * f7sm) +
-                        min_(max6, P.taux15 * (f7sf + f7si + f7su + f7sw)) +
-                        min_(max5, P.taux18 * (f7sd + f7sj)) +
-                        min_(max4, P.taux23 * (f7sg + f7sh + f7so + f7sp)) +
-                        min_(max3, P.taux26 * f7se) +
-                        min_(max2, P.taux32 * f7sv) +
-                        min_(max1, P.taux34 * (f7sn + f7sr + f7sq)) +
-                        min_(max0, P.taux40 * (f7ss + f7st))) +
-                    (not_(quaenv_bouquet) * (
-                        min_(max0, P.taux32 * (f7ss + f7st + f7sv)) +
-                        min_(max1, P.taux26 * (f7sn + f7sq + f7sr)) +
-                        min_(max2, P.taux17 * f7se) +
-                        min_(max3, P.taux15 * (f7sf + f7sg + f7sh + f7si + f7so + f7su + f7sw + f7sp)) +
-                        min_(max4, P.taux11 * f7sm) +
-                        min_(max5, P.taux10 * (f7sd + f7wk * (f7sj + f7sk + f7sl))))
-                    ))
+        montant = (
+            quaenv_bouquet * (
+                min_(max8, P.taux10 * (f7sk + f7sl)) +
+                min_(max7, P.taux11 * f7sm) +
+                min_(max6, P.taux15 * (f7sf + f7si + f7su + f7sw)) +
+                min_(max5, P.taux18 * (f7sd + f7sj)) +
+                min_(max4, P.taux23 * (f7sg + f7sh + f7so + f7sp)) +
+                min_(max3, P.taux26 * f7se) +
+                min_(max2, P.taux32 * f7sv) +
+                min_(max1, P.taux34 * (f7sn + f7sr + f7sq)) +
+                min_(max0, P.taux40 * (f7ss + f7st))
+                ) +
+            (
+                not_(quaenv_bouquet) * (
+                    min_(max0, P.taux32 * (f7ss + f7st + f7sv)) +
+                    min_(max1, P.taux26 * (f7sn + f7sq + f7sr)) +
+                    min_(max2, P.taux17 * f7se) +
+                    min_(max3, P.taux15 * (f7sf + f7sg + f7sh + f7si + f7so + f7su + f7sw + f7sp)) +
+                    min_(max4, P.taux11 * f7sm) +
+                    min_(max5, P.taux10 * (f7sd + f7wk * (f7sj + f7sk + f7sl)))
+                    )
+                )
+            )
         return period, not_(f7wg) * or_(not_(f7we), (rfr < 30000)) * (montant + collectif) + f7sz
 
     @dated_function(start = date(2013, 1, 1), stop = date(2013, 12, 31))
@@ -1522,10 +1529,10 @@ class quaenv(DatedVariable):
         f7sv = simulation.calculate('f7sv', period)
         f7sw = simulation.calculate('f7sw', period)
         f7sz = simulation.calculate('f7sz', period)
-        f7wc = simulation.calculate('f7wc', period)
+        # f7wc = simulation.calculate('f7wc', period)
         f7we = simulation.calculate('f7we', period)
         f7wg = simulation.calculate('f7wg', period)
-        f7wh = simulation.calculate('f7wh', period)
+        # f7wh = simulation.calculate('f7wh', period)
         f7wk = simulation.calculate('f7wk', period)
         marpac = simulation.calculate('marpac', period)
         nb_pac2 = simulation.calculate('nb_pac2', period)
@@ -1544,24 +1551,28 @@ class quaenv(DatedVariable):
         max7 = max_(0, max6 - quaenv_bouquet * (f7sf + f7si + f7su + f7sw))
         max8 = max_(0, max7 - quaenv_bouquet * (f7sm))
 
-        montant = (quaenv_bouquet * (
-                        min_(max8, P.taux10 * (f7sk + f7sl)) +
-                        min_(max7, P.taux11 * f7sm) +
-                        min_(max6, P.taux15 * (f7sf + f7si + f7su + f7sw)) +
-                        min_(max5, P.taux18 * (f7sd + f7sj)) +
-                        min_(max4, P.taux23 * (f7sg + f7sh + f7so + f7sp)) +
-                        min_(max3, P.taux26 * f7se) +
-                        min_(max2, P.taux32 * f7sv) +
-                        min_(max1, P.taux34 * (f7sn + f7sr + f7sq)) +
-                        min_(max0, P.taux40 * (f7ss + f7st))) +
-                    (not_(quaenv_bouquet) * (
-                        min_(max0, P.taux32 * (f7ss + f7st + f7sv)) +
-                        min_(max1, P.taux26 * (f7sn + f7sq + f7sr)) +
-                        min_(max2, P.taux17 * f7se) +
-                        min_(max3, P.taux15 * (f7sf + f7sg + f7sh + f7si + f7so + f7su + f7sw + f7sp)) +
-                        min_(max4, P.taux11 * f7sm) +
-                        min_(max5, P.taux10 * (f7sd + f7wk * (f7sj + f7sk + f7sl))))
-                    ))
+        montant = (
+            quaenv_bouquet * (
+                min_(max8, P.taux10 * (f7sk + f7sl)) +
+                min_(max7, P.taux11 * f7sm) +
+                min_(max6, P.taux15 * (f7sf + f7si + f7su + f7sw)) +
+                min_(max5, P.taux18 * (f7sd + f7sj)) +
+                min_(max4, P.taux23 * (f7sg + f7sh + f7so + f7sp)) +
+                min_(max3, P.taux26 * f7se) +
+                min_(max2, P.taux32 * f7sv) +
+                min_(max1, P.taux34 * (f7sn + f7sr + f7sq)) +
+                min_(max0, P.taux40 * (f7ss + f7st))
+                ) +
+            (
+                not_(quaenv_bouquet) * (
+                    min_(max0, P.taux32 * (f7ss + f7st + f7sv)) +
+                    min_(max1, P.taux26 * (f7sn + f7sq + f7sr)) +
+                    min_(max2, P.taux17 * f7se) +
+                    min_(max3, P.taux15 * (f7sf + f7sg + f7sh + f7si + f7so + f7su + f7sw + f7sp)) +
+                    min_(max4, P.taux11 * f7sm) +
+                    min_(max5, P.taux10 * (f7sd + f7wk * (f7sj + f7sk + f7sl))))
+                )
+            )
         return period, or_(not_(or_(f7we, f7wg)), (rfr < 30000)) * montant + f7sz
 
 
