@@ -235,39 +235,12 @@ class aah(Variable):
 
         return period, aah_base
 
-
-class caah(DatedVariable):
-    calculate_output = calculate_output_add
+class aah_mva(Variable):
     column = FloatCol
-    label = u"Complément d'allocation adulte handicapé (mensualisé)"
+    label = u"Majoration pour la vie autonome"
     entity_class = Individus
+    start_date = date(2005, 7, 1)
     '''
-        Complément d'allocation adulte handicapé : complément de ressources ou majoration vie autonome.
-
-        Complément de ressources
-
-        Pour bénéficier du complément de ressources, l’intéressé doit remplir les conditions
-        suivantes :
-        - percevoir l’allocation aux adultes handicapés à taux normal ou en
-           complément d’une pension d’invalidité, d’une pension de vieillesse ou
-           d’une rente accident du travail ;
-        - avoir un taux d’incapacité égal ou supérieur à 80 % ;
-        - avoir une capacité de travail, appréciée par la commission des droits et
-           de l’autonomie (CDAPH) inférieure à 5 % du fait du handicap ;
-        - ne pas avoir perçu de revenu à caractère professionnel depuis un an à la date
-           du dépôt de la demande de complément ;
-        - disposer d’un logement indépendant.
-        A noter : une personne hébergée par un particulier à son domicile n’est pas
-        considérée disposer d’un logement indépendant, sauf s’il s’agit de son conjoint,
-        de son concubin ou de la personne avec laquelle elle est liée par un pacte civil
-        de solidarité.
-
-        Le complément de ressources est destiné aux personnes handicapées dans l’incapacité de
-        travailler. Il est égal à la différence entre la garantie de ressources pour les personnes
-        handicapées (GRPH) et l’AAH.
-
-        Majoration pour la vie autonome
-
         La majoration pour la vie autonome est destinée à permettre aux personnes, en capacité de travailler et
         au chômage en raison de leur handicap, de pourvoir faire face à leur dépense de logement.
 
@@ -290,8 +263,50 @@ class caah(DatedVariable):
         l'autre.
     '''
 
-    @dated_function(start = date(2005, 7, 1))
-    def function_2005_07_01(self, simulation, period):
+    def function(self, simulation, period):
+        period = period.this_month
+        montant_mva = simulation.legislation_at(period.start).minim.caah.mva
+        al_holder = simulation.compute('aide_logement_montant', period)  # montant allocs logement de la famille
+        al = self.cast_from_entity_to_roles(al_holder)  # attribué à tout individu membre de la famille
+        aah = simulation.calculate('aah', period)
+        asi_eligibilite = simulation.calculate('asi_eligibilite', period)
+        asi_holder = simulation.compute('asi', period)  # montant asi de la famille
+        asi = self.cast_from_entity_to_roles(asi_holder)  # attribué à tous les membres de la famille
+        benef_asi = (asi_eligibilite * (asi > 0))
+        elig_mva = (al > 0) * ((aah > 0) | (benef_asi > 0))
+        # TODO: & logement indépendant & pas de revenus professionnels
+        # propres & capa de travail < 5% & taux d'incapacité >= 80%
+        mva = montant_mva * elig_mva
+        return period, mva
+
+class aah_complement_ressources(Variable):
+    column = FloatCol
+    label = u"Complément de ressources à l'AAH"
+    entity_class = Individus
+    start_date = date(2005, 7, 1)
+    '''
+        Pour bénéficier du complément de ressources, l’intéressé doit remplir les conditions
+        suivantes :
+        - percevoir l’allocation aux adultes handicapés à taux normal ou en
+           complément d’une pension d’invalidité, d’une pension de vieillesse ou
+           d’une rente accident du travail ;
+        - avoir un taux d’incapacité égal ou supérieur à 80 % ;
+        - avoir une capacité de travail, appréciée par la commission des droits et
+           de l’autonomie (CDAPH) inférieure à 5 % du fait du handicap ;
+        - ne pas avoir perçu de revenu à caractère professionnel depuis un an à la date
+           du dépôt de la demande de complément ;
+        - disposer d’un logement indépendant.
+        A noter : une personne hébergée par un particulier à son domicile n’est pas
+        considérée disposer d’un logement indépendant, sauf s’il s’agit de son conjoint,
+        de son concubin ou de la personne avec laquelle elle est liée par un pacte civil
+        de solidarité.
+
+        Le complément de ressources est destiné aux personnes handicapées dans l’incapacité de
+        travailler. Il est égal à la différence entre la garantie de ressources pour les personnes
+        handicapées (GRPH) et l’AAH.
+    '''
+
+    def function(self, simulation, period):
         period = period.this_month
         law = simulation.legislation_at(period.start)
 
@@ -303,23 +318,22 @@ class caah(DatedVariable):
         asi_holder = simulation.compute('asi', period)  # montant asi de la famille
         asi = self.cast_from_entity_to_roles(asi_holder)  # attribué à tous les membres de la famille
         benef_asi = (asi_eligibilite * (asi > 0))
-        al_holder = simulation.compute('aide_logement_montant', period)  # montant allocs logement de la famille
-        al = self.cast_from_entity_to_roles(al_holder)  # attribué à tout individu membre de la famille
 
         elig_cpl = ((aah > 0) | (benef_asi > 0))
         # TODO: & logement indépendant & inactif 12 derniers mois
         # & capa de travail < 5% & taux d'incapacité >= 80%
         compl_ress = elig_cpl * max_(grph - aah_montant, 0)
 
-        elig_mva = (al > 0) * ((aah > 0) | (benef_asi > 0))
-        # TODO: & logement indépendant & pas de revenus professionnels
-        # propres & capa de travail < 5% & taux d'incapacité >= 80%
-        mva = 0.0 * elig_mva  # TODO: rentrer mva dans paramètres. mva (mensuelle) = 104,77 en 2015, était de 101,80 en 2006, et de 119,72 en 2007
+        return period, compl_ress
 
-        return period, max_(compl_ress, mva)
+class caah(Variable):
+    calculate_output = calculate_output_add
+    column = FloatCol
+    label = u"Complément d'allocation adulte handicapé (mensualisé), remplacé en 2005 par la MVA et le complément de ressources."
+    entity_class = Individus
+    stop_date = date(2005, 6, 30)
 
-    @dated_function(start = date(2002, 1, 1), stop = date(2005, 6, 30))  # TODO FIXME start date
-    def function_2005_06_30(self, simulation, period):
+    def function(self, simulation, period):
         period = period.this_month
         law = simulation.legislation_at(period.start)
 

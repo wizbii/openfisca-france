@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.0 - [diff](https://github.com/openfisca/openfisca-france/compare/4.0.9..4.1.0)
+
+* Split `caah` into `aah_mva` and `aah_cr`, as it disappeared in 2005
+* Introduce `aah_mva`
+* Introduce `aah_cr`
+
 ## 4.0.9 - [diff](https://github.com/openfisca/openfisca-france/compare/4.0.8..4.0.9)
 
 * Adapt plfr2014 reform to new Reform API
