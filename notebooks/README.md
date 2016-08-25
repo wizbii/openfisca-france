@@ -4,3 +4,5 @@ These scripts are mentioned in the
 [getting started](http://doc.openfisca.fr/getting-started.html)
 section of the
 [OpenFisca documentation](http://doc.openfisca.fr/).
+
+If you want a first look into OpenFisca, just come and see !
