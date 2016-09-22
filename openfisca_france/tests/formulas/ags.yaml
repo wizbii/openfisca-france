@@ -10,6 +10,7 @@
     personne_de_reference: "parent1"
   individus:
     - id: "parent1"
+      heures_remunerees_volume: 0
       contrat_de_travail: 1
   output_variables:
     ags: 0
