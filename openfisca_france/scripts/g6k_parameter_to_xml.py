@@ -66,9 +66,18 @@ def reindent(elem, depth = 0):
             elem.tail = indent
 
 
+def find_parameter_element(root, path):
+    xpath = './[code="root"]/' + (
+        '/'.join('[code="{}"]'.format(fragment) for fragment in path)
+        )
+    element = root.find(xpath)
+    return element
+
+
 def main():
     parser = argparse.ArgumentParser(description = __doc__)
     parser.add_argument('input_json_file_path', help=u'Input JSON file')
+    parser.add_argument('xml_parameters_file_path', help=u'Input and output XML file')
     parser.add_argument('-v', '--verbose', action='store_true', default=False, help=u'Increase output verbosity')
     args = parser.parse_args()
     logging.basicConfig(level = logging.DEBUG if args.verbose else logging.WARNING, stream = sys.stdout)
@@ -76,10 +85,15 @@ def main():
     with open(args.input_json_file_path) as input_json_file:
         input_json = json.load(input_json_file)
 
+    xml_parameters_tree = etree.parse(args.xml_parameters_file_path)
+
     for g6k_name, g6k_parameter in input_json.items():
-        code_element = g6k_parameter_to_code_element(g6k_name, g6k_parameter)
-        reindent(code_element)
-        print(etree.tostring(code_element))
+        g6k_code_element = g6k_parameter_to_code_element(g6k_name, g6k_parameter)
+        transformation_data = transformation_data_by_g6k_name[g6k_name]
+        path = transformation_data['openfisca_parameter_path']
+        original_code_element = find_parameter_element(xml_parameters_tree, path)
+        reindent(g6k_code_element)
+        print(etree.tostring(g6k_code_element))
 
     return 0
 
