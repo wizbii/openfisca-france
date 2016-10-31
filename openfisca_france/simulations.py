@@ -4,8 +4,7 @@ import itertools
 import uuid
 import datetime
 
-from openfisca_core import conv
-import openfisca_core.simulations
+from openfisca_core import conv, simulations
 
 from .entities import Familles, Menages, Individus, FoyersFiscaux
 
@@ -14,18 +13,19 @@ def N_(message):
     return message
 
 
-class Simulation(openfisca_core.simulations.AbstractSimulation):
-    def __init__(self, tbs, test_case):
-        self.tax_benefit_system = tbs
+class Simulation(simulations.Simulation):
+    """
+    This `Simulation` contains code specific to France.
+    """
+
+    def __init__(self, tax_benefit_system, period, test_case, axes=None):
+        super(Simulation, self).__init__(tax_benefit_system, period)
 
         assert 'parent1' in test_case
         parent1 = test_case['parent1']
+        parent2 = test_case.get('parent2')
+        enfants = test_case.get('enfants')
 
-        parent2 = test_case['parent2'] if 'parent2' in test_case else None
-        axes = test_case['axes'] if 'axes' in test_case else None
-        period = test_case['period'] if 'period' in test_case else None
-
-        enfants = test_case['enfants'] if 'enfants' in test_case else []
         famille = test_case['famille'].copy() if 'famille' in test_case else {}
         foyer_fiscal = test_case['foyer_fiscal'].copy() if 'foyer_fiscal' in test_case else {}
         menage = test_case['menage'].copy() if 'menage' in test_case else {}
@@ -34,22 +34,22 @@ class Simulation(openfisca_core.simulations.AbstractSimulation):
         for index, individu in enumerate([parent1, parent2] + (enfants or [])):
             if individu is None:
                 continue
-            ident = individu.get('id')
-            if ident is None:
+            individu_id = individu.get('id')
+            if individu_id is None:
                 individu = individu.copy()
-                individu['id'] = ident = 'ind{}'.format(index)
+                individu['id'] = individu_id = 'ind{}'.format(index)
             individus.append(individu)
             if index <= 1:
-                famille.setdefault('parents', []).append(ident)
-                foyer_fiscal.setdefault('declarants', []).append(ident)
+                famille.setdefault('parents', []).append(individu_id)
+                foyer_fiscal.setdefault('declarants', []).append(individu_id)
                 if index == 0:
-                    menage['personne_de_reference'] = ident
+                    menage['personne_de_reference'] = individu_id
                 else:
-                    menage['conjoint'] = ident
+                    menage['conjoint'] = individu_id
             else:
-                famille.setdefault('enfants', []).append(ident)
-                foyer_fiscal.setdefault('personnes_a_charge', []).append(ident)
-                menage.setdefault('enfants', []).append(ident)
+                famille.setdefault('enfants', []).append(individu_id)
+                foyer_fiscal.setdefault('personnes_a_charge', []).append(individu_id)
+                menage.setdefault('enfants', []).append(individu_id)
 
         refined_dict = dict(
             axes=axes,
@@ -61,7 +61,6 @@ class Simulation(openfisca_core.simulations.AbstractSimulation):
                 menages=[menage],
                 ),
             )
-
         conv.check(self.make_json_or_python_to_attributes())(refined_dict)
 
         self.instantiate_variables()
@@ -89,7 +88,7 @@ class Simulation(openfisca_core.simulations.AbstractSimulation):
                                 conv.test_isinstance(dict),
                                 drop_none_items=True,
                                 ),
-                            conv.function(openfisca_core.simulations.set_entities_json_id),
+                            conv.function(simulations.set_entities_json_id),
                             conv.uniform_sequence(
                                 conv.struct(
                                     dict(itertools.chain(
@@ -136,7 +135,7 @@ class Simulation(openfisca_core.simulations.AbstractSimulation):
                                 conv.test_isinstance(dict),
                                 drop_none_items=True,
                                 ),
-                            conv.function(openfisca_core.simulations.set_entities_json_id),
+                            conv.function(simulations.set_entities_json_id),
                             conv.uniform_sequence(
                                 conv.struct(
                                     dict(itertools.chain(
@@ -183,7 +182,7 @@ class Simulation(openfisca_core.simulations.AbstractSimulation):
                                 conv.test_isinstance(dict),
                                 drop_none_items=True,
                                 ),
-                            conv.function(openfisca_core.simulations.set_entities_json_id),
+                            conv.function(simulations.set_entities_json_id),
                             conv.uniform_sequence(
                                 conv.struct(
                                     dict(itertools.chain(
@@ -216,7 +215,7 @@ class Simulation(openfisca_core.simulations.AbstractSimulation):
                                 conv.test_isinstance(dict),
                                 drop_none_items=True,
                                 ),
-                            conv.function(openfisca_core.simulations.set_entities_json_id),
+                            conv.function(simulations.set_entities_json_id),
                             conv.uniform_sequence(
                                 conv.struct(
                                     dict(itertools.chain(

@@ -1,9 +1,13 @@
+# -*- coding: utf-8 -*-
+
+
 import openfisca_france
 import datetime
 
-tbs = openfisca_france.FranceTaxBenefitSystem()
 
-scenario = tbs.new_scenario().init_from_attributes(
+tax_benefit_system = openfisca_france.FranceTaxBenefitSystem()
+
+scenario = tax_benefit_system.new_scenario().init_from_attributes(
     period = "2016-01",
     input_variables = {
         'date_naissance': datetime.date(1980, 1, 1),
@@ -12,13 +16,14 @@ scenario = tbs.new_scenario().init_from_attributes(
         },
     )
 
+
 def test_variable_in_blacklist():
-	simulation = scenario.new_simulation(opt_out_cache = True)
-	simulation.calculate('aide_logement_montant_brut')
-	assert(simulation.get_or_new_holder('aide_logement_R0')._array_by_period is None)
+    simulation = scenario.new_simulation(opt_out_cache = True)
+    simulation.calculate('aide_logement_montant_brut')
+    assert simulation.get_or_new_holder('aide_logement_R0')._array_by_period is None
+
 
 def test_variable_not_in_blacklist():
-	simulation = scenario.new_simulation(opt_out_cache = True)
-	simulation.calculate('aide_logement_montant_brut')
-	assert(simulation.get_or_new_holder('aide_logement_montant_brut')._array_by_period is not None)
-
+    simulation = scenario.new_simulation(opt_out_cache = True)
+    simulation.calculate('aide_logement_montant_brut')
+    assert simulation.get_or_new_holder('aide_logement_montant_brut')._array_by_period is not None
