@@ -9,7 +9,8 @@ from numpy import int16, maximum as max_, minimum as min_, logical_not as not_, 
 
 
 from openfisca_france.model.base import *  # noqa analysis:ignore
-from openfisca_france.model.prelevements_obligatoires.prelevements_sociaux.cotisations_sociales.base import apply_bareme, apply_bareme_for_relevant_type_sal
+from openfisca_france.model.prelevements_obligatoires.prelevements_sociaux.cotisations_sociales.base import (
+    apply_bareme, apply_bareme_for_relevant_type_sal)
 
 
 log = logging.getLogger(__name__)
@@ -71,6 +72,7 @@ class assiette_cotisations_sociales_prive(Variable):
             )
         return period, assiette * (assiette > 0)
 
+
 class indemnite_fin_contrat(Variable):
     column = FloatCol
     entity_class = Individus
@@ -99,13 +101,14 @@ class indemnite_fin_contrat(Variable):
             (
                 (categorie_salarie == 0) +
                 (categorie_salarie == 1)
-            ) *
+                ) *
             not_(apprenti) *
             indemnite_fin_contrat_due *
             # 10% du brut
             taux * salaire_de_base
             )
         return period, result
+
 
 class reintegration_titre_restaurant_employeur(Variable):
     column = FloatCol
@@ -138,6 +141,7 @@ class reintegration_titre_restaurant_employeur(Variable):
 
 
 class accident_du_travail(Variable):
+    base_function = requested_period_added_value
     column = FloatCol
     entity_class = Individus
     label = u"Cotisations employeur accident du travail et maladie professionelle"
@@ -148,7 +152,8 @@ class accident_du_travail(Variable):
             'assiette_cotisations_sociales', period)
         taux_accident_travail = simulation.calculate('taux_accident_travail', period)
         categorie_salarie = simulation.calculate('categorie_salarie', period)
-        assujetti = categorie_salarie <= 1  # TODO: ajouter contractuel du public salarié de moins d'un an ou à temps partiel
+        assujetti = categorie_salarie <= 1
+        # TODO: ajouter contractuel du public salarié de moins d'un an ou à temps partiel
         return period, - assiette_cotisations_sociales * taux_accident_travail * assujetti
 
 
@@ -315,6 +320,7 @@ class ags(Variable):
     label = u"Contribution à l'association pour la gestion du régime de garantie des créances des salariés (AGS, employeur)"  # noqa analysis:ignore
 
     def function(self, simulation, period):
+        period = period.this_month
         cotisation = apply_bareme(
             simulation, period,
             cotisation_type = "employeur",
@@ -347,6 +353,7 @@ class apec_employeur(Variable):
     label = u"Cotisations Agenece pour l'emploi des cadres (APEC, employeur)"
 
     def function(self, simulation, period):
+        period = period.this_month
         cotisation = apply_bareme(
             simulation,
             period,
@@ -394,6 +401,7 @@ class arrco_employeur(Variable):
     # TODO: check gestion mensuel/annuel
 
     def function(self, simulation, period):
+        period = period.this_month
         cotisation_minimale = apply_bareme(
             simulation,
             period,
@@ -439,6 +447,7 @@ class chomage_employeur(Variable):
     label = u"Cotisation chômage tranche A (employeur)"
 
     def function(self, simulation, period):
+        period = period.this_month
         cotisation = apply_bareme(
             simulation,
             period,
@@ -455,6 +464,7 @@ class contribution_solidarite_autonomie(Variable):
     label = u"Contribution solidarité autonomie (employeur)"
 
     def function(self, simulation, period):
+        period = period.this_month
         cotisation = apply_bareme(
             simulation,
             period,
@@ -471,6 +481,7 @@ class cotisation_exceptionnelle_temporaire_salarie(Variable):
     label = u"Cotisation_exceptionnelle_temporaire (salarie)"
 
     def function(self, simulation, period):
+        period = period.this_month
         cotisation = apply_bareme(
             simulation,
             period,
@@ -487,6 +498,7 @@ class cotisation_exceptionnelle_temporaire_employeur(Variable):
     label = u"Cotisation exceptionnelle temporaire (employeur)"
 
     def function(self, simulation, period):
+        period = period.this_month
         cotisation = apply_bareme(
             simulation,
             period,
@@ -503,6 +515,7 @@ class famille(Variable):
     label = u"Cotisation famille (employeur)"
 
     def function(self, simulation, period):
+        period = period.start.period(u'month').offset('first-of')
         cotisation = apply_bareme(
             simulation,
             period,
@@ -589,7 +602,6 @@ class plafond_securite_sociale(Variable):
 
         period = period.start.period(u'month').offset('first-of')
         plafond_temps_plein = simulation.legislation_at(period.start).cotsoc.gen.plafond_securite_sociale
-        salaire_de_base = simulation.calculate('salaire_de_base', period)
         contrat_de_travail = simulation.calculate('contrat_de_travail', period)
         heures_remunerees_volume = simulation.calculate('heures_remunerees_volume', period)
         forfait_jours_remuneres_volume = simulation.calculate('forfait_jours_remuneres_volume', period)
@@ -600,17 +612,21 @@ class plafond_securite_sociale(Variable):
         # 1) Proratisation pour temps partiel
 
         duree_legale_mensuelle = 35 * 52 / 12  # ~151,67
-        heures_temps_plein = switch(heures_duree_collective_entreprise, {0: duree_legale_mensuelle, 1: heures_duree_collective_entreprise})
+        heures_temps_plein = switch(
+            heures_duree_collective_entreprise,
+            {0: duree_legale_mensuelle, 1: heures_duree_collective_entreprise}
+            )
 
         plafond = switch(
             contrat_de_travail,
-             {  # temps plein
+            {  # temps plein
                 0: plafond_temps_plein,
                 # temps partiel
                 1: plafond_temps_plein * (heures_remunerees_volume / heures_temps_plein),
                 # forfait jour
                 5: plafond_temps_plein * (forfait_jours_remuneres_volume / 218)
-             })
+                }
+            )
 
         # 2) Proratisation pour mois incomplet selon la méthode des 30èmes
 

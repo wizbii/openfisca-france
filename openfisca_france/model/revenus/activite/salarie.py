@@ -114,12 +114,10 @@ class nbsala(Variable):
             u"500 à 999 salariés",
             u"1000 salariés ou plus",
             u"Ne sait pas",
-            ])
-            ,
+            ]),
         )
     entity_class = Individus
     label = u"Nombre de salariés dans l'établissement de l'emploi actuel"
-
 
 
 class tva_ent(Variable):
@@ -804,7 +802,7 @@ class salaire_net_a_payer(Variable):
         depense_cantine_titre_restaurant_employe = simulation.calculate(
             'depense_cantine_titre_restaurant_employe')
         indemnites_forfaitaires = simulation.calculate('indemnites_forfaitaires', period)
-        remuneration_apprenti = simulation.calculate('remuneration_apprenti', period)
+        remuneration_apprenti = simulation.calculate_add('remuneration_apprenti', period)
         stage_gratification = simulation.calculate('stage_gratification', period)
         salaire_net_a_payer = (
             salaire_net +

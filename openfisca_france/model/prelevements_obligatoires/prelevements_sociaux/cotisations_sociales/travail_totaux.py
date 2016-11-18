@@ -91,7 +91,7 @@ class cotisations_employeur_non_contributives(Variable):
         accident_du_travail = simulation.calculate_add('accident_du_travail', period)
         allocations_temporaires_invalidite = simulation.calculate_add('allocations_temporaires_invalidite', period)
         contribution_solidarite_autonomie = simulation.calculate('contribution_solidarite_autonomie', period)
-        famille = simulation.calculate('famille', period)
+        famille = simulation.calculate_add('famille', period)
         mmid_employeur = simulation.calculate_add('mmid_employeur', period)
         taxe_salaires = simulation.calculate_add('taxe_salaires', period)
         forfait_social = simulation.calculate_add('forfait_social', period)

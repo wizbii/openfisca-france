@@ -146,6 +146,7 @@ class fnal(Variable):
     label = u"Cotisation fonds national action logement (FNAL)"
 
     def function(self, simulation, period):
+        period = period.this_month
         fnal_tranche_a = simulation.calculate('fnal_tranche_a', period)
         fnal_tranche_a_plus_20 = simulation.calculate('fnal_tranche_a_plus_20', period)
         return period, fnal_tranche_a + fnal_tranche_a_plus_20
@@ -210,6 +211,7 @@ class formation_professionnelle(Variable):
     url = u"https://www.service-public.fr/professionnels-entreprises/vosdroits/F22570"
 
     def function(self, simulation, period):
+        period = period.this_month
         taille_entreprise = simulation.calculate('taille_entreprise', period)
         cotisation_0_9 = (taille_entreprise == 1) * apply_bareme(
             simulation,
