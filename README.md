@@ -52,3 +52,20 @@ Special thanks to:
   - Fabien Dell
   - Pierre Pezziardi
   - Alain Trannoy
+
+### Run with the Web API
+
+```sh
+pip install OpenFisca-Web-API[paster]
+paster serve api/api_config.ini
+```
+
+To test with sample files:
+
+```sh
+curl http://localhost:2000/api/1/calculate -X POST --data @./api/examples/calculate_single_person_1.json --header 'content-type: application/json' | jq .
+curl http://localhost:2000/api/1/simulate -X POST --data @./api/examples/simulate_single_person_1.json --header 'content-type: application/json' | jq .
+```
+
+> Here we use [`curl`](http://curl.haxx.se/) to perform HTTP requests and [`jq`](https://stedolan.github.io/jq/)
+> to format the JSON payload of the HTTP response:
