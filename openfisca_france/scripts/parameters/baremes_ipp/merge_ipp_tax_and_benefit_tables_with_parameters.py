@@ -18,7 +18,7 @@ import xml.etree.ElementTree as etree
 from biryani import strings
 import yaml
 
-from openfisca_france.param import ipp_tax_and_benefit_tables_to_parameters
+from openfisca_france.scripts.parameters.baremes_ipp import ipp_tax_and_benefit_tables_to_parameters
 
 
 app_name = os.path.splitext(os.path.basename(__file__))[0]
@@ -34,8 +34,8 @@ note_names = (
     u"Notes",
     u"Notes bis",
     )
-package_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), '..'))
-param_dir = os.path.join(package_dir, 'param')
+script_dir = os.path.normpath(os.path.join(os.path.dirname(__file__)))
+package_dir = os.path.join(script_dir, '..', '..', '..')
 reference_names = (
     u"Parution au JO",
     u"Références BOI",
@@ -72,12 +72,12 @@ def iter_ipp_values(node):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--ipp-translations',
-        default = os.path.join(param_dir, 'ipp-tax-and-benefit-tables-to-parameters.yaml'),
+        default = os.path.join(script_dir, 'ipp-tax-and-benefit-tables-to-parameters.yaml'),
         help = 'path of YAML file containing the association between IPP fields and OpenFisca parameters')
-    parser.add_argument('-o', '--origin', default = os.path.join(param_dir, 'param.xml'),
+    parser.add_argument('-o', '--origin', default = os.path.join(script_dir, 'param.xml'),
         help = 'path of XML file containing the original OpenFisca parameters')
     parser.add_argument('-p', '--param-translations',
-        default = os.path.join(param_dir, 'param-to-parameters.yaml'),
+        default = os.path.join(script_dir, 'param-to-parameters.yaml'),
         help = 'path of YAML file containing the association between param elements and OpenFisca parameters')
     parser.add_argument('-s', '--source-dir', default = 'yaml-clean',
         help = 'path of source directory containing clean IPP YAML files')

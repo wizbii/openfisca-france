@@ -20,19 +20,13 @@ from openfisca_france.france_taxbenefitsystem import FranceTaxBenefitSystem
 
 country_package_dir_path = pkg_resources.get_distribution('OpenFisca-France').location
 
-package_dir = os.path.normpath(os.path.join(os.path.dirname(__file__), '..'))
-param_dir = os.path.join(package_dir, 'param')
+script_dir = os.path.normpath(os.path.join(os.path.dirname(__file__)))
 
 app_name = os.path.splitext(os.path.basename(__file__))[0]
 log = logging.getLogger(app_name)
 
 
 def get_relative_file_path(absolute_file_path):
-    '''
-    Example:
-    absolute_file_path = "/home/xxx/Dev/openfisca/openfisca-france/openfisca_france/param/param.xml"
-    result = "openfisca_france/param/param.xml"
-    '''
     global country_package_dir_path
     assert country_package_dir_path is not None
     relative_file_path = absolute_file_path[len(country_package_dir_path):]
@@ -114,7 +108,7 @@ def get_attributes_by_parameter_name_dataframe():
     tax_benefit_system = FranceTaxBenefitSystem()
     variable_names_by_parameter_name = get_variable_names_by_parameter_name(tax_benefit_system)
     attributes_by_parameter_name = get_attributes_by_parameter_name(
-        param_translations = os.path.join(param_dir, 'param-to-parameters.yaml'),
+        param_translations = os.path.join(script_dir, 'param-to-parameters.yaml'),
         tax_benefit_system = tax_benefit_system,
         variable_names_by_parameter_name = variable_names_by_parameter_name,
         )
@@ -138,7 +132,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-v', '--verbose', action = 'store_true', default = False, help = "increase output verbosity")
     parser.add_argument('-p', '--param-translations',
-        default = os.path.join(param_dir, 'param-to-parameters.yaml'),
+        default = os.path.join(script_dir, 'param-to-parameters.yaml'),
         help = 'path of YAML file containing the association between param elements and OpenFisca parameters')
     args = parser.parse_args()
     logging.basicConfig(level = logging.DEBUG if args.verbose else logging.WARNING, stream = sys.stdout)
