@@ -1,11 +1,26 @@
 # -*- coding: utf-8 -*-
 
+"""
+Ce fichier contient une fonction `transform_ipp_tree` appelée par le script
+`merge_ipp_tax_and_benefit_tables_with_parameters.py`.
+
+Cette fonction renomme des paramètres provenant des barèmes IPP pour insertion dans l'arbre des paramètres OpenFisca.
+Le script de merge éclate cet arbre cible en plusieurs fichiers XML écrits dans le répertoire `parameters`.
+"""
 
 import collections
 import datetime
 
 
 def fixed_bases_tax_scale(base_by_slice_name, null_rate_base = None, rates_tree = None):
+    """
+    Crée un barème qui sera transformé en un élément XML <BAREME> par le script de fusion.
+
+    Cette fonction sert essentiellement pour les barèmes des cotisations sociales
+    dont les seuils s'expriment en unité du plafond de la sécurité sociale.
+
+    Voir la fonction `tax_scale` pour une version plus simple.
+    """
     first_start = UnboundLocalError
     last_stop = UnboundLocalError
     for bracket in rates_tree.itervalues():
@@ -85,6 +100,7 @@ def fixed_bases_tax_scale(base_by_slice_name, null_rate_base = None, rates_tree 
 
 
 def tax_scale(bases_tree, rates_tree = None):
+    """Crée un barème qui sera transformé en un élément XML <BAREME> par le script de fusion."""
     assert rates_tree is not None, 'TODO'
     return dict(
         TYPE = 'BAREME',
@@ -94,6 +110,9 @@ def tax_scale(bases_tree, rates_tree = None):
 
 
 def transform_ipp_tree(root):
+    """
+    root est la racine de l'arbre construit depuis les fichiers XLS de l'IPP.
+    """
     del root['baremes_ipp_tarification_energie_logement']
     del root['baremes_ipp_chomage_unemployment']
     # root['chomage'] = root.pop('baremes_ipp_chomage_unemployment')

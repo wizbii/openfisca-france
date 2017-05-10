@@ -23,13 +23,13 @@ git clone https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit
 ./openfisca_france/scripts/parameters/baremes_ipp/merge_ipp_tax_and_benefit_tables_with_parameters.py -v
 ```
 
+Le script produit des fichiers XML stockés dans le répertoire [`parameters`](../../../parameters). Les noms des nœuds des fichiers XML contenus dans ce répertoire cible sont identiques aux noms des paramètres contenus dans les fichiers XLS de l'IPP.
+
 Le script [`merge_ipp_tax_and_benefit_tables_with_parameters.py`](./merge_ipp_tax_and_benefit_tables_with_parameters.py) utilise en entrée :
 - les fichiers [YAML clean](https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-yaml-clean) produits par le pipeline de transformation de données exécuté côté IPP et décrit [ici](https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-converters#in-the-ipp-world)
-- [`param.xml`](https://github.com/openfisca/openfisca-france/blob/master/openfisca_france/scripts/parameters/baremes_ipp/param.xml) : le fichier de paramètres d'OpenFisca
-- [`param-to-parameters.yaml`](https://github.com/openfisca/openfisca-france/blob/master/openfisca_france/scripts/parameters/baremes_ipp/param-to-parameters.yaml) : une table de correspondance indiquant, pour certains barèmes IPP, un nouveau nom correspondant à l'arborescence OpenFisca
-- [`ipp_tax_and_benefit_tables_to_parameters.py`](https://github.com/openfisca/openfisca-france/blob/master/openfisca_france/scripts/parameters/baremes_ipp/ipp_tax_and_benefit_tables_to_parameters.py) : définit une fonction qui transforme les barèmes IPP. TODO : à documenter mieux
-
-Le script produit des fichiers XML stockés dans le répertoire [`parameters`](https://github.com/openfisca/openfisca-france/tree/master/openfisca_france/parameters).
+- [`param.xml`](./param.xml) : le fichier de paramètres d'OpenFisca
+- [`param-to-parameters.yaml`](./param-to-parameters.yaml) : une table de correspondance de type `param_name: parameter_name`, où `param_name` est un nom de paramètre provenant de [`param.xml`](./param.xml), et `parameter_name` son nouveau nom tel qu'il apparaîtra dans le répertoire cible `parameters`. Ce changement de nom facilite la fusion avec les paramètres de l'IPP.
+- [`ipp_tax_and_benefit_tables_to_parameters.py`](./ipp_tax_and_benefit_tables_to_parameters.py) : définit une fonction qui renomme des paramètres provenant des barèmes IPP pour insertion dans l'arbre des paramètres OpenFisca.
 
 ### Script de visualisation
 
