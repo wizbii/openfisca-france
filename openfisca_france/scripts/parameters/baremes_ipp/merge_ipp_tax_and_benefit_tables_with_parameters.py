@@ -79,7 +79,7 @@ def main():
     parser.add_argument('-p', '--param-translations',
         default = os.path.join(script_dir, 'param-to-parameters.yaml'),
         help = 'path of YAML file containing the association between param elements and OpenFisca parameters')
-    parser.add_argument('-s', '--source-dir', default = 'yaml-clean',
+    parser.add_argument('-s', '--source-dir', default = 'ipp-tax-and-benefit-tables-yaml-clean',
         help = 'path of source directory containing clean IPP YAML files')
     parser.add_argument('-t', '--target', default = os.path.join(package_dir, 'parameters'),
         help = 'path of generated directory of XML files merging IPP fields with OpenFisca parameters')

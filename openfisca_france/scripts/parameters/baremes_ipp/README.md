@@ -20,7 +20,7 @@ Se placer dans le répertoire racine d'OpenFisca-France, là où se trouve le fi
 
 ```sh
 git clone https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-yaml-clean.git
-./openfisca_france/scripts/parameters/baremes_ipp/merge_ipp_tax_and_benefit_tables_with_parameters.py --source-dir ipp-tax-and-benefit-tables-yaml-clean -v
+./openfisca_france/scripts/parameters/baremes_ipp/merge_ipp_tax_and_benefit_tables_with_parameters.py -v
 ```
 
 Le script [`merge_ipp_tax_and_benefit_tables_with_parameters.py`](./merge_ipp_tax_and_benefit_tables_with_parameters.py) utilise en entrée :
