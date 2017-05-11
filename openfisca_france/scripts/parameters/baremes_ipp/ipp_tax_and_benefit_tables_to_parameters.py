@@ -1079,9 +1079,9 @@ def transform_ipp_tree(root):
         'majoration_par_enfant_en_du_plafond_de_ressources_avec_0_enfant')
     ars['montant_seuil_non_versement'] = montant_seuil_non_versement = ars_min.pop('montant_minimum_verse')
     ars['plafond_ressources'] = plafond_ressources = ars_plaf.pop('plafond_de_ressources_0_enfant')
-    ars['taux_primaire'] = taux_primaire = ars_m.pop('enfants_entre_6_et_11_ans_en_de_la_bmaf_1')
-    ars['taux_college'] = taux_college = ars_m.pop('enfants_entre_11_et_15_ans_en_de_la_bmaf_2')
-    ars['taux_lycee'] = taux_lycee = ars_m.pop('enfants_de_plus_de_15_ans_en_de_la_bmaf_3')
+    ars['taux_primaire'] = taux_primaire = ars_m.pop('enfants_entre_6_et_10_ans_en_de_la_bmaf_1')
+    ars['taux_college'] = taux_college = ars_m.pop('enfants_entre_11_et_14_ans_en_de_la_bmaf_2')
+    ars['taux_lycee'] = taux_lycee = ars_m.pop('enfants_15_ans_et_en_de_la_bmaf_3')
 
     prestations_familiales['cf'] = cf = dict()
     cf = prestations_familiales['cf']
@@ -1134,14 +1134,13 @@ def transform_ipp_tree(root):
 
     del prestations['paje_cm2']['conditions_pour_qu_un_enfant_adopte_ouvre_droit_a_la_prime_a_son_arrivee']
     prestations_familiales['paje'] = paje = dict()
-    paje = prestations_familiales['paje']
     paje['clmg'] = clmg = dict()
-    prestations_familiales['paje'].update(prestations.pop('paje_cm'))
-    prestations_familiales['paje'].update(prestations.pop('paje_cm2'))
-    prestations_familiales['paje'].update(prestations.pop('paje_plaf'))
-    prestations_familiales['paje'].update(prestations.pop('paje_clca'))
-    prestations_familiales['paje'].update(prestations.pop('paje_prepare'))
-    prestations_familiales['paje'].update(prestations.pop('plaf_cmg'))
+    paje.update(prestations.pop('paje_cm'))
+    paje.update(prestations.pop('paje_cm2'))
+    paje.update(prestations.pop('plaf_cmg'))
+    paje.update(prestations.pop('paje_clca'))
+    paje.update(prestations.pop('paje_prepare'))
+    paje['paje_plaf'] = paje_plaf = prestations.pop('paje_plaf')
     paje['clmg'].update(prestations.pop('paje_cmg'))
     paje['base'] = base = dict()
     paje['clca'] = clca = dict()
@@ -1168,12 +1167,13 @@ def transform_ipp_tree(root):
 
     base['avant_2014'] = avant_2014 = dict()
     avant_2014 = base['avant_2014']
-    avant_2014['plafond_ressources_0_enf'] = paje.pop('plafond_de_ressources_0_enfant')
-    prestations_familiales['paje'].update(paje.pop('majoration_en_ou_en_du_plafond_de_ressources_avec_0_enfant'))
-    avant_2014['majoration_biact_parent_isoles'] = majoration_biact_parent_isoles = paje.pop(
-        'biactifs_et_parents_isoles_1')
-    avant_2014['taux_majoration_2_premiers_enf'] = taux_majoration_2_premiers_enf = paje.pop('1er_et_2eme_enfant')
-    avant_2014['taux_majoration_3eme_enf_et_plus'] = taux_majoration_3eme_enf_et_plus = paje.pop('3eme_enfant_et_plus')
+    avant_2014['plafond_ressources_0_enf'] = paje_plaf \
+        .pop('premier_plafond_ne_ou_adopte_avant_le_1er_avril_2014') \
+        .pop('plafond_de_ressources_0_enfant')
+    paje_plaf.update(paje_plaf.pop('majoration_en_ou_en_du_plafond_de_ressources_avec_0_enfant'))
+    avant_2014['majoration_biact_parent_isoles'] = paje_plaf.pop('biactifs_et_parents_isoles_1')
+    avant_2014['taux_majoration_2_premiers_enf'] = paje_plaf.pop('1er_et_2eme_enfant')
+    avant_2014['taux_majoration_3eme_enf_et_plus'] = paje_plaf.pop('3eme_enfant_et_plus')
     paje['clmg'].update(clmg.pop('complement_libre_choix_du_mode_de_garde_en_de_la_bmaf_1'))
     clmg['taux_recours_emploi_1er_plafond'] = clmg.pop('revenus_inferieurs_a_45_du_plafond_d_allocation')
     clmg['taux_recours_emploi_2e_plafond'] = clmg.pop('revenus_superieurs_a_45_du_plafond_d_allocation')
