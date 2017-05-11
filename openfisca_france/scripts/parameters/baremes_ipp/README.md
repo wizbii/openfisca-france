@@ -61,13 +61,25 @@ L'objectif est de rechercher, dans les fichiers YAML, une clé qui une fois "slu
 
 Après un peu de recherche on trouve la clé `Enfants entre 6 et 11 ans (En % de la BMAF) (1)` [ici](https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-yaml-raw/commit/2b75741164aef5131b262b82fd0bcc29c016fefb#40c6be4cc89b14bd863ea81e78f9c9c300b645dc_8_5). Elle correspond bien à la version "slugifiée" `enfants_entre_6_et_11_ans_en_de_la_bmaf_1`. On voit aussi grâce au diff qu'elle a été remplacée par `Enfants entre 6 et 10 ans (En % de la BMAF) (1)`.
 
-Pour résoudre le problème, premièrement il faut valider d'un point de vue métier, par exemple avec un économiste, que la nouvelle clé peut être utilisée à la place de l'ancienne.
-Ensuite il faut renommer effectivement la clé dans le module `ipp_tax_and_benefit_tables_to_parameters.py`, mais en utilisant la notation "slug".
-Dans ce cas, `Enfants entre 6 et 10 ans (En % de la BMAF) (1)` donne `enfants_entre_6_et_10_ans_en_de_la_bmaf_1`.
+Pour accélérer cette recherche il est possible d'utiliser le script [`find_key_in_yaml.sh`](./find_key_in_yaml.sh).
+Celui-ci va trouver dans le dépôt YAML cloné précédemment les commits contenant des clés correspondant au "slug" demandé.
+Ce script est uniquement une aide à la recherche dans les logs de git.
 
-Si on exécute à nouveau le script de fusion, l'erreur disparaît, laissant apparaître le cas échéant une nouvelle erreur qui aurait lieu plus loin.
+Par exemple:
+```sh
+./openfisca_france/scripts/parameters/baremes_ipp/find_key_in_yaml.sh enfants_entre_11_et_15_ans_en_de_la_bmaf_2
+```
 
-Il n'existe pas (pour l'instant) de solution pour automatiser cette recherche.
+Pour résoudre le problème, il faut d'abord valider d'un point de vue métier, par exemple avec un économiste, que la nouvelle clé peut être utilisée à la place de l'ancienne.
+
+Ensuite il faut renommer effectivement la clé dans le module `ipp_tax_and_benefit_tables_to_parameters.py`, mais en utilisant la notation "slug" présentée ci-dessus.
+Le script [`yaml_key_to_openfisca.py`](yaml_key_to_openfisca.py) peut être utilisé pour calculer ce "slug" :
+```sh
+./openfisca_france/scripts/parameters/baremes_ipp/yaml_key_to_openfisca.py "Enfants entre 6 et 10 ans (En % de la BMAF) (1)"
+enfants_entre_6_et_10_ans_en_de_la_bmaf_1
+```
+
+Si on exécute à nouveau le script de fusion, l'erreur devrait disparaître, passant le cas échéant à une nouvelle erreur qui aurait lieu plus loin dans le traitement.
 
 ### Script de visualisation
 
