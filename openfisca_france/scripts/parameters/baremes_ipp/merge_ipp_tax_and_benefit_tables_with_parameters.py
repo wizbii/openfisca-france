@@ -8,7 +8,6 @@
 import argparse
 import collections
 import datetime
-import glob
 import itertools
 import logging
 import os
@@ -16,9 +15,12 @@ import sys
 import xml.etree.ElementTree as etree
 
 from biryani import strings
+from biryani.baseconv import check
+from openfisca_core import legislationsxml
 import yaml
 
-from openfisca_france.scripts.parameters.baremes_ipp import ipp_tax_and_benefit_tables_to_parameters
+from openfisca_france.france_taxbenefitsystem import FranceTaxBenefitSystem
+from openfisca_france.scripts.parameters.baremes_ipp.ipp_tax_and_benefit_tables_to_parameters import transform_ipp_tree
 
 
 app_name = os.path.splitext(os.path.basename(__file__))[0]
@@ -29,13 +31,16 @@ date_names = (
     u"Date de perception du salaire",
     u"Date ISF",
     )
+file_system_encoding = sys.getfilesystemencoding()
+france_tax_benefit_system = FranceTaxBenefitSystem()
 log = logging.getLogger(app_name)
 note_names = (
     u"Notes",
     u"Notes bis",
     )
 script_dir = os.path.normpath(os.path.join(os.path.dirname(__file__)))
-package_dir = os.path.join(script_dir, '..', '..', '..')
+package_dir = os.path.normpath(os.path.join(script_dir, '..', '..', '..'))
+parameters_dir = os.path.join(package_dir, 'parameters')
 reference_names = (
     u"Parution au JO",
     u"Références BOI",
@@ -47,9 +52,6 @@ reference_names = (
     )
 
 
-# YAML configuration
-
-
 def dict_constructor(loader, node):
     return collections.OrderedDict(loader.construct_pairs(node))
 
@@ -57,96 +59,62 @@ def dict_constructor(loader, node):
 yaml.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, dict_constructor)
 
 
-# Functions
-
-
-def iter_ipp_values(node):
-    if isinstance(node, dict):
-        for name, child in node.iteritems():
-            for path, value in iter_ipp_values(child):
-                yield [name] + path, value
-    else:
-        yield [], node
-
-
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-i', '--ipp-translations',
         default = os.path.join(script_dir, 'ipp-tax-and-benefit-tables-to-parameters.yaml'),
         help = 'path of YAML file containing the association between IPP fields and OpenFisca parameters')
-    parser.add_argument('-o', '--origin', default = os.path.join(script_dir, 'param.xml'),
-        help = 'path of XML file containing the original OpenFisca parameters')
-    parser.add_argument('-p', '--param-translations',
-        default = os.path.join(script_dir, 'param-to-parameters.yaml'),
-        help = 'path of YAML file containing the association between param elements and OpenFisca parameters')
-    parser.add_argument('-s', '--source-dir', default = 'ipp-tax-and-benefit-tables-yaml-clean',
-        help = 'path of source directory containing clean IPP YAML files')
-    parser.add_argument('-t', '--target', default = os.path.join(package_dir, 'parameters'),
-        help = 'path of generated directory of XML files merging IPP fields with OpenFisca parameters')
+    parser.add_argument('--yaml-dir', default = 'ipp-tax-and-benefit-tables-yaml-clean',
+        help = 'path of directory containing clean IPP YAML files')
     parser.add_argument('-v', '--verbose', action = 'store_true', default = False, help = "increase output verbosity")
     args = parser.parse_args()
     logging.basicConfig(level = logging.DEBUG if args.verbose else logging.WARNING, stream = sys.stdout)
 
-    assert os.path.isdir(args.source_dir), args.source_dir
+    if not os.path.isdir(args.yaml_dir):
+        parser.error(u'{!r} must be a directory'.format(args.yaml_dir))
 
-    file_system_encoding = sys.getfilesystemencoding()
+    openfisca_root_element = build_element_from_openfisca_files()
 
-    original_element_tree = etree.parse(args.origin)
-    original_root_element = original_element_tree.getroot()
+    ipp_tree = build_tree_from_ipp_files(args.yaml_dir)
+    transform_ipp_tree(ipp_tree)  # User-written transformations which modify `ipp_tree`.
+    ipp_root_element = transform_node_to_element(u'root', ipp_tree)
 
-    # Apply translations to original parameters.
-    with open(args.param_translations) as param_translations_file:
-        param_translations = yaml.load(param_translations_file)
-    for old_path, new_path in param_translations.iteritems():
-        parent_element = None
-        element = original_root_element
-        for name in old_path.split('.'):
-            for child in element:
-                if child.get('code') == name:
-                    parent_element = element
-                    element = child
-                    break
-            else:
-                assert False, 'Path "{}" not found in "{}"'.format(old_path, args.origin)
-        parent_element.remove(element)
-        if new_path is not None:
-            parent_element = original_root_element
-            split_new_path = new_path.split('.')
-            for name in split_new_path[:-1]:
-                for child in parent_element:
-                    if child.get('code') == name:
-                        parent_element = child
-                        break
-                else:
-                    parent_element = etree.SubElement(parent_element, 'NODE', attrib = dict(
-                        code = name,
-                        ))
-            name = split_new_path[-1]
-            assert all(
-                child.get('code') != name
-                for child in parent_element
-                ), 'Path "{}" already exists in "{}"'.format(new_path, args.origin)
-            element.set('code', name)
-            parent_element.append(element)
+    merge_elements(ipp_root_element, openfisca_root_element)
 
-    # Build `tree` from IPP YAML files.
+    root_element = ipp_root_element
+    for child_element in root_element[:]:
+        root_element.remove(child_element)
+        element_tree = etree.ElementTree(child_element)
+        sort_elements(child_element)
+        reindent(child_element)
+        element_tree.write(
+            os.path.join(parameters_dir, '{}.xml'.format(child_element.attrib['code'])),
+            encoding = 'utf-8',
+            )
+    element_tree = etree.ElementTree(root_element)
+    reindent(root_element)
+    element_tree.write(os.path.join(parameters_dir, '__root__.xml'), encoding = 'utf-8')
+
+    return 0
+
+
+def build_tree_from_ipp_files(yaml_dir):
     tree = collections.OrderedDict()
-    for source_dir_encoded, directories_name_encoded, filenames_encoded in os.walk(args.source_dir):
-        directories_name_encoded.sort()
+    for yaml_dir_encoded, _, filenames_encoded in os.walk(yaml_dir):
         for filename_encoded in sorted(filenames_encoded):
             if not filename_encoded.endswith('.yaml'):
                 continue
             filename = filename_encoded.decode(file_system_encoding)
             sheet_name = os.path.splitext(filename)[0]
-            source_file_path_encoded = os.path.join(source_dir_encoded, filename_encoded)
-            relative_file_path_encoded = source_file_path_encoded[len(args.source_dir):].lstrip(os.sep)
+            yaml_file_path_encoded = os.path.join(yaml_dir_encoded, filename_encoded)
+            relative_file_path_encoded = yaml_file_path_encoded[len(yaml_dir):].lstrip(os.sep)
             relative_file_path = relative_file_path_encoded.decode(file_system_encoding)
             if sheet_name.isupper():
                 continue
             assert sheet_name.islower(), sheet_name
             log.info(u'Loading file {}'.format(relative_file_path))
-            with open(source_file_path_encoded) as source_file:
-                data = yaml.load(source_file)
+            with open(yaml_file_path_encoded) as yaml_file:
+                data = yaml.load(yaml_file)
             rows = data.get(u"Valeurs")
             if rows is None:
                 log.info(u'  Skipping file {} without "Valeurs"'.format(relative_file_path))
@@ -227,86 +195,66 @@ def main():
                     if sub_tree:
                         last_leaf = sub_tree[-1]
                         if last_leaf['value'] == value:
+                            # Merge leaves with the same value.
+                            # One day, when we'll support "Références législatives", this behavior may change.
                             continue
-                        last_leaf['stop'] = start - datetime.timedelta(days = 1)
                     sub_tree.append(dict(
                         start = start,
                         value = value,
                         ))
+    return tree
 
-    ipp_tax_and_benefit_tables_to_parameters.transform_ipp_tree(tree)
 
-    root_element = transform_node_to_element(u'root', tree)
-    add_origin_openfisca_attrib(original_root_element)
-    merge_elements(root_element, original_root_element)
-    # Since now `original_root_element` is discarded.
+def build_element_from_openfisca_files():
+    converter = legislationsxml.make_xml_legislation_info_list_to_xml_element(with_source_file_infos = False)
+    root_element = check(converter(france_tax_benefit_system.legislation_xml_info_list))
+    return root_element
 
-    if os.path.exists(args.target):
-        for xml_file_path in glob.glob(os.path.join(args.target, '*.xml')):
-            os.remove(xml_file_path)
+
+def iter_ipp_values(node):
+    if isinstance(node, dict):
+        for name, child in node.iteritems():
+            for path, value in iter_ipp_values(child):
+                yield [name] + path, value
     else:
-        os.mkdir(args.target)
-    for child_element in root_element[:]:
-        root_element.remove(child_element)
-        element_tree = etree.ElementTree(child_element)
-        sort_elements(child_element)
-        reindent(child_element)
-        element_tree.write(os.path.join(args.target, '{}.xml'.format(child_element.attrib['code'])), encoding = 'utf-8')
-    element_tree = etree.ElementTree(root_element)
-    reindent(root_element)
-    element_tree.write(os.path.join(args.target, '__root__.xml'), encoding = 'utf-8')
-
-    return 0
-
-
-def add_origin_openfisca_attrib(element):
-    element.attrib['origin'] = u'openfisca'
-    for child_element in element:
-        if child_element.tag in ('NODE', 'CODE', 'BAREME'):
-            add_origin_openfisca_attrib(child_element)
-
-
-def build_inclusion_conflict(original_value_element, element):
-    ipp_valeur_list = [
-        value_element.attrib['valeur']
-        for value_element in element
-        if value_element.attrib['deb'] == original_value_element.attrib['deb'] and
-        value_element.get('fin') == original_value_element.get('fin')
-        ]
-    ipp_valeur = ipp_valeur_list[0] if ipp_valeur_list else 'unknown'
-    return (
-        u'children:openfisca-not-fully-included-in-ipp('
-        'openfisca_deb={},openfisca_fin={},openfisca_valeur={},ipp_valeur={})'.format(
-            original_value_element.attrib['deb'],
-            original_value_element.get('fin'),
-            original_value_element.attrib['valeur'],
-            ipp_valeur,
-            ))
-
-
-def is_included_in_ipp_values(original_value_element, element):
-    return any(
-        original_value_element.attrib['deb'] >= value_element.attrib['deb'] and (
-            'fin' not in original_value_element.attrib and 'fin' not in value_element.attrib or (
-                'fin' in original_value_element.attrib and
-                'fin' in value_element.attrib and
-                original_value_element.attrib['fin'] <= value_element.attrib['fin']
-                ) or (
-                'fin' in original_value_element.attrib and
-                'fin' not in value_element.attrib and
-                'fuzzy' in value_element.attrib
-                ) or (
-                'fin' not in original_value_element.attrib and
-                'fin' in value_element.attrib and
-                'fuzzy' in original_value_element.attrib
-                )
-            ) and
-        float(original_value_element.attrib['valeur']) == float(value_element.attrib['valeur'])
-        for value_element in element
-        )
+        yield [], node
 
 
 def merge_elements(element, original_element, path = None):
+    """
+    Merge `original_element` in `element`.
+
+    `element` is modified.
+
+    Returns `None`.
+    """
+    def appears_in_ipp_values(element):
+        return any(
+            element.attrib['deb'] == value_element.attrib['deb'] and
+            element.attrib['valeur'] == value_element.attrib['valeur']
+            for value_element in value_children(element)
+            )
+
+    def get_conflicts_for_values(element):
+        conflicts = set()
+        for original_value_element in value_children(original_element):
+            if not appears_in_ipp_values(original_value_element):
+                ipp_valeur_list = [
+                    value_element.attrib['valeur']
+                    for value_element in value_children(element)
+                    if value_element.attrib['deb'] == original_value_element.attrib['deb']
+                    ]
+                ipp_valeur = ipp_valeur_list[0] if ipp_valeur_list else 'unknown'
+                conflicts.add(
+                    u'children:openfisca-not-fully-included-in-ipp('
+                    u'openfisca_deb={},openfisca_valeur={},ipp_valeur={})'.format(
+                        original_value_element.attrib['deb'],
+                        original_value_element.attrib['valeur'],
+                        ipp_valeur,
+                        )
+                    )
+        return conflicts
+
     assert element.attrib['code'] == original_element.attrib['code'], (element, original_element)
     if path is None:
         path = []
@@ -318,7 +266,7 @@ def merge_elements(element, original_element, path = None):
     description = original_element.get('description')
     if description is not None:
         assert element.get('description') is None, element.get('description')
-        # TODO Get description of element in YAML files.
+        # TODO Retrieve description of element from IPP YAML files.
         element.attrib['description'] = description
 
     if element.tag == 'NODE':
@@ -330,36 +278,31 @@ def merge_elements(element, original_element, path = None):
             else:
                 # A `child_element` of `element` with the same code as the `original_child_element` was not found.
                 element.append(original_child_element)
-    elif element.tag == 'CODE':
+
+    elif element.tag == 'CODE':  # <CODE> elements are simple parameters.
         conflicts = set()
-        # if element.attrib.get('format') != original_element.attrib.get('format'):
-        #     conflicts.add(u'attrib:format({})'.format(original_element.attrib.get('format')))
         type_attrib = element.attrib.get('type')
         original_type_attrib = original_element.attrib.get('type')
         if type_attrib is not None and original_type_attrib is not None and type_attrib != original_type_attrib:
             conflicts.add(u'attrib:type({})'.format(original_element.attrib.get('type')))
-
         # Check that every `original_element` child (VALUE elements) is included in `element` children.
-        for original_value_element in original_element:
-            if not is_included_in_ipp_values(original_value_element=original_value_element, element=element):
-                conflicts.add(build_inclusion_conflict(original_value_element=original_value_element, element=element))
-
+        conflicts.update(get_conflicts_for_values(element))
         if conflicts:
             element.attrib['conflicts'] = u','.join(conflicts)
 
-    elif element.tag == 'BAREME':
+    elif element.tag == 'BAREME':  # <BAREME> elements are more complex parameters than <CODE>.
         conflicts = set()
         type_attrib = element.attrib.get('type')
         original_type_attrib = original_element.attrib.get('type')
         if type_attrib is not None and original_type_attrib is not None and type_attrib != original_type_attrib:
             conflicts.add(u'attrib:type({})'.format(original_element.attrib.get('type')))
 
-        # Some BAREME in param.xml have a first TRANCHE with only zero values for TAUX and SEUIL.
+        # Some BAREME in XML files have a first TRANCHE with only zero values for TAUX and SEUIL.
         # Skip it to ease conflict detection.
-        def only_zero_values(value_elements):
+        def only_zero_values(element):
             return all(
                 float(value_element.attrib['valeur']) == 0
-                for value_element in value_elements
+                for value_element in value_children(element)
                 )
         first_tranche = original_element[0]
         is_first_tranche_empty = only_zero_values(first_tranche.find('TAUX')) and \
@@ -376,10 +319,7 @@ def merge_elements(element, original_element, path = None):
                 def handle_child(tag):
                     tag_element = tranche_element.find(tag)
                     original_tag_element = original_tranche_element.find(tag)
-                    tag_conflicts = set()
-                    for original_value_element in original_tag_element:
-                        if not is_included_in_ipp_values(original_value_element, tag_element):
-                            tag_conflicts.add(build_inclusion_conflict(original_value_element, tag_element))
+                    tag_conflicts = get_conflicts_for_values(original_tag_element)
                     if tag_conflicts:
                         tag_element.attrib['conflicts'] = u','.join(tag_conflicts)
 
@@ -389,6 +329,7 @@ def merge_elements(element, original_element, path = None):
 
         if conflicts:
             element.attrib['conflicts'] = u','.join(conflicts)
+
     else:
         raise NotImplementedError(element.tag)
 
@@ -560,30 +501,19 @@ def transform_value_to_element(leaf):
     start = leaf.get('start')
     if start is not None:
         value_element.set('deb', start.isoformat())
-    stop = leaf.get('stop')
-    if stop is not None:
-        value_element.set('fin', stop.isoformat())
-    if start is None or stop is None:
-        value_element.set('fuzzy', 'true')
     return value_element
 
 
 def transform_values_to_element_children(values, element):
-    j = 0
-    for i, value in enumerate(values[1:]):
-        next_value = values[j]
-        j += 1
-        if value['stop'] < next_value['start'] - datetime.timedelta(days = 1):
-            values.insert(j, dict(
-                start = value['stop'] + datetime.timedelta(days = 1),
-                stop = next_value['start'] - datetime.timedelta(days = 1),
-                value = 0,
-                ))
-            j += 1
     for value in values:
         value_element = transform_value_to_element(value)
         if value_element is not None:
             element.append(value_element)
+
+
+def value_children(element):
+    """Ignore <END> and <PLACEHOLDER> elements which are not handled by IPP YAML files."""
+    return filter(lambda child: child.tag == 'VALUE', element)
 
 
 if __name__ == "__main__":
