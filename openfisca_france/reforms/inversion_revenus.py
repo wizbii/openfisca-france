@@ -139,7 +139,7 @@ def build_reform(tax_benefit_system):
     #
     #        # public etat
     #        # TODO: modifier la contribution exceptionelle de solidarité
-    #        # en fixant son seuil de non imposition dans le barème (à corriger dans param.xml
+    #        # en fixant son seuil de non imposition dans le barème (à corriger dans parameters
     #        # et en tenant compte des éléments de l'assiette
     #        salarie['fonc']['etat']['excep_solidarite'] = salarie['fonc']['commun']['solidarite']
     #
