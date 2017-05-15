@@ -222,9 +222,12 @@ def iter_ipp_values(node):
 
 def merge_elements(openfisca_element, element, path = []):
     """
-    Merge `original_element` in `element`.
+    Merge `element` in `openfisca_element`, modifying `openfisca_element`,
+    only if:
+        - each <VALUE> of `openfisca_element` is in `element` (same deb and valeur attributes)
+        - if `openfisca_element` has a <END> child element, there is no corresponding <VALUE> in `element`
 
-    `element` is modified.
+    The source of truth is `openfisca_element`.
 
     Returns `None`.
     """
