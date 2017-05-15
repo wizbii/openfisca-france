@@ -260,7 +260,7 @@ def merge_elements(openfisca_element, element, path = []):
 
     assert element.attrib['code'] == openfisca_element.attrib['code'], (element, openfisca_element)
     path = path + [element.get('code')]
-    assert element.tag == openfisca_element.tag, 'At {}, IPP element "{}"" differs from OpenFisca element "{}"'.format(
+    assert element.tag == openfisca_element.tag, 'At {}, IPP element "{}" differs from OpenFisca element "{}"'.format(
         '.'.join(path), element.tag, openfisca_element.tag)
 
     # Only XML nodes have a `description` attribute.
