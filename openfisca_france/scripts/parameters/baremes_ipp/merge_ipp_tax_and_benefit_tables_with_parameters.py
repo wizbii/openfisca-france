@@ -79,7 +79,7 @@ def main():
     transform_ipp_tree(ipp_tree)  # User-written transformations which modify `ipp_tree`.
     ipp_root_element = transform_node_to_element(u'root', ipp_tree)
 
-    merge_elements(ipp_root_element, openfisca_root_element)
+    merge_elements(openfisca_root_element, ipp_root_element)
 
     root_element = ipp_root_element
     for child_element in root_element[:]:
@@ -220,7 +220,7 @@ def iter_ipp_values(node):
         yield [], node
 
 
-def merge_elements(element, original_element, path = None):
+def merge_elements(openfisca_element, element, path = []):
     """
     Merge `original_element` in `element`.
 
@@ -237,55 +237,52 @@ def merge_elements(element, original_element, path = None):
 
     def get_conflicts_for_values(element):
         conflicts = set()
-        for original_value_element in value_children(original_element):
-            if not appears_in_ipp_values(original_value_element):
+        for openfisca_value_element in value_children(openfisca_element):
+            if not appears_in_ipp_values(openfisca_value_element):
                 ipp_valeur_list = [
                     value_element.attrib['valeur']
                     for value_element in value_children(element)
-                    if value_element.attrib['deb'] == original_value_element.attrib['deb']
+                    if value_element.attrib['deb'] == openfisca_value_element.attrib['deb']
                     ]
                 ipp_valeur = ipp_valeur_list[0] if ipp_valeur_list else 'unknown'
                 conflicts.add(
                     u'children:openfisca-not-fully-included-in-ipp('
                     u'openfisca_deb={},openfisca_valeur={},ipp_valeur={})'.format(
-                        original_value_element.attrib['deb'],
-                        original_value_element.attrib['valeur'],
+                        openfisca_value_element.attrib['deb'],
+                        openfisca_value_element.attrib['valeur'],
                         ipp_valeur,
                         )
                     )
         return conflicts
 
-    assert element.attrib['code'] == original_element.attrib['code'], (element, original_element)
-    if path is None:
-        path = []
+    assert element.attrib['code'] == openfisca_element.attrib['code'], (element, openfisca_element)
     path = path + [element.get('code')]
-    assert element.tag == original_element.tag, 'At {}, IPP element "{}"" differs from original element "{}"'.format(
-        '.'.join(path), element.tag, original_element.tag)
+    assert element.tag == openfisca_element.tag, 'At {}, IPP element "{}"" differs from OpenFisca element "{}"'.format(
+        '.'.join(path), element.tag, openfisca_element.tag)
 
-    # Only param.xml nodes have a `description` attribute.
-    description = original_element.get('description')
+    # Only XML nodes have a `description` attribute.
+    description = openfisca_element.get('description')
     if description is not None:
         assert element.get('description') is None, element.get('description')
-        # TODO Retrieve description of element from IPP YAML files.
         element.attrib['description'] = description
 
     if element.tag == 'NODE':
-        for original_child_element in original_element:
+        for openfisca_child_element in openfisca_element:
             for child_element in element:
-                if child_element.get('code') == original_child_element.get('code'):
-                    merge_elements(child_element, original_child_element, path)
+                if child_element.get('code') == openfisca_child_element.get('code'):
+                    merge_elements(openfisca_child_element, child_element, path)
                     break
             else:
-                # A `child_element` of `element` with the same code as the `original_child_element` was not found.
-                element.append(original_child_element)
+                # A `child_element` of `element` with the same code as the `openfisca_child_element` was not found.
+                element.append(openfisca_child_element)
 
     elif element.tag == 'CODE':  # <CODE> elements are simple parameters.
         conflicts = set()
         type_attrib = element.attrib.get('type')
-        original_type_attrib = original_element.attrib.get('type')
-        if type_attrib is not None and original_type_attrib is not None and type_attrib != original_type_attrib:
-            conflicts.add(u'attrib:type({})'.format(original_element.attrib.get('type')))
-        # Check that every `original_element` child (VALUE elements) is included in `element` children.
+        openfisca_type_attrib = openfisca_element.attrib.get('type')
+        if type_attrib is not None and openfisca_type_attrib is not None and type_attrib != openfisca_type_attrib:
+            conflicts.add(u'attrib:type({})'.format(openfisca_element.attrib.get('type')))
+        # Check that every `openfisca_element` child (VALUE elements) is included in `element` children.
         conflicts.update(get_conflicts_for_values(element))
         if conflicts:
             element.attrib['conflicts'] = u','.join(conflicts)
@@ -293,9 +290,9 @@ def merge_elements(element, original_element, path = None):
     elif element.tag == 'BAREME':  # <BAREME> elements are more complex parameters than <CODE>.
         conflicts = set()
         type_attrib = element.attrib.get('type')
-        original_type_attrib = original_element.attrib.get('type')
-        if type_attrib is not None and original_type_attrib is not None and type_attrib != original_type_attrib:
-            conflicts.add(u'attrib:type({})'.format(original_element.attrib.get('type')))
+        openfisca_type_attrib = openfisca_element.attrib.get('type')
+        if type_attrib is not None and openfisca_type_attrib is not None and type_attrib != openfisca_type_attrib:
+            conflicts.add(u'attrib:type({})'.format(openfisca_element.attrib.get('type')))
 
         # Some BAREME in XML files have a first TRANCHE with only zero values for TAUX and SEUIL.
         # Skip it to ease conflict detection.
@@ -304,24 +301,22 @@ def merge_elements(element, original_element, path = None):
                 float(value_element.attrib['valeur']) == 0
                 for value_element in value_children(element)
                 )
-        first_tranche = original_element[0]
+        first_tranche = openfisca_element[0]
         is_first_tranche_empty = only_zero_values(first_tranche.find('TAUX')) and \
             only_zero_values(first_tranche.find('SEUIL'))
         if is_first_tranche_empty:
-            original_element = original_element[1:]
+            openfisca_element = openfisca_element[1:]
 
-        # Check that every `original_element` child (VALUE elements) is included in `element` children
+        # Check that every `openfisca_element` child (VALUE elements) is included in `element` children
         # for each TAUX and SEUIL of each TRANCHE.
-        if len(original_element) != len(element):
+        if len(openfisca_element) != len(element):
             conflicts.add('children:different-number-of-TRANCHE')
         else:
-            for tranche_index, original_tranche_element in enumerate(original_element):
+            for tranche_index, openfisca_tranche_element in enumerate(openfisca_element):
                 def handle_child(tag):
-                    tag_element = tranche_element.find(tag)
-                    original_tag_element = original_tranche_element.find(tag)
-                    tag_conflicts = get_conflicts_for_values(original_tag_element)
+                    tag_conflicts = get_conflicts_for_values(openfisca_tranche_element.find(tag))
                     if tag_conflicts:
-                        tag_element.attrib['conflicts'] = u','.join(tag_conflicts)
+                        tranche_element.find(tag).attrib['conflicts'] = u','.join(tag_conflicts)
 
                 tranche_element = element[tranche_index]
                 handle_child('TAUX')
