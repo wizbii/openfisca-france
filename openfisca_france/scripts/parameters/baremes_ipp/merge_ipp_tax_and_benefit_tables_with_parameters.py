@@ -424,6 +424,9 @@ def sort_elements(element):
 
 
 def transform_node_to_element(name, node):
+    """
+    A `node` is a dict or a list produced by `build_tree_from_ipp_files` or `transform_ipp_tree`.
+    """
     if isinstance(node, dict):
         if node.get('TYPE') == u'BAREME':
             scale_element = etree.Element('BAREME', attrib = dict(
