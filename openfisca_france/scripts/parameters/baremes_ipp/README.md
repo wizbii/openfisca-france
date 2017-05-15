@@ -16,21 +16,27 @@ Le script [`merge_ipp_tax_and_benefit_tables_with_parameters.py`](./merge_ipp_ta
 
 Se placer dans le répertoire racine d'OpenFisca-France, là où se trouve le fichier `setup.py`.
 
-### Script de fusion
-
 ```sh
 git clone https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-yaml-clean.git
 ./openfisca_france/scripts/parameters/baremes_ipp/merge_ipp_tax_and_benefit_tables_with_parameters.py -v
 ```
 
+Les fichiers [YAML clean](https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-yaml-clean)  sont mis à jour par l'intégration continue côté IPP. Pour profiter de leur mise à jour, penser à faire `git pull` dans le répertoire cloné. Pour plus d'informations sur le pipeline de transformation côté IPP, voir ce [README](https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-converters).
+
 Le script produit des fichiers XML stockés dans le répertoire [`parameters`](../../../parameters). Les noms des nœuds des fichiers XML contenus dans ce répertoire cible sont identiques aux noms des paramètres contenus dans les fichiers XLS de l'IPP.
 
-Le script [`merge_ipp_tax_and_benefit_tables_with_parameters.py`](./merge_ipp_tax_and_benefit_tables_with_parameters.py) utilise en entrée :
-- les fichiers [YAML clean](https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-yaml-clean) produits par le pipeline de transformation de données exécuté côté IPP et décrit [ici](https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-converters#in-the-ipp-world)
+Le script utilise en entrée :
+- les fichiers YAML clean de l'IPP
 - [`parameters`](../../../parameters) : le répertoire de paramètres d'OpenFisca
-- [`ipp_tax_and_benefit_tables_to_parameters.py`](./ipp_tax_and_benefit_tables_to_parameters.py) : définit une fonction qui renomme des paramètres provenant des barèmes IPP pour insertion dans l'arbre des paramètres OpenFisca.
+- [`ipp_tax_and_benefit_tables_to_parameters.py`](./ipp_tax_and_benefit_tables_to_parameters.py) : définit une fonction qui :
+  - renomme des paramètres provenant des barèmes IPP pour insertion dans l'arbre des paramètres OpenFisca,
+  - sachant que les fichiers YAML de l'IPP contiennent uniquement des valeurs simples, crée les structures de données pour les barèmes via les fonctions `tax_scale` et `fixed_bases_tax_scale`.
 
-#### En cas de problème
+Le script :
+- convertit les fichiers YAML clean en représentation XML identique à celle d'OpenFisca (fonction `build_tree_from_ipp_files`),
+- fusionne les 2 représentations XML, provenant d'OpenFisca et des barèmes IPP (function `merge_elements`).
+
+## En cas de problème
 
 Parfois le [script de fusion](#script-de-fusion) provoque une erreur.
 Cela peut arriver si le script est lui-même faux, dans ce cas il s'agit d'un bug.
@@ -79,9 +85,3 @@ enfants_entre_6_et_10_ans_en_de_la_bmaf_1
 ```
 
 Si on exécute à nouveau le script de fusion, l'erreur devrait disparaître, passant le cas échéant à une nouvelle erreur qui aurait lieu plus loin dans le traitement.
-
-### Script de visualisation
-
-```sh
-./openfisca_france/scripts/parameters/baremes_ipp/show_merged_parameters.py
-```
