@@ -17,9 +17,10 @@ Le script [`merge_ipp_tax_and_benefit_tables_with_parameters.py`](./merge_ipp_ta
 Se placer dans le répertoire racine d'OpenFisca-France, là où se trouve le fichier `setup.py`.
 
 ```sh
-git clone https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-yaml-clean.git
 ./openfisca_france/scripts/parameters/baremes_ipp/merge_ipp_tax_and_benefit_tables_with_parameters.py -v
 ```
+
+Le script prend en charge le téléchargement des fichiers YAML la première fois, et leur mise à jour ensuite.
 
 Les fichiers [YAML clean](https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-yaml-clean)  sont mis à jour par l'intégration continue côté IPP. Pour profiter de leur mise à jour, penser à faire `git pull` dans le répertoire cloné. Pour plus d'informations sur le pipeline de transformation côté IPP, voir ce [README](https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-converters).
 

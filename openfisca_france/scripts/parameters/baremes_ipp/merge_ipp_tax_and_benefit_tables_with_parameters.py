@@ -11,6 +11,7 @@ import datetime
 import itertools
 import logging
 import os
+import subprocess
 import sys
 import xml.etree.ElementTree as etree
 
@@ -38,9 +39,10 @@ note_names = (
     u"Notes",
     u"Notes bis",
     )
-script_dir = os.path.normpath(os.path.join(os.path.dirname(__file__)))
+script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 package_dir = os.path.normpath(os.path.join(script_dir, '..', '..', '..'))
 parameters_dir = os.path.join(package_dir, 'parameters')
+default_yaml_dir = os.path.normpath(os.path.join(package_dir, '..', 'ipp-tax-and-benefit-tables-yaml-clean'))
 reference_names = (
     u"Parution au JO",
     u"Références BOI",
@@ -64,14 +66,26 @@ def main():
     parser.add_argument('-i', '--ipp-translations',
         default = os.path.join(script_dir, 'ipp-tax-and-benefit-tables-to-parameters.yaml'),
         help = 'path of YAML file containing the association between IPP fields and OpenFisca parameters')
-    parser.add_argument('--yaml-dir', default = 'ipp-tax-and-benefit-tables-yaml-clean',
+    parser.add_argument('--yaml-dir', default = default_yaml_dir,
         help = 'path of directory containing clean IPP YAML files')
     parser.add_argument('-v', '--verbose', action = 'store_true', default = False, help = "increase output verbosity")
     args = parser.parse_args()
     logging.basicConfig(level = logging.DEBUG if args.verbose else logging.WARNING, stream = sys.stdout)
 
-    if not os.path.isdir(args.yaml_dir):
-        parser.error(u'{!r} must be a directory'.format(args.yaml_dir))
+    if os.path.isdir(args.yaml_dir):
+        log.info(u'Updating YAML files from IPP...')
+        command = u'; '.join([
+            u'cd {}'.format(args.yaml_dir),
+            u'git pull',
+            ])
+    else:
+        log.info(u'Downloading YAML files from IPP...')
+        command = u'git clone {} {}'.format(
+            u'https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-yaml-clean.git',
+            args.yaml_dir,
+            )
+    log.debug(command)
+    subprocess.check_call(command, shell=True)
 
     openfisca_root_element = build_element_from_openfisca_files()
 
