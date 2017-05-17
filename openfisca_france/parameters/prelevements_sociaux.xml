@@ -901,7 +901,7 @@
           </SEUIL>
           <TAUX>
             <!-- http://www.ags-garantie-salaires.org/actualites/items/taux-de-cotisation-89.html -->
-            <VALUE deb="2017-01-01"     valeur="0.0020" />
+            <VALUE deb="2017-01-01" valeur="0.0020" />
             <VALUE deb="2016-01-01" valeur="0.0025" />
             <VALUE deb="2011-04-01" valeur="0.003" />
             <VALUE deb="2009-10-01" valeur="0.004" />
