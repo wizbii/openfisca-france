@@ -265,7 +265,7 @@ def transform_ipp_tree(root):
     ecodev['taux_plafond'] = taux_plafond = ecodev.pop('plafond_en_du_revenu_net_global')
 
     # reduction impot emprunt
-    reductions_impots['intemp'] = intemp = impot_revenu.pop('habitat_princ')
+    reductions_impots['intemp'] = intemp = impot_revenu.pop('habitat_princ_reduc')
     reduction_d_impot_pour_interets_d_emprunt_habitat = intemp['reduction_d_impot_pour_interets_d_emprunt_habitat']
     reduction_d_impot_pour_interets_d_emprunt_habitat['taux1'] = reduction_d_impot_pour_interets_d_emprunt_habitat.pop(
         'taux')
@@ -288,8 +288,11 @@ def transform_ipp_tree(root):
 
     # investissement foret
     reductions_impots['invfor'] = invfor = impot_revenu.pop('foret')
-    reductions_impots['invfor'].update(invfor.pop('reduction_d_impot_pour_investissements_forestiers'))
-    invfor['seuil'] = invfor.pop('plafond_des_depenses_d_investissement_forestier')
+    depenses_d_investissement_forestier = invfor.pop('depenses_d_investissement_forestier')
+    invfor.update({
+        'taux': depenses_d_investissement_forestier['taux'],
+        'seuil': depenses_d_investissement_forestier['plafond_de_depenses'],
+        })
 
     # prestations compensatoires
     reductions_impots['prcomp'] = prcomp = impot_revenu.pop('prest_compen')
