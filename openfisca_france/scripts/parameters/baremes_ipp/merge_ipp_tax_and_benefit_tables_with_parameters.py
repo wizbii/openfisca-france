@@ -13,6 +13,7 @@ import logging
 import os
 import subprocess
 import sys
+import types
 import xml.etree.ElementTree as etree
 
 from biryani import strings
@@ -95,19 +96,18 @@ def main():
 
     merge_elements(openfisca_root_element, ipp_root_element)
 
-    root_element = ipp_root_element
-    for child_element in root_element[:]:
-        root_element.remove(child_element)
-        element_tree = etree.ElementTree(child_element)
-        sort_elements(child_element)
-        reindent(child_element)
+    def write_xml_file(file_name, element):
+        element_tree = etree.ElementTree(element)
+        reindent(element)
         element_tree.write(
-            os.path.join(parameters_dir, '{}.xml'.format(child_element.attrib['code'])),
+            os.path.join(parameters_dir, file_name),
             encoding = 'utf-8',
             )
-    element_tree = etree.ElementTree(root_element)
-    reindent(root_element)
-    element_tree.write(os.path.join(parameters_dir, '__root__.xml'), encoding = 'utf-8')
+
+    for child_element in openfisca_root_element[:]:
+        write_xml_file('{}.xml'.format(child_element.attrib['code']), child_element)
+        openfisca_root_element.remove(child_element)
+    write_xml_file('__root__.xml', openfisca_root_element)
 
     return 0
 
@@ -207,8 +207,8 @@ def build_tree_from_ipp_files(yaml_dir):
                     fragment = ipp_path[-1]
                     sub_tree = sub_tree.setdefault(fragment, [])
                     if sub_tree:
-                        last_leaf = sub_tree[-1]
-                        if last_leaf['value'] == value:
+                        previous_leaf = sub_tree[-1]
+                        if previous_leaf['value'] == value:
                             # Merge leaves with the same value.
                             # One day, when we'll support "Références législatives", this behavior may change.
                             continue
@@ -244,46 +244,26 @@ def merge_elements(openfisca_element, element, path = []):
 
     Returns `None`.
     """
-    def appears_in_ipp_values(element):
-        return any(
-            element.attrib['deb'] == value_element.attrib['deb'] and
-            element.attrib['valeur'] == value_element.attrib['valeur']
-            for value_element in value_children(element)
-            )
-
-    def get_conflicts_for_values(element):
-        conflicts = set()
-        for openfisca_value_element in value_children(openfisca_element):
-            if not appears_in_ipp_values(openfisca_value_element):
-                ipp_valeur_list = [
-                    value_element.attrib['valeur']
-                    for value_element in value_children(element)
-                    if value_element.attrib['deb'] == openfisca_value_element.attrib['deb']
-                    ]
-                ipp_valeur = ipp_valeur_list[0] if ipp_valeur_list else 'unknown'
-                conflicts.add(
-                    u'children:openfisca-not-fully-included-in-ipp('
-                    u'openfisca_deb={},openfisca_valeur={},ipp_valeur={})'.format(
-                        openfisca_value_element.attrib['deb'],
-                        openfisca_value_element.attrib['valeur'],
-                        ipp_valeur,
-                        )
-                    )
-        return conflicts
-
     def error_at_path(error):
         path_with_code = path + [openfisca_element.attrib['code']]
         return u'At {}: {}'.format('.'.join(path_with_code), error)
 
-    def log_error_at_path(error):
-        log.error(error_at_path(error))
+    def different_attributes_error(attribute):
+        return u'{!r} attribute differs: OpenFisca={!r} and IPP={!r}'.format(
+            attribute, openfisca_element.get(attribute), element.get(attribute))
 
-    def log_error_if_different_values_for_attribute(attribute):
-        openfisca_attrib = openfisca_element.get(attribute)
-        ipp_attrib = element.get(attribute)
-        if ipp_attrib is not None and openfisca_attrib is not None and ipp_attrib != openfisca_attrib:
-            log_error_at_path(u'{!r} attribute differs: OpenFisca={!r} and IPP={!r}'.format(
-                attribute, openfisca_attrib, ipp_attrib))
+    def skip_merge_error(error):
+        return u'{} => skip merge for these <{}> elements'.format(error, openfisca_element.tag)
+
+    # def show():
+    #     """For debugging purpose"""
+    #     print(error_at_path(""))
+    #     reindent(openfisca_element)
+    #     print("openfisca_element")
+    #     print(etree.tostring(openfisca_element))
+    #     reindent(element)
+    #     print("element")
+    #     print(etree.tostring(element))
 
     assert element.attrib['code'] == openfisca_element.attrib['code'], (element, openfisca_element)
     assert element.tag == openfisca_element.tag, \
@@ -291,44 +271,78 @@ def merge_elements(openfisca_element, element, path = []):
             openfisca_element.tag, element.tag).encode('utf-8'))
 
     if openfisca_element.tag == 'NODE':
-        for openfisca_child_element in openfisca_element:
+        for openfisca_child_element in without_comments(openfisca_element):
             for child_element in element:
                 if child_element.attrib['code'] == openfisca_child_element.attrib['code']:
                     merge_elements(openfisca_child_element, child_element, path + [openfisca_element.attrib['code']])
                     break
 
     elif openfisca_element.tag == 'CODE':
-        log_error_if_different_values_for_attribute('type')
-        # Check that every `openfisca_element` child (VALUE elements) is included in `element` children.
+        if openfisca_element.get('type') != element.get('type'):
+            log.error(error_at_path(skip_merge_error(different_attributes_error('type'))))
+            return
+        # Skip merge for this openfisca_element if <END> and <PLACEHOLDER> elements in OpenFisca
+        # conflict with any IPP child having the same "deb" attribute.
+        for openfisca_other_element in filter(lambda child: child.tag != 'VALUE', without_comments(openfisca_element)):
+            assert openfisca_other_element.tag in ['END', 'PLACEHOLDER'], openfisca_other_element.tag
+            deb = openfisca_other_element.attrib['deb']
+            ipp_value_element = find_child('VALUE', {'deb': deb}, element)
+            if ipp_value_element is not None:
+                log.error(error_at_path(skip_merge_error(
+                    u'an IPP element has the same deb={!r} attribute than OpenFisca {!r} element'.format(
+                        deb, openfisca_other_element.tag))))
+                return
+        # Remove <VALUE> elements from IPP which are both in OpenFisca and IPP.
+        for openfisca_value_element in value_children(openfisca_element):
+            assert openfisca_value_element.get('deb') is not None
+            assert openfisca_value_element.get('valeur') is not None
+            ipp_value_element = find_child(
+                tag = 'VALUE',
+                attributes = {
+                    'deb': openfisca_value_element.attrib['deb'],
+                    'valeur': openfisca_value_element.attrib['valeur'],
+                    },
+                element = element,
+                )
+            if ipp_value_element is None:
+                log.error(error_at_path(skip_merge_error(
+                    u'OpenFisca {!r} element was not found in IPP element children'.format(
+                        etree.tostring(openfisca_value_element)))))
+                return
+            element.remove(ipp_value_element)
+        # Add new <VALUE> elements from IPP to OpenFisca <CODE>.
+        for ipp_value_element in value_children(element):
+            openfisca_element.append(ipp_value_element)
+            element.remove(ipp_value_element)
+        assert len(element) == 0, etree.tostring(element)
 
     elif openfisca_element.tag == 'BAREME':
-        log_error_if_different_values_for_attribute('type')
+        return
+        # # Some BAREME in XML files have a first TRANCHE with only zero values for TAUX and SEUIL.
+        # # Skip it to ease conflict detection.
+        # def only_zero_values(element):
+        #     return all(
+        #         float(value_element.attrib['valeur']) == 0
+        #         for value_element in value_children(element)
+        #         )
+        # first_tranche = openfisca_element[0]
+        # is_first_tranche_empty = only_zero_values(first_tranche.find('TAUX')) and \
+        #     only_zero_values(first_tranche.find('SEUIL'))
+        # if is_first_tranche_empty:
+        #     openfisca_element = openfisca_element[1:]
 
-        # Some BAREME in XML files have a first TRANCHE with only zero values for TAUX and SEUIL.
-        # Skip it to ease conflict detection.
-        def only_zero_values(element):
-            return all(
-                float(value_element.attrib['valeur']) == 0
-                for value_element in value_children(element)
-                )
-        first_tranche = openfisca_element[0]
-        is_first_tranche_empty = only_zero_values(first_tranche.find('TAUX')) and \
-            only_zero_values(first_tranche.find('SEUIL'))
-        if is_first_tranche_empty:
-            openfisca_element = openfisca_element[1:]
+        # # Check that every `openfisca_element` child (VALUE elements) is included in `element` children
+        # # for each TAUX and SEUIL of each TRANCHE.
+        # if len(openfisca_element) != len(element):
+        #     log_error_at_path(u'Different number of <TRANCHE> elements')
+        # # else:
+        # #     for tranche_index, openfisca_tranche_element in enumerate(openfisca_element):
+        # #         def handle_child(tag):
+        # #             tag_conflicts = get_conflicts_for_values(openfisca_tranche_element.find(tag))
 
-        # Check that every `openfisca_element` child (VALUE elements) is included in `element` children
-        # for each TAUX and SEUIL of each TRANCHE.
-        if len(openfisca_element) != len(element):
-            log_error_at_path(u'Different number of <TRANCHE> elements')
-        # else:
-        #     for tranche_index, openfisca_tranche_element in enumerate(openfisca_element):
-        #         def handle_child(tag):
-        #             tag_conflicts = get_conflicts_for_values(openfisca_tranche_element.find(tag))
-
-        #         tranche_element = element[tranche_index]
-        #         handle_child('TAUX')
-        #         handle_child('SEUIL')
+        # #         tranche_element = element[tranche_index]
+        # #         handle_child('TAUX')
+        # #         handle_child('SEUIL')
     else:
         raise NotImplementedError(openfisca_element.tag)
 
@@ -406,24 +420,6 @@ def reindent(elem, depth = 0):
             elem.tail = indent
 
 
-def sort_elements(element):
-    if element.tag in ('BAREME', 'NODE', 'TRANCHE'):
-        if element.tag == 'NODE':
-            children = list(element)
-            for child in children:
-                element.remove(child)
-            children.sort(key = lambda child: child.get('code'))
-            element.extend(children)
-        for child in element:
-            sort_elements(child)
-    else:
-        children = list(element)
-        for child in children:
-            element.remove(child)
-        children.sort(key = lambda child: child.get('deb') or '', reverse = True)
-        element.extend(children)
-
-
 def transform_node_to_element(name, node):
     """
     A `node` is a dict or a list produced by `build_tree_from_ipp_files` or `transform_ipp_tree`.
@@ -493,29 +489,44 @@ def transform_node_to_element(name, node):
         return code_element if len(code_element) > 0 else None
 
 
-def transform_value_to_element(leaf):
-    value = leaf.get('value')
-    if value is None:
-        return None
-    value_element = etree.Element('VALUE', attrib = dict(
-        valeur = unicode(value),
-        ))
-    start = leaf.get('start')
-    if start is not None:
-        value_element.set('deb', start.isoformat())
-    return value_element
-
-
 def transform_values_to_element_children(values, element):
-    for value in values:
-        value_element = transform_value_to_element(value)
-        if value_element is not None:
-            element.append(value_element)
+    element.extend(map(
+        lambda value: etree.Element('VALUE', attrib = dict(
+            deb = value['start'].isoformat(),
+            valeur = unicode(value['value']),
+            )),
+        values,
+        ))
+
+
+def find_child(tag, attributes, element):
+    """
+    Find an XML element among the children of `element`, given its `tag` and `attributes`.
+
+    Expects zero or one result exactly.
+    """
+    matches = filter(
+        lambda child: child.tag == tag and all(
+            child.get(name) == value
+            for name, value in attributes.iteritems()
+            ),
+        element,
+        )
+    assert len(matches) <= 1, matches
+    return matches[0] if matches else None
 
 
 def value_children(element):
     """Ignore <END> and <PLACEHOLDER> elements which are not handled by IPP YAML files."""
-    return filter(lambda child: child.tag == 'VALUE', element)
+    return filter(lambda child: child.tag == 'VALUE', without_comments(element))
+
+
+def without_comments(element):
+    """Return children of `element` ignoring XML comments."""
+    return filter(
+        lambda child: not (isinstance(child.tag, types.FunctionType) and child.tag.__name__ == 'Comment'),
+        element,
+        )
 
 
 if __name__ == "__main__":
