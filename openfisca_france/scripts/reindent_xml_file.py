@@ -10,11 +10,21 @@ import os
 import sys
 import xml.etree.ElementTree as etree
 
-from openfisca_france import decompositions, param
-
 
 app_name = os.path.splitext(os.path.basename(__file__))[0]
 log = logging.getLogger(app_name)
+
+
+# From http://stackoverflow.com/a/34324359/3548266
+class CommentedTreeBuilder(etree.TreeBuilder):
+    """Keep comments in XML files."""
+    def __init__(self, *args, **kwargs):
+        super(CommentedTreeBuilder, self).__init__(*args, **kwargs)
+
+    def comment(self, data):
+        self.start(etree.Comment, {})
+        self.data(data)
+        self.end(etree.Comment)
 
 
 def indent(elem, level = 0):
@@ -36,25 +46,16 @@ def indent(elem, level = 0):
 
 def main():
     parser = argparse.ArgumentParser(description = __doc__)
+    parser.add_argument('file_name', help = "XML file to reindent")
     parser.add_argument('-v', '--verbose', action = 'store_true', default = False, help = "increase output verbosity")
     args = parser.parse_args()
     logging.basicConfig(level = logging.DEBUG if args.verbose else logging.WARNING, stream = sys.stdout)
 
-    for module in (decompositions, param):
-        dir = os.path.dirname(module.__file__)
-        for filename in os.listdir(dir):
-            if not filename.endswith('.xml'):
-                continue
-            xml_file_path = os.path.join(dir, filename)
-            try:
-                tree = etree.parse(xml_file_path)
-            except (AttributeError, etree.ParseError):
-                log.exception(u'Ignoring "{}" because of a syntax error in XML'.format(xml_file_path))
-                continue
-            root_element = tree.getroot()
-            indent(root_element)
-            with open(xml_file_path, 'w') as xml_file:
-                xml_file.write(etree.tostring(root_element, encoding = 'utf-8'))
+    tree = etree.parse(args.file_name, parser = etree.XMLParser(target = CommentedTreeBuilder()))
+    root_element = tree.getroot()
+    indent(root_element)
+    with open(args.file_name, 'w') as xml_file:
+        xml_file.write(etree.tostring(root_element, encoding = 'utf-8'))
 
     return 0
 
