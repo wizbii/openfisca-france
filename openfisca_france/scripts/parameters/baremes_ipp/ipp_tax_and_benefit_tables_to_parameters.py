@@ -99,9 +99,8 @@ def fixed_bases_tax_scale(base_by_slice_name, null_rate_base = None, rates_tree 
         )
 
 
-def tax_scale(bases_tree, rates_tree = None):
+def tax_scale(bases_tree, rates_tree):
     """Crée un barème qui sera transformé en un élément XML <BAREME> par le script de fusion."""
-    assert rates_tree is not None, 'TODO'
     return dict(
         TYPE = 'BAREME',
         SEUIL = bases_tree,
