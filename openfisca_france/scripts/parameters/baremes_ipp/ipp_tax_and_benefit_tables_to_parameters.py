@@ -9,7 +9,6 @@ Le script de merge éclate cet arbre cible en plusieurs fichiers XML écrits dan
 """
 
 import collections
-import datetime
 
 
 def fixed_bases_tax_scale(base_by_slice_name, null_rate_base = None, rates_tree = None):
@@ -22,19 +21,13 @@ def fixed_bases_tax_scale(base_by_slice_name, null_rate_base = None, rates_tree 
     Voir la fonction `tax_scale` pour une version plus simple.
     """
     first_start = UnboundLocalError
-    last_stop = UnboundLocalError
     for bracket in rates_tree.itervalues():
         if isinstance(bracket, (float, int)):
             continue
         bracket_start = bracket[0]['start']
         if first_start is UnboundLocalError or bracket_start < first_start:
             first_start = bracket_start
-        bracket_stop = bracket[-1].get('stop')
-        if last_stop is UnboundLocalError or \
-                last_stop is not None and (bracket_stop is None or last_stop < bracket_stop):
-            last_stop = bracket_stop
     assert first_start is not UnboundLocalError
-    assert last_stop is not UnboundLocalError
 
     # Convert constant brackets to real brackets.
     for slice_name, bracket in rates_tree.iteritems():
@@ -43,8 +36,6 @@ def fixed_bases_tax_scale(base_by_slice_name, null_rate_base = None, rates_tree 
                 start = first_start,
                 value = str(bracket),
                 )
-            if last_stop is not None:
-                rates_bracket_item['stop'] = last_stop
             rates_tree[slice_name] = [rates_bracket_item]
 
     if null_rate_base is not None:
@@ -53,18 +44,8 @@ def fixed_bases_tax_scale(base_by_slice_name, null_rate_base = None, rates_tree 
             if first_start < bracket[0]['start']:
                 bracket.insert(0, dict(
                     start = first_start,
-                    stop = bracket[0]['start'] - datetime.timedelta(days = 1),
                     value = '0',
                     ))
-            stop = bracket[-1].get('stop')
-            if stop is not None and (last_stop is None or stop < last_stop):
-                bracket_last_item = dict(
-                    start = stop + datetime.timedelta(days = 1),
-                    value = '0',
-                    )
-                if last_stop is not None:
-                    bracket_last_item['stop'] = last_stop
-                bracket.append(bracket_last_item)
             for item in bracket:
                 if item['value'] is None:
                     item['value'] = '0'
@@ -73,8 +54,6 @@ def fixed_bases_tax_scale(base_by_slice_name, null_rate_base = None, rates_tree 
             start = first_start,
             value = '0',
             )
-        if last_stop is not None:
-            rates_bracket_null_item['stop'] = last_stop
         rates_tree['tranche_nulle'] = [rates_bracket_null_item]
 
         base_by_slice_name = base_by_slice_name.copy()
@@ -87,16 +66,9 @@ def fixed_bases_tax_scale(base_by_slice_name, null_rate_base = None, rates_tree 
             start = rates_bracket[0]['start'],
             value = str(base_by_slice_name[slice_name]),
             )
-        stop = rates_bracket[-1].get('stop')
-        if stop is not None:
-            bases_bracket_item['stop'] = stop
         bases_tree[slice_name] = [bases_bracket_item]
 
-    return dict(
-        TYPE = 'BAREME',
-        SEUIL = bases_tree,
-        TAUX = rates_tree,
-        )
+    return tax_scale(bases_tree, rates_tree)
 
 
 def tax_scale(bases_tree, rates_tree):
