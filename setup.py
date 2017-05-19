@@ -51,7 +51,7 @@ setup(
         'Biryani[datetimeconv] >= 0.10.4',
         'lxml >= 3.7',
         'numpy >= 1.11',
-        'OpenFisca-Core >= 12.0.2, < 13.0',
+        'OpenFisca-Core >= 12.1.1, < 13.0',
         'PyYAML >= 3.10',
         'requests >= 2.8',
         ],

@@ -13,11 +13,10 @@ import logging
 import os
 import subprocess
 import sys
-import types
-import xml.etree.ElementTree as etree
+import xml.etree.ElementTree
 
 from biryani import strings
-from biryani.baseconv import check
+from lxml import etree
 from openfisca_core import legislationsxml
 import yaml
 
@@ -69,6 +68,8 @@ def main():
         help = 'path of YAML file containing the association between IPP fields and OpenFisca parameters')
     parser.add_argument('--yaml-dir', default = default_yaml_dir,
         help = 'path of directory containing clean IPP YAML files')
+    parser.add_argument('--reformat-only', action = 'store_true', default = False,
+        help = "Load, reformat and save OpenFisca XML, do not merge with IPP files")
     parser.add_argument('-v', '--verbose', action = 'store_true', default = False, help = "increase output verbosity")
     args = parser.parse_args()
     logging.basicConfig(level = logging.DEBUG if args.verbose else logging.WARNING, stream = sys.stdout)
@@ -90,15 +91,25 @@ def main():
 
     openfisca_root_element = build_element_from_openfisca_files()
 
-    ipp_tree = build_tree_from_ipp_files(args.yaml_dir)
-    transform_ipp_tree(ipp_tree)  # User-written transformations which modify `ipp_tree`.
-    ipp_root_element = transform_node_to_element(u'root', ipp_tree)
+    if not args.reformat_only:
+        ipp_tree = build_tree_from_ipp_files(args.yaml_dir)
+        transform_ipp_tree(ipp_tree)  # User-written transformations which modify `ipp_tree`.
+        ipp_root_element = ipp_node_to_element(u'root', ipp_tree)
 
-    merge_elements(openfisca_root_element, ipp_root_element)
+        merge_elements(openfisca_root_element, ipp_root_element)
 
     def write_xml_file(file_name, element):
-        element_tree = etree.ElementTree(element)
+        # element_as_string = etree.tostring(element, encoding='utf-8', pretty_print=True)
+        # with open(os.path.join(parameters_dir, file_name), 'w') as file:
+        #     file.write(element_as_string)
+        # element_tree = etree.ElementTree(element)
+        # element_tree.write(
+        #     os.path.join(parameters_dir, file_name),
+        #     encoding = 'utf-8',
+        #     pretty_print = True,
+        #     )
         reindent(element)
+        element_tree = xml.etree.ElementTree.ElementTree(element)
         element_tree.write(
             os.path.join(parameters_dir, file_name),
             encoding = 'utf-8',
@@ -220,8 +231,68 @@ def build_tree_from_ipp_files(yaml_dir):
 
 
 def build_element_from_openfisca_files():
-    converter = legislationsxml.make_xml_legislation_info_list_to_xml_element(with_source_file_infos = False)
-    root_element = check(converter(france_tax_benefit_system.legislation_xml_info_list))
+    def openfisca_node_to_element(code, node):
+        def with_optional_attributes(attrib, names):
+            for attrib_name in names:
+                attrib_value = node.get(attrib_name)
+                if attrib_value is not None:
+                    attrib[attrib_name] = attrib_value
+            return attrib
+
+        def fill_with_items(element, items):
+            """Fill `element` with either <VALUE>, <END> or <PLACEHOLDER>."""
+            for item in items:
+                attrib = dict(deb = item['start'])
+                tag_name = 'VALUE' if 'value' in item else 'END'  # <PLACEHOLDER> elements are not kept in nodes.
+                if tag_name == 'VALUE':
+                    attrib['valeur'] = unicode(item['value'])
+                element.append(etree.Element(tag_name, attrib = attrib))
+
+        default_attrib = with_optional_attributes(dict(code = code), ['description', 'origin'])
+
+        if node['@type'] == 'Node':
+            node_element = etree.Element('NODE', attrib = default_attrib)
+            if node.get('children'):
+                for code in sorted(node['children']):
+                    child_node = node['children'][code]
+                    node_element.append(openfisca_node_to_element(code, child_node))
+            return node_element
+        elif node['@type'] == 'Parameter':
+            attrib = default_attrib
+            # Translate format key to attribute.
+            format = node.get('format')
+            if format is not None:
+                attrib['format'] = {
+                    'boolean': 'bool',
+                    'rate': 'percent',
+                    }.get(format, format)
+            # Translate unit key to type attribute.
+            unit = node.get('unit')
+            if unit is not None:
+                xml_type_by_json_unit = {v: k for k, v in legislationsxml.json_unit_by_xml_json_type.iteritems()}
+                attrib['type'] = xml_type_by_json_unit.get(unit, unit)
+            code_element = etree.Element('CODE', attrib = attrib)
+            fill_with_items(code_element, node['values'])
+            return code_element
+        elif node['@type'] == 'Scale':
+            def fill_tranche_element_with(tranche_element, child_tag, items):
+                child_element = etree.Element(child_tag)
+                fill_with_items(child_element, items)
+                tranche_element.append(child_element)
+
+            attrib = with_optional_attributes(default_attrib, ['option'])
+            bareme_element = etree.Element('BAREME', attrib = attrib)
+            for bracket in node['brackets']:
+                tranche_element = etree.Element('TRANCHE', attrib = default_attrib)
+                fill_tranche_element_with(tranche_element, 'SEUIL', bracket['threshold'])
+                fill_tranche_element_with(tranche_element, 'TAUX', bracket['rate'])
+                bareme_element.append(tranche_element)
+                return bareme_element
+        else:
+            raise NotImplementedError(node)
+
+    openfisca_node = legislationsxml.load_legislation(france_tax_benefit_system.legislation_xml_info_list)
+    root_element = openfisca_node_to_element('root', openfisca_node)
     return root_element
 
 
@@ -254,16 +325,6 @@ def merge_elements(openfisca_element, element, path = []):
 
     def skip_merge_error(error):
         return u'{} => skip merge for these <{}> elements'.format(error, openfisca_element.tag)
-
-    # def show():
-    #     """For debugging purpose"""
-    #     print(error_at_path(""))
-    #     reindent(openfisca_element)
-    #     print("openfisca_element")
-    #     print(etree.tostring(openfisca_element))
-    #     reindent(element)
-    #     print("element")
-    #     print(etree.tostring(element))
 
     assert element.attrib['code'] == openfisca_element.attrib['code'], (element, openfisca_element)
     assert element.tag == openfisca_element.tag, \
@@ -313,7 +374,7 @@ def merge_elements(openfisca_element, element, path = []):
         # Add new <VALUE> elements from IPP to OpenFisca <CODE>.
         for ipp_value_element in value_children(element):
             openfisca_element.append(ipp_value_element)
-            element.remove(ipp_value_element)
+            # No need to remove element with lxml: it's removed automatically form where it was when appending.
         assert len(element) == 0, etree.tostring(element)
 
     elif openfisca_element.tag == 'BAREME':
@@ -344,7 +405,7 @@ def merge_elements(openfisca_element, element, path = []):
         # #         handle_child('TAUX')
         # #         handle_child('SEUIL')
     else:
-        raise NotImplementedError(openfisca_element.tag)
+        raise NotImplementedError(openfisca_element)
 
 
 def prepare_xml_values(name, leafs):
@@ -403,72 +464,43 @@ def prepare_xml_values(name, leafs):
     return leafs, format, type
 
 
-def reindent(elem, depth = 0):
-    # cf http://effbot.org/zone/element-lib.htm
-    indent = "\n" + depth * "  "
-    if len(elem):
-        if not elem.text or not elem.text.strip():
-            elem.text = indent + "  "
-        if not elem.tail or not elem.tail.strip():
-            elem.tail = indent
-        for elem in elem:
-            reindent(elem, depth + 1)
-        if not elem.tail or not elem.tail.strip():
-            elem.tail = indent
-    else:
-        if depth and (not elem.tail or not elem.tail.strip()):
-            elem.tail = indent
-
-
-def transform_node_to_element(name, node):
+def ipp_node_to_element(name, node):
     """
     A `node` is a dict or a list produced by `build_tree_from_ipp_files` or `transform_ipp_tree`.
     """
     if isinstance(node, dict):
         if node.get('TYPE') == u'BAREME':
-            scale_element = etree.Element('BAREME', attrib = dict(
+            bareme_element = etree.Element('BAREME', attrib = dict(
                 code = strings.slugify(name, separator = u'_'),
                 origin = u'ipp',
                 ))
             for slice_name in node.get('SEUIL', {}).keys():
-                slice_element = etree.Element('TRANCHE', attrib = dict(
+                tranche_element = etree.Element('TRANCHE', attrib = dict(
                     code = strings.slugify(slice_name, separator = u'_'),
                     ))
 
-                threshold_element = etree.Element('SEUIL')
+                seuil_element = etree.Element('SEUIL')
                 values, format, type = prepare_xml_values(name, node.get('SEUIL', {}).get(slice_name, []))
-                transform_values_to_element_children(values, threshold_element)
-                if len(threshold_element) > 0:
-                    slice_element.append(threshold_element)
+                transform_values_to_element_children(values, seuil_element)
+                if len(seuil_element) > 0:
+                    tranche_element.append(seuil_element)
 
-                amount_element = etree.Element('MONTANT')
-                values, format, type = prepare_xml_values(name, node.get('MONTANT', {}).get(slice_name, []))
-                transform_values_to_element_children(values, amount_element)
-                if len(amount_element) > 0:
-                    slice_element.append(amount_element)
-
-                rate_element = etree.Element('TAUX')
+                taux_element = etree.Element('TAUX')
                 values, format, type = prepare_xml_values(name, node.get('TAUX', {}).get(slice_name, []))
-                transform_values_to_element_children(values, rate_element)
-                if len(rate_element) > 0:
-                    slice_element.append(rate_element)
+                transform_values_to_element_children(values, taux_element)
+                if len(taux_element) > 0:
+                    tranche_element.append(taux_element)
 
-                base_element = etree.Element('ASSIETTE')
-                values, format, type = prepare_xml_values(name, node.get('ASSIETTE', {}).get(slice_name, []))
-                transform_values_to_element_children(values, base_element)
-                if len(base_element) > 0:
-                    slice_element.append(base_element)
-
-                if len(slice_element) > 0:
-                    scale_element.append(slice_element)
-            return scale_element if len(scale_element) > 0 else None
+                if len(tranche_element) > 0:
+                    bareme_element.append(tranche_element)
+            return bareme_element if len(bareme_element) > 0 else None
         else:
             node_element = etree.Element('NODE', attrib = dict(
                 code = strings.slugify(name, separator = u'_'),
                 origin = u'ipp',
                 ))
             for key, value in node.iteritems():
-                child_element = transform_node_to_element(key, value)
+                child_element = ipp_node_to_element(key, value)
                 if child_element is not None:
                     node_element.append(child_element)
             return node_element if len(node_element) > 0 else None
@@ -487,6 +519,23 @@ def transform_node_to_element(name, node):
             code_element.set('type', type)
         transform_values_to_element_children(values, code_element)
         return code_element if len(code_element) > 0 else None
+
+
+def reindent(elem, depth = 0):
+    # cf http://effbot.org/zone/element-lib.htm
+    indent = "\n" + depth * "  "
+    if len(elem):
+        if not elem.text or not elem.text.strip():
+            elem.text = indent + "  "
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = indent
+        for elem in elem:
+            reindent(elem, depth + 1)
+        if not elem.tail or not elem.tail.strip():
+            elem.tail = indent
+    else:
+        if depth and (not elem.tail or not elem.tail.strip()):
+            elem.tail = indent
 
 
 def transform_values_to_element_children(values, element):
@@ -523,10 +572,7 @@ def value_children(element):
 
 def without_comments(element):
     """Return children of `element` ignoring XML comments."""
-    return filter(
-        lambda child: not (isinstance(child.tag, types.FunctionType) and child.tag.__name__ == 'Comment'),
-        element,
-        )
+    return filter(lambda child: child.tag is not etree.Comment, element)
 
 
 if __name__ == "__main__":
