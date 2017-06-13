@@ -45,6 +45,8 @@ INFO:convert_ipp_xlsx_to_openfisca_xml:XML files written to '/tmp/baremes-ipp-v3
 
 > Ce processus de conversion de données a été internalisé dans OpenFisca-France à partir de celui de l'IPP disponible [ici](https://framagit.org/french-tax-and-benefit-tables/ipp-tax-and-benefit-tables-converters#in-the-ipp-world).
 
+> La dernière version du repository `ipp-tax-and-benefit-tables-xlsx` testée est `2c6936d6`. Utiliser l'argument `--ref-ipp` pour spécifier une référence à utiliser autre que `master`.
+
 ### Intégration avec OpenFisca
 
 Le script [`merge_ipp_xml_files_with_openfisca_parameters.py`](./merge_ipp_xml_files_with_openfisca_parameters.py) fusionne les fichiers XML produits depuis les fichiers XLSX de l'IPP avec les fichiers XML existants d'OpenFisca-France.
