@@ -23,7 +23,7 @@ Le script [`convert_ipp_xlsx_to_openfisca_xml.py`](./convert_ipp_xlsx_to_openfis
 Ce script nécessite des dépendances supplémentaires. Pour les installer :
 
 ```sh
-pip install .[baremes_ipp]
+pip install --editable .[baremes_ipp]
 ```
 
 Il faut également installer `gnumeric` :
