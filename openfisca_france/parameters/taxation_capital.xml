@@ -1,7 +1,6 @@
 <NODE code="taxation_capital" origin="ipp">
   <NODE code="bouclier" origin="ipp">
     <CODE code="taux_bouclier_fiscal" format="percent" origin="ipp">
-      <END deb="2011-01-01"/>
       <VALUE deb="2006-01-01" valeur="0.5"/>
       <VALUE deb="2005-01-01" valeur="0.6"/>
     </CODE>
@@ -9,7 +8,6 @@
   <NODE code="forfait_mobilier" origin="ipp">
     <CODE code="majoration_forfaitaire" format="percent" origin="ipp">
       <VALUE deb="1989-01-01" valeur="0.05"/>
-      <VALUE deb="1987-01-01" valeur="0"/>
       <VALUE deb="1982-01-01" valeur="0.05"/>
     </CODE>
   </NODE>
@@ -32,7 +30,6 @@
           <VALUE deb="1991-01-01" valeur="4260000"/>
           <VALUE deb="1990-01-01" valeur="4130000"/>
           <VALUE deb="1989-01-01" valeur="4000000"/>
-          <VALUE deb="1987-01-01" valeur="0"/>
           <VALUE deb="1986-01-01" valeur="3600000"/>
           <VALUE deb="1985-01-01" valeur="3500000"/>
           <VALUE deb="1984-01-01" valeur="3400000"/>
@@ -43,7 +40,6 @@
           <VALUE deb="2013-01-01" valeur="0.005"/>
           <VALUE deb="1999-01-01" valeur="0.0055"/>
           <VALUE deb="1989-01-01" valeur="0.005"/>
-          <VALUE deb="1987-01-01" valeur="0"/>
           <VALUE deb="1982-01-01" valeur="0.005"/>
         </TAUX>
       </TRANCHE>
@@ -66,7 +62,6 @@
           <VALUE deb="1991-01-01" valeur="6920000"/>
           <VALUE deb="1990-01-01" valeur="6710000"/>
           <VALUE deb="1989-01-01" valeur="6500000"/>
-          <VALUE deb="1987-01-01" valeur="0"/>
           <VALUE deb="1986-01-01" valeur="6000000"/>
           <VALUE deb="1985-01-01" valeur="5800000"/>
           <VALUE deb="1984-01-01" valeur="5600000"/>
@@ -77,7 +72,6 @@
           <VALUE deb="2013-01-01" valeur="0.007"/>
           <VALUE deb="1999-01-01" valeur="0.0075"/>
           <VALUE deb="1989-01-01" valeur="0.007"/>
-          <VALUE deb="1987-01-01" valeur="0"/>
           <VALUE deb="1982-01-01" valeur="0.01"/>
         </TAUX>
       </TRANCHE>
@@ -99,7 +93,6 @@
           <VALUE deb="1991-01-01" valeur="13740000"/>
           <VALUE deb="1990-01-01" valeur="13320000"/>
           <VALUE deb="1989-01-01" valeur="12900000"/>
-          <VALUE deb="1987-01-01" valeur="0"/>
           <VALUE deb="1986-01-01" valeur="11900000"/>
           <VALUE deb="1985-01-01" valeur="11500000"/>
           <VALUE deb="1984-01-01" valeur="11200000"/>
@@ -109,7 +102,6 @@
         <TAUX>
           <VALUE deb="1999-01-01" valeur="0.01"/>
           <VALUE deb="1989-01-01" valeur="0.009"/>
-          <VALUE deb="1987-01-01" valeur="0"/>
           <VALUE deb="1982-01-01" valeur="0.015"/>
         </TAUX>
       </TRANCHE>
@@ -132,7 +124,6 @@
           <VALUE deb="1991-01-01" valeur="21320000"/>
           <VALUE deb="1990-01-01" valeur="20660000"/>
           <VALUE deb="1989-01-01" valeur="20000000"/>
-          <VALUE deb="1987-01-01" valeur="0"/>
           <VALUE deb="1986-01-01" valeur="20600000"/>
           <VALUE deb="1985-01-01" valeur="20000000"/>
         </SEUIL>
@@ -141,7 +132,6 @@
           <VALUE deb="1999-01-01" valeur="0.013"/>
           <VALUE deb="1990-01-01" valeur="0.012"/>
           <VALUE deb="1989-01-01" valeur="0.011"/>
-          <VALUE deb="1987-01-01" valeur="0"/>
           <VALUE deb="1985-01-01" valeur="0.02"/>
         </TAUX>
       </TRANCHE>
@@ -172,7 +162,6 @@
       </TRANCHE>
       <TRANCHE code="6eme_tranche">
         <SEUIL conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2005-01-01,openfisca_fin=2006-12-31,openfisca_valeur=15255000,ipp_valeur=unknown)">
-          <END deb="2013-01-01"/>
           <VALUE deb="2011-01-01" valeur="16790000"/>
           <VALUE deb="2010-01-01" valeur="16540000"/>
           <VALUE deb="2009-01-01" valeur="16480000"/>
@@ -184,7 +173,6 @@
           <VALUE deb="1999-01-01" valeur="100000000"/>
         </SEUIL>
         <TAUX>
-          <END deb="2013-01-01"/>
           <VALUE deb="1999-01-01" valeur="0.018"/>
         </TAUX>
       </TRANCHE>
@@ -269,13 +257,10 @@
       </CODE>
     </NODE>
     <CODE code="plafonnement_du_plafonnement" format="percent" origin="ipp">
-      <VALUE deb="2013-01-01" valeur="0.5"/>
-      <VALUE deb="2012-01-01" valeur="0"/>
       <VALUE deb="1996-01-01" valeur="0.5"/>
     </CODE>
     <CODE code="plafonnement_taux_d_imposition_isf" format="percent" origin="ipp">
       <VALUE deb="2013-01-01" valeur="0.75"/>
-      <VALUE deb="2012-01-01" valeur="0"/>
       <VALUE deb="1991-01-01" valeur="0.85"/>
       <VALUE deb="1989-01-01" valeur="0.7"/>
     </CODE>
@@ -290,7 +275,7 @@
       </CODE>
       <CODE code="plafond_invest_pme" format="float" origin="ipp" type="monetary">
         <VALUE deb="2011-01-01" valeur="45000"/>
-        <VALUE deb="2009-01-01" valeur="50000"/>
+        <VALUE deb="2008-01-01" valeur="50000"/>
       </CODE>
       <CODE code="taux_don_interet_general" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2002-01-01,openfisca_fin=2007-12-31,openfisca_valeur=0,ipp_valeur=unknown)" description="Taux pour dons à certains organismes d'intérêt général" format="percent" origin="ipp">
         <VALUE deb="2008-01-01" valeur="0.75"/>
@@ -306,7 +291,6 @@
         <VALUE deb="2002-01-01" valeur="75"/>
       </CODE>
       <CODE code="reduc_enf_garde" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2013-01-01,openfisca_fin=2013-12-31,openfisca_valeur=0,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2014-01-01,openfisca_fin=None,openfisca_valeur=0,ipp_valeur=unknown)" description="Réduction pac sans garde alternée" format="float" origin="ipp" type="monetary">
-        <END deb="2013-01-01"/>
         <VALUE deb="2012-01-01" valeur="300"/>
         <VALUE deb="2002-01-01" valeur="150"/>
         <VALUE deb="1989-01-01" valeur="1000"/>
@@ -318,7 +302,24 @@
         <VALUE deb="1999-01-01" valeur="0.2"/>
       </CODE>
     </NODE>
-  </NODE>
+  <NODE code="reduction_pour_investissements_dans_fcpi_1_ou_fip_2_dans_les_pme" origin="ipp">
+      <CODE code="plafond" origin="ipp" format="float" type="monetary">
+        <VALUE deb="2011-01-01" valeur="18000"/>
+        <VALUE deb="2008-01-01" valeur="20000"/>
+      </CODE>
+      <CODE code="taux_pour_investissement" origin="ipp" format="percent">
+        <VALUE deb="2008-01-01" valeur="0.5"/>
+      </CODE>
+    </NODE>
+    <CODE code="plafond_pour_la_somme_des_trois_reductions_pme_fcip_fip_sur_pme_et_dons" origin="ipp" format="float" type="monetary">
+      <VALUE deb="2011-01-01" valeur="45000"/>
+      <VALUE deb="2008-01-01" valeur="50000"/>
+    </CODE>
+    <CODE code="plafond_pour_la_somme_de_la_reduction_pour_pme_et_pour_les_fcip_et_fip_des_pme" origin="ipp" format="float" type="monetary">
+      <VALUE deb="2011-01-01" valeur="45000"/>
+      <VALUE deb="2008-01-01" valeur="50000"/>
+    </CODE>
+    </NODE>
   <NODE code="isf_abattement_biens" origin="ipp">
     <CODE code="taux_d_abattement_residence_principale" format="percent" origin="ipp">
       <VALUE deb="2008-01-01" valeur="0.3"/>
@@ -408,15 +409,12 @@
     </CODE>
     <NODE code="plan_d_epargne_populaire" origin="ipp">
       <CODE code="retrait_apres_8_ans" format="percent" origin="ipp">
-        <END deb="2013-01-01"/>
         <VALUE deb="1990-06-15" valeur="0"/>
       </CODE>
       <CODE code="retrait_avant_4_ans" format="percent" origin="ipp">
-        <END deb="2008-01-01"/>
         <VALUE deb="1994-01-01" valeur="0.35"/>
       </CODE>
       <CODE code="retrait_entre_4_et_8_ans" format="percent" origin="ipp">
-        <END deb="2013-01-01"/>
         <VALUE deb="2012-01-01" valeur="0.24"/>
         <VALUE deb="2011-01-01" valeur="0.19"/>
         <VALUE deb="2008-01-01" valeur="0.18"/>
@@ -434,7 +432,14 @@
       <VALUE deb="1979-07-01" valeur="0.4"/>
       <VALUE deb="1974-01-01" valeur="0.333"/>
     </CODE>
-  </NODE>
+  <CODE code="produits_d_epargne_solidaire_de_partage" origin="ipp" format="percent">
+      <VALUE deb="2008-01-01" valeur="0.05"/>
+    </CODE>
+  <CODE code="paiement_de_produits_dans_un_etat_non_cooperatif_4" origin="ipp" format="percent">
+      <VALUE deb="2013-01-01" valeur="0.75"/>
+      <VALUE deb="2010-03-01" valeur="0.5"/>
+    </CODE>
+    </NODE>
   <NODE code="pfl_av" origin="ipp">
     <NODE code="bons_ou_contrats_de_capitalisation_et_placements_de_meme_nature_assurance_vie_lors_du_denouement_du_contrat" origin="ipp">
       <CODE code="avec_anonymat" format="percent" origin="ipp">
@@ -457,11 +462,9 @@
       </NODE>
       <NODE code="souscrits_entre_le_1_1_83_et_le_31_12_89_pour_une_duree_de" origin="ipp">
         <CODE code="2_a_4_ans_3" format="percent" origin="ipp">
-          <END deb="1998-01-01"/>
           <VALUE deb="1983-01-01" valeur="0.25"/>
         </CODE>
         <CODE code="4_a_6_ans_4" format="percent" origin="ipp">
-          <END deb="1998-01-01"/>
           <VALUE deb="1983-01-01" valeur="0.15"/>
         </CODE>
         <CODE code="6_ans_et_plus_pour_les_primes_versees_avant_le_01_01_1998_et_les_produits_afferents_acquis_apres_cette_date" format="percent" origin="ipp">
@@ -471,10 +474,13 @@
           <VALUE deb="1998-01-01" valeur="0.075"/>
         </CODE>
         <CODE code="moins_de_2_ans_2" format="percent" origin="ipp">
-          <END deb="1998-01-01"/>
           <VALUE deb="1983-01-01" valeur="0.45"/>
         </CODE>
       </NODE>
+    <CODE code="produits_beneficiant_a_des_personnes_etablies_dans_un_etat_non_cooperatif_6" origin="ipp" format="percent">
+        <VALUE deb="2013-01-01" valeur="0.75"/>
+        <VALUE deb="2010-03-01" valeur="0.5"/>
+      </CODE>
     </NODE>
   </NODE>
   <NODE code="prelevements_sociaux" description="Prélèvement social et contributions additionnelles" origin="ipp">
@@ -490,16 +496,13 @@
         <VALUE deb="2003-01-01" valeur="0.0015"/>
       </CODE>
       <CODE code="rsa" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2012-01-01,openfisca_fin=2013-12-31,openfisca_valeur=.02,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2014-01-01,openfisca_fin=None,openfisca_valeur=.02,ipp_valeur=unknown)" description="Contribution au financement du revenu de solidarité active" format="percent" origin="ipp">
-        <END deb="2013-01-01"/>
         <VALUE deb="2009-01-01" valeur="0.011"/>
       </CODE>
     </NODE>
     <CODE code="contribution_sociale_cnav" format="percent" origin="ipp">
-      <END deb="1991-01-01"/>
       <VALUE deb="1985-01-01" valeur="0.004"/>
     </CODE>
     <CODE code="contribution_sociale_permanente_cnaf" format="percent" origin="ipp">
-      <END deb="1997-01-01"/>
       <VALUE deb="1984-01-01" valeur="0.01"/>
     </CODE>
     <NODE code="crds" origin="ipp">
@@ -527,7 +530,6 @@
       </CODE>
     </NODE>
     <CODE code="prelevement_social_exceptionnel_cnav" format="percent" origin="ipp">
-      <END deb="1997-01-01"/>
       <VALUE deb="1987-08-01" valeur="0.01"/>
     </CODE>
     <NODE code="prelevements_solidarite" origin="ipp">
