@@ -1,60 +1,48 @@
 <NODE code="prestations" origin="ipp">
   <NODE code="aa_m" origin="ipp">
     <CODE code="montant_de_l_allocation_d_adoption_en_de_la_bmaf" format="percent" origin="ipp">
-      <END deb="2007-01-01"/>
       <VALUE deb="1996-08-01" valeur="0.4595"/>
       <VALUE deb="1995-01-01" valeur="0.3"/>
     </CODE>
   </NODE>
   <NODE code="afg_c" origin="ipp">
     <CODE code="montant_mensuel_maximum_1" format="float" origin="ipp" type="monetary">
-      <END deb="1978-01-01"/>
       <VALUE deb="1976-07-01" valeur="291.35"/>
     </CODE>
     <CODE code="nombre_minimal_d_enfants_a_charge" origin="ipp">
-      <END deb="1978-01-01"/>
       <VALUE deb="1976-07-01" valeur="3"/>
     </CODE>
   </NODE>
   <NODE code="afg_plaf" origin="ipp">
     <NODE code="plafond_de_ressources_pour_2_revenus" origin="ipp">
       <CODE code="1_enfant" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="40200"/>
       </CODE>
       <CODE code="2_enfants" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="48240"/>
       </CODE>
       <CODE code="3_enfants" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="56280"/>
       </CODE>
       <CODE code="par_enfant_supplementaire" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="8040"/>
       </CODE>
     </NODE>
     <NODE code="plafond_de_ressources_pour_un_revenu" origin="ipp">
       <CODE code="1_enfant" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="24120"/>
       </CODE>
       <CODE code="2_enfants" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="32160"/>
       </CODE>
       <CODE code="3_enfants" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="40200"/>
       </CODE>
       <CODE code="par_enfant_supplementaire" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="8040"/>
       </CODE>
     </NODE>
     <CODE code="plafond_unique_montant_mensuel_max_majoration_du_s_u" format="float" origin="ipp" type="monetary">
-      <END deb="1978-01-01"/>
       <VALUE deb="1976-07-01" valeur="291.35"/>
     </CODE>
   </NODE>
@@ -62,6 +50,7 @@
     <NODE code="al_charge" origin="ipp">
       <NODE code="personne_isolee_ou_menage_seul" origin="ipp">
         <CODE code="cas_des_colocataires_ou_des_proprietaires_1" format="float" origin="ipp" type="monetary">
+          <VALUE deb="2015-10-01" valeur="26.63"/>
           <VALUE deb="2014-10-01" valeur="26.61"/>
           <VALUE deb="2013-01-01" valeur="26.46"/>
           <VALUE deb="2012-01-01" valeur="25.9"/>
@@ -154,7 +143,8 @@
     </NODE>
     <NODE code="forfait_charges" description="Forfait de charge" origin="ipp">
       <CODE code="cas_general" description="Cas général - isolé ou couple" format="float" origin="ipp" type="monetary">
-        <VALUE deb="2014-10-01" valeur="53.27"/>
+        <VALUE deb="2015-10-01" valeur="53.27"/>
+        <VALUE deb="2014-10-01" valeur="53.23"/>
         <VALUE deb="2013-01-01" valeur="52.93"/>
         <VALUE deb="2012-01-01" valeur="51.82"/>
         <VALUE deb="2011-01-01" valeur="51.31"/>
@@ -171,7 +161,8 @@
         <VALUE deb="1994-07-01" valeur="282"/>
       </CODE>
       <CODE code="majoration_par_enfant" description="Cas général - par personne à charge supplémentaire" format="float" origin="ipp" type="monetary">
-        <VALUE deb="2014-10-01" valeur="12.07"/>
+        <VALUE deb="2015-10-01" valeur="12.07"/>
+        <VALUE deb="2014-10-01" valeur="12.06"/>
         <VALUE deb="2013-01-01" valeur="11.99"/>
         <VALUE deb="2012-01-01" valeur="11.74"/>
         <VALUE deb="2011-01-01" valeur="11.62"/>
@@ -206,7 +197,7 @@
           <VALUE deb="2016-07-01" valeur="4.0"/>
         </CODE>
         <CODE code="couples" description="Zone 1 - 2 adultes" format="float" origin="ipp" type="monetary">
-          <VALUE deb="2015-10-01" valeur="353.20"/>
+          <VALUE deb="2015-10-01" valeur="353.2"/>
           <VALUE deb="2014-10-01" valeur="352.92"/>
           <VALUE deb="2013-01-01" valeur="350.92"/>
           <VALUE deb="2012-01-01" valeur="343.53"/>
@@ -282,7 +273,7 @@
           <VALUE deb="2016-07-01" valeur="3.1"/>
         </CODE>
         <CODE code="couples" description="Zone 2 - 2 adultes" format="float" origin="ipp" type="monetary">
-          <VALUE deb="2015-10-01" valeur="312.40"/>
+          <VALUE deb="2015-10-01" valeur="312.4"/>
           <VALUE deb="2014-10-01" valeur="312.15"/>
           <VALUE deb="2013-01-01" valeur="310.38"/>
           <VALUE deb="2012-01-01" valeur="303.85"/>
@@ -375,7 +366,7 @@
           <VALUE deb="2001-01-01" valeur="1574"/>
         </CODE>
         <CODE code="majoration_par_enf_supp" description="Zone 3 - enfants supplémentaires" format="float" origin="ipp" type="monetary">
-          <VALUE deb="2015-10-01" valeur="46.60"/>
+          <VALUE deb="2015-10-01" valeur="46.6"/>
           <VALUE deb="2014-10-01" valeur="46.56"/>
           <VALUE deb="2013-01-01" valeur="46.3"/>
           <VALUE deb="2012-01-01" valeur="45.33"/>
@@ -429,6 +420,7 @@
     </NODE>
     <NODE code="participation_min" origin="ipp">
       <CODE code="montant_forfaitaire" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2003-07-01,openfisca_fin=2006-12-31,openfisca_valeur=29,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2009-01-01,openfisca_fin=2010-12-31,openfisca_valeur=33,ipp_valeur=unknown)" description="Participation minimale" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="35.76"/>
         <VALUE deb="2014-10-01" valeur="34.73"/>
         <VALUE deb="2013-01-01" valeur="34.53"/>
         <VALUE deb="2012-01-01" valeur="33.8"/>
@@ -486,11 +478,9 @@
     </NODE>
     <NODE code="r1" description="R1 (% du RMI)" origin="ipp">
       <CODE code="couple_sans_enf" description="Taux pour 2 adultes" format="percent" origin="ipp">
-        <END deb="2015-01-01"/>
         <VALUE deb="2001-01-01" valeur="1.26"/>
       </CODE>
       <CODE code="majoration_enfant_a_charge_supp" format="percent" origin="ipp">
-        <END deb="2015-01-01"/>
         <VALUE deb="2001-01-01" valeur="0.4"/>
       </CODE>
       <CODE code="majoration_enfant_supp_a_charge_supp" description="Taux par enfants supplémentaires" format="percent" origin="openfisca">
@@ -498,25 +488,20 @@
         <VALUE deb="2002-01-01" valeur="0.4"/>
       </CODE>
       <CODE code="personne_isolee" description="Taux pour 1 adulte" format="percent" origin="ipp">
-        <END deb="2015-01-01"/>
         <VALUE deb="2001-01-01" valeur="0.88"/>
       </CODE>
       <CODE code="personne_isolee_ou_couple_avec_1_enf" description="Taux pour 1 enfant" format="percent" origin="ipp">
-        <END deb="2015-01-01"/>
         <VALUE deb="2001-01-01" valeur="1.503"/>
       </CODE>
       <CODE code="personne_isolee_ou_couple_avec_2_enf" description="Taux pour 2 enfants" format="percent" origin="ipp">
-        <END deb="2015-01-01"/>
         <VALUE deb="2001-01-01" valeur="1.803"/>
       </CODE>
     </NODE>
     <NODE code="r2" description="R2 (% de la BMAF)" origin="ipp">
       <CODE code="majoration_par_enf_supp_a_charge" description="Taux par enfants supplémentaires" format="percent" origin="ipp">
-        <END deb="2015-01-01"/>
         <VALUE deb="2001-01-01" valeur="0.41"/>
       </CODE>
       <CODE code="personnes_isolees_ou_couples_avec_2_enf" description="Taux pour 2 enfants" format="percent" origin="ipp">
-        <END deb="2015-01-01"/>
         <VALUE deb="2001-01-01" valeur="0.32"/>
       </CODE>
       <CODE code="taux3_dom" description="Taux pour 1 enfant (seulement pour les DOM)" format="percent" origin="openfisca">
@@ -764,6 +749,7 @@
   <NODE code="al_etudiant" origin="ipp">
     <NODE code="autres_dont_les_etudiants_en_chambres_rehabilitees_de_residences_universitaires" origin="ipp">
       <CODE code="menages" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="259.77"/>
         <VALUE deb="2014-10-01" valeur="259.56"/>
         <VALUE deb="2013-01-01" valeur="258.09"/>
         <VALUE deb="2012-01-01" valeur="252.66"/>
@@ -775,6 +761,7 @@
         <VALUE deb="2005-09-01" valeur="226.8"/>
       </CODE>
       <CODE code="personnes_isolees" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="167.14"/>
         <VALUE deb="2014-10-01" valeur="167.01"/>
         <VALUE deb="2013-01-01" valeur="166.06"/>
         <VALUE deb="2012-01-01" valeur="162.56"/>
@@ -788,6 +775,7 @@
     </NODE>
     <NODE code="loyer_considere_comme_paye_par_les_etudiants_logeant_en_residence_universitaire" origin="ipp">
       <CODE code="menages" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="128.71"/>
         <VALUE deb="2014-10-01" valeur="128.61"/>
         <VALUE deb="2013-01-01" valeur="127.88"/>
         <VALUE deb="2012-01-01" valeur="125.19"/>
@@ -807,6 +795,7 @@
         <VALUE deb="1994-07-01" valeur="416"/>
       </CODE>
       <CODE code="personnes_isolees" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="82.67"/>
         <VALUE deb="2014-10-01" valeur="82.6"/>
         <VALUE deb="2013-01-01" valeur="82.13"/>
         <VALUE deb="2012-01-01" valeur="80.4"/>
@@ -1110,6 +1099,7 @@
   <NODE code="al_plaf_acc" origin="ipp">
     <NODE code="plafond_pour_accession_a_la_propriete_zone_1" origin="ipp">
       <CODE code="menage_ou_isole_avec_1_enfant" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="403.62"/>
         <VALUE deb="2014-09-01" valeur="403.3"/>
         <VALUE deb="2013-01-01" valeur="401.01"/>
         <VALUE deb="2012-01-01" valeur="392.57"/>
@@ -1132,6 +1122,7 @@
         <VALUE deb="1990-07-01" valeur="1870"/>
       </CODE>
       <CODE code="menage_ou_isole_avec_2_enfants" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="414.9"/>
         <VALUE deb="2014-09-01" valeur="414.57"/>
         <VALUE deb="2013-01-01" valeur="412.22"/>
         <VALUE deb="2012-01-01" valeur="403.54"/>
@@ -1154,6 +1145,7 @@
         <VALUE deb="1990-07-01" valeur="1923"/>
       </CODE>
       <CODE code="menage_ou_isole_avec_3_enfants" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="426.57"/>
         <VALUE deb="2014-09-01" valeur="426.23"/>
         <VALUE deb="2013-01-01" valeur="423.81"/>
         <VALUE deb="2012-01-01" valeur="414.89"/>
@@ -1176,6 +1168,7 @@
         <VALUE deb="1990-07-01" valeur="1976"/>
       </CODE>
       <CODE code="menage_ou_isole_avec_4_enfants" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="438.01"/>
         <VALUE deb="2014-09-01" valeur="437.66"/>
         <VALUE deb="2013-01-01" valeur="435.18"/>
         <VALUE deb="2012-01-01" valeur="426.02"/>
@@ -1198,6 +1191,7 @@
         <VALUE deb="1990-07-01" valeur="2029"/>
       </CODE>
       <CODE code="menage_ou_isole_avec_5_enfants" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="447.29"/>
         <VALUE deb="2014-09-01" valeur="446.93"/>
         <VALUE deb="2013-01-01" valeur="444.4"/>
         <VALUE deb="2012-01-01" valeur="435.05"/>
@@ -1220,6 +1214,7 @@
         <VALUE deb="1990-07-01" valeur="2075"/>
       </CODE>
       <CODE code="menage_ou_isole_par_enfant_en_plus" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="38.95"/>
         <VALUE deb="2014-09-01" valeur="38.92"/>
         <VALUE deb="2013-01-01" valeur="38.7"/>
         <VALUE deb="2012-01-01" valeur="37.89"/>
@@ -1241,6 +1236,7 @@
         <VALUE deb="1990-07-01" valeur="180"/>
       </CODE>
       <CODE code="menage_seul" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="375.38"/>
         <VALUE deb="2014-09-01" valeur="375.08"/>
         <VALUE deb="2013-01-01" valeur="372.95"/>
         <VALUE deb="2012-01-01" valeur="365.1"/>
@@ -1263,6 +1259,7 @@
         <VALUE deb="1990-07-01" valeur="1817"/>
       </CODE>
       <CODE code="personne_isolee_sans_enfant" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="311.48"/>
         <VALUE deb="2014-09-01" valeur="311.23"/>
         <VALUE deb="2013-01-01" valeur="309.47"/>
         <VALUE deb="2012-01-01" valeur="302.96"/>
@@ -1279,6 +1276,7 @@
     </NODE>
     <NODE code="plafond_pour_accession_a_la_propriete_zone_2" origin="ipp">
       <CODE code="menage_ou_isole_avec_1_enfant" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="362.64"/>
         <VALUE deb="2014-09-01" valeur="362.35"/>
         <VALUE deb="2013-01-01" valeur="360.3"/>
         <VALUE deb="2012-01-01" valeur="352.72"/>
@@ -1301,6 +1299,7 @@
         <VALUE deb="1990-07-01" valeur="1679"/>
       </CODE>
       <CODE code="menage_ou_isole_avec_2_enfants" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="375.2"/>
         <VALUE deb="2014-09-01" valeur="374.9"/>
         <VALUE deb="2013-01-01" valeur="372.78"/>
         <VALUE deb="2012-01-01" valeur="364.93"/>
@@ -1323,6 +1322,7 @@
         <VALUE deb="1990-07-01" valeur="1738"/>
       </CODE>
       <CODE code="menage_ou_isole_avec_3_enfants" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="388.14"/>
         <VALUE deb="2014-09-01" valeur="387.83"/>
         <VALUE deb="2013-01-01" valeur="385.63"/>
         <VALUE deb="2012-01-01" valeur="377.51"/>
@@ -1345,6 +1345,7 @@
         <VALUE deb="1990-07-01" valeur="1797"/>
       </CODE>
       <CODE code="menage_ou_isole_avec_4_enfants" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="400.88"/>
         <VALUE deb="2014-09-01" valeur="400.56"/>
         <VALUE deb="2013-01-01" valeur="398.29"/>
         <VALUE deb="2012-01-01" valeur="389.91"/>
@@ -1367,6 +1368,7 @@
         <VALUE deb="1990-07-01" valeur="1856"/>
       </CODE>
       <CODE code="menage_ou_isole_avec_5_enfants" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="429.26"/>
         <VALUE deb="2014-09-01" valeur="428.92"/>
         <VALUE deb="2013-01-01" valeur="426.49"/>
         <VALUE deb="2012-01-01" valeur="417.51"/>
@@ -1389,6 +1391,7 @@
         <VALUE deb="1990-07-01" valeur="1990"/>
       </CODE>
       <CODE code="menage_ou_isole_par_enfant_en_plus" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="37.32"/>
         <VALUE deb="2014-09-01" valeur="37.29"/>
         <VALUE deb="2013-01-01" valeur="37.08"/>
         <VALUE deb="2012-01-01" valeur="36.3"/>
@@ -1410,6 +1413,7 @@
         <VALUE deb="1990-07-01" valeur="174"/>
       </CODE>
       <CODE code="menage_seul" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="335"/>
         <VALUE deb="2014-09-01" valeur="334.73"/>
         <VALUE deb="2013-01-01" valeur="332.83"/>
         <VALUE deb="2012-01-01" valeur="325.82"/>
@@ -1432,6 +1436,7 @@
         <VALUE deb="1990-07-01" valeur="1620"/>
       </CODE>
       <CODE code="personne_isolee_sans_enfant" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="273.26"/>
         <VALUE deb="2014-09-01" valeur="273.04"/>
         <VALUE deb="2013-01-01" valeur="271.49"/>
         <VALUE deb="2012-01-01" valeur="265.78"/>
@@ -1448,6 +1453,7 @@
     </NODE>
     <NODE code="plafond_pour_accession_a_la_propriete_zone_3" origin="ipp">
       <CODE code="menage_ou_isole_avec_1_enfant" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="338.98"/>
         <VALUE deb="2014-09-01" valeur="338.71"/>
         <VALUE deb="2013-01-01" valeur="336.79"/>
         <VALUE deb="2012-01-01" valeur="329.7"/>
@@ -1470,6 +1476,7 @@
         <VALUE deb="1990-07-01" valeur="1570"/>
       </CODE>
       <CODE code="menage_ou_isole_avec_2_enfants" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="352.99"/>
         <VALUE deb="2014-09-01" valeur="352.71"/>
         <VALUE deb="2013-01-01" valeur="350.71"/>
         <VALUE deb="2012-01-01" valeur="343.33"/>
@@ -1492,6 +1499,7 @@
         <VALUE deb="1990-07-01" valeur="1635"/>
       </CODE>
       <CODE code="menage_ou_isole_avec_3_enfants" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="367.21"/>
         <VALUE deb="2014-09-01" valeur="366.92"/>
         <VALUE deb="2013-01-01" valeur="364.84"/>
         <VALUE deb="2012-01-01" valeur="357.16"/>
@@ -1514,6 +1522,7 @@
         <VALUE deb="1990-07-01" valeur="1700"/>
       </CODE>
       <CODE code="menage_ou_isole_avec_4_enfants" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="381.2"/>
         <VALUE deb="2014-09-01" valeur="380.9"/>
         <VALUE deb="2013-01-01" valeur="378.74"/>
         <VALUE deb="2012-01-01" valeur="370.77"/>
@@ -1536,6 +1545,7 @@
         <VALUE deb="1990-07-01" valeur="1765"/>
       </CODE>
       <CODE code="menage_ou_isole_avec_5_enfants" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="409.61"/>
         <VALUE deb="2014-09-01" valeur="409.28"/>
         <VALUE deb="2013-01-01" valeur="406.96"/>
         <VALUE deb="2012-01-01" valeur="398.39"/>
@@ -1558,6 +1568,7 @@
         <VALUE deb="1990-07-01" valeur="1896"/>
       </CODE>
       <CODE code="menage_ou_isole_par_enfant_en_plus" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="35.51"/>
         <VALUE deb="2014-09-01" valeur="35.48"/>
         <VALUE deb="2013-01-01" valeur="35.28"/>
         <VALUE deb="2012-01-01" valeur="34.54"/>
@@ -1579,6 +1590,7 @@
         <VALUE deb="1990-07-01" valeur="165"/>
       </CODE>
       <CODE code="menage_seul" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="310.92"/>
         <VALUE deb="2014-09-01" valeur="310.67"/>
         <VALUE deb="2013-01-01" valeur="308.91"/>
         <VALUE deb="2012-01-01" valeur="302.41"/>
@@ -1601,6 +1613,7 @@
         <VALUE deb="1990-07-01" valeur="1505"/>
       </CODE>
       <CODE code="personne_isolee_sans_enfant" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2015-10-01" valeur="256.34"/>
         <VALUE deb="2014-09-01" valeur="256.14"/>
         <VALUE deb="2013-01-01" valeur="254.69"/>
         <VALUE deb="2012-01-01" valeur="249.33"/>
@@ -1620,7 +1633,6 @@
     <NODE code="plafonds_de_loyer_en_zone_1" origin="ipp">
       <NODE code="menage_ou_isole" origin="ipp">
         <CODE code="avec_1_enfant" format="float" origin="ipp" type="monetary">
-          <END deb="2001-01-01"/>
           <VALUE deb="2000-07-01" valeur="2082"/>
           <VALUE deb="1999-07-01" valeur="2061"/>
           <VALUE deb="1998-07-01" valeur="2031"/>
@@ -1628,7 +1640,6 @@
           <VALUE deb="1994-07-01" valeur="1889"/>
         </CODE>
         <CODE code="avec_2_enfants" format="float" origin="ipp" type="monetary">
-          <END deb="2001-01-01"/>
           <VALUE deb="2000-07-01" valeur="2224"/>
           <VALUE deb="1999-07-01" valeur="2202"/>
           <VALUE deb="1998-07-01" valeur="2089"/>
@@ -1636,7 +1647,6 @@
           <VALUE deb="1994-07-01" valeur="1943"/>
         </CODE>
         <CODE code="avec_3_enfants" format="float" origin="ipp" type="monetary">
-          <END deb="2001-01-01"/>
           <VALUE deb="2000-07-01" valeur="2436"/>
           <VALUE deb="1999-07-01" valeur="2412"/>
           <VALUE deb="1998-07-01" valeur="2250"/>
@@ -1644,7 +1654,6 @@
           <VALUE deb="1994-07-01" valeur="1997"/>
         </CODE>
         <CODE code="avec_4_enfants" format="float" origin="ipp" type="monetary">
-          <END deb="2001-01-01"/>
           <VALUE deb="2000-07-01" valeur="2580"/>
           <VALUE deb="1999-07-01" valeur="2554"/>
           <VALUE deb="1998-07-01" valeur="2310"/>
@@ -1652,7 +1661,6 @@
           <VALUE deb="1994-07-01" valeur="2051"/>
         </CODE>
         <CODE code="avec_5_enfants" format="float" origin="ipp" type="monetary">
-          <END deb="2001-01-01"/>
           <VALUE deb="2000-07-01" valeur="2719"/>
           <VALUE deb="1999-07-01" valeur="2692"/>
           <VALUE deb="1998-07-01" valeur="2363"/>
@@ -1660,7 +1668,6 @@
           <VALUE deb="1994-07-01" valeur="2098"/>
         </CODE>
         <CODE code="par_enfant_en_plus" format="float" origin="ipp" type="monetary">
-          <END deb="2001-01-01"/>
           <VALUE deb="2000-07-01" valeur="241"/>
           <VALUE deb="1999-07-01" valeur="239"/>
           <VALUE deb="1998-07-01" valeur="205"/>
@@ -1669,7 +1676,6 @@
         </CODE>
       </NODE>
       <CODE code="menage_seul" format="float" origin="ipp" type="monetary">
-        <END deb="2001-01-01"/>
         <VALUE deb="2000-07-01" valeur="1902"/>
         <VALUE deb="1999-07-01" valeur="1883"/>
         <VALUE deb="1998-07-01" valeur="1864"/>
@@ -1680,7 +1686,6 @@
     <NODE code="plafonds_de_loyer_en_zone_2" origin="ipp">
       <NODE code="menage_ou_isole" origin="ipp">
         <CODE code="avec_1_enfant" format="float" origin="ipp" type="monetary">
-          <END deb="2001-01-01"/>
           <VALUE deb="2000-07-01" valeur="1722"/>
           <VALUE deb="1999-07-01" valeur="1705"/>
           <VALUE deb="1998-07-01" valeur="1681"/>
@@ -1688,7 +1693,6 @@
           <VALUE deb="1994-07-01" valeur="1586"/>
         </CODE>
         <CODE code="avec_2_enfants" format="float" origin="ipp" type="monetary">
-          <END deb="2001-01-01"/>
           <VALUE deb="2000-07-01" valeur="1853"/>
           <VALUE deb="1999-07-01" valeur="1835"/>
           <VALUE deb="1998-07-01" valeur="1751"/>
@@ -1696,7 +1700,6 @@
           <VALUE deb="1994-07-01" valeur="1652"/>
         </CODE>
         <CODE code="avec_3_enfants" format="float" origin="ipp" type="monetary">
-          <END deb="2001-01-01"/>
           <VALUE deb="2000-07-01" valeur="1985"/>
           <VALUE deb="1999-07-01" valeur="1965"/>
           <VALUE deb="1998-07-01" valeur="1821"/>
@@ -1704,7 +1707,6 @@
           <VALUE deb="1994-07-01" valeur="1718"/>
         </CODE>
         <CODE code="avec_4_enfants" format="float" origin="ipp" type="monetary">
-          <END deb="2001-01-01"/>
           <VALUE deb="2000-07-01" valeur="2115"/>
           <VALUE deb="1999-07-01" valeur="2094"/>
           <VALUE deb="1998-07-01" valeur="1890"/>
@@ -1712,7 +1714,6 @@
           <VALUE deb="1994-07-01" valeur="1784"/>
         </CODE>
         <CODE code="avec_5_enfants" format="float" origin="ipp" type="monetary">
-          <END deb="2001-01-01"/>
           <VALUE deb="2000-07-01" valeur="2295"/>
           <VALUE deb="1999-07-01" valeur="2272"/>
           <VALUE deb="1998-07-01" valeur="2032"/>
@@ -1720,7 +1721,6 @@
           <VALUE deb="1994-07-01" valeur="1917"/>
         </CODE>
         <CODE code="par_enfant_en_plus" format="float" origin="ipp" type="monetary">
-          <END deb="2001-01-01"/>
           <VALUE deb="2000-07-01" valeur="203"/>
           <VALUE deb="1999-07-01" valeur="201"/>
           <VALUE deb="1998-07-01" valeur="177"/>
@@ -1729,7 +1729,6 @@
         </CODE>
       </NODE>
       <CODE code="menage_seul" format="float" origin="ipp" type="monetary">
-        <END deb="2001-01-01"/>
         <VALUE deb="2000-07-01" valeur="1574"/>
         <VALUE deb="1999-07-01" valeur="1558"/>
         <VALUE deb="1998-07-01" valeur="1543"/>
@@ -1741,36 +1740,29 @@
   <NODE code="amf_m" origin="ipp">
     <NODE code="regime_agricole_taux_en_de_la_bmaf" origin="ipp">
       <CODE code="3_enfants_et_de_plus_de_2_ans" format="percent" origin="ipp">
-        <END deb="1978-01-01"/>
         <VALUE deb="1956-10-01" valeur="0.5"/>
       </CODE>
       <CODE code="au_plus_un_enfant_sans_moins_de_2_ans" format="percent" origin="ipp">
-        <END deb="1978-01-01"/>
         <VALUE deb="1974-07-01" valeur="0.1"/>
         <VALUE deb="1956-10-01" valeur="0.25"/>
       </CODE>
       <CODE code="deux_enfants_de_plus_de_2_ans" format="percent" origin="ipp">
-        <END deb="1978-01-01"/>
         <VALUE deb="1974-07-01" valeur="0.25"/>
         <VALUE deb="1956-10-01" valeur="0.4"/>
       </CODE>
       <CODE code="un_enfant_et_plus_de_moins_de_2_ans" format="percent" origin="ipp">
-        <END deb="1978-01-01"/>
         <VALUE deb="1974-07-01" valeur="0.5"/>
         <VALUE deb="1956-10-01" valeur="0.15"/>
       </CODE>
     </NODE>
     <NODE code="regime_general_taux_en_de_la_bmaf" origin="ipp">
       <CODE code="au_moins_1_enfant_de_moins_de_2_ans" format="percent" origin="ipp">
-        <END deb="1978-01-01"/>
         <VALUE deb="1974-07-01" valeur="0.5"/>
       </CODE>
       <CODE code="plus_de_6_enfants_tous_plus_de_2_ans" format="percent" origin="ipp">
-        <END deb="1978-01-01"/>
         <VALUE deb="1974-07-01" valeur="0.5"/>
       </CODE>
       <CODE code="points_par_enfant_de_plus_de_2_ans_avec_entre_2_et_6_enfants" format="percent" origin="ipp">
-        <END deb="1978-01-01"/>
         <VALUE deb="1974-07-01" valeur="0.1"/>
       </CODE>
     </NODE>
@@ -1778,21 +1770,17 @@
   <NODE code="amf_maj" origin="ipp">
     <NODE code="regime_agricole_majoration" origin="ipp">
       <CODE code="base" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="388.2"/>
       </CODE>
       <CODE code="montant" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="194.1"/>
       </CODE>
     </NODE>
     <NODE code="regime_general_majoration" origin="ipp">
       <CODE code="base" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="388.2"/>
       </CODE>
       <CODE code="montant" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="194.1"/>
       </CODE>
     </NODE>
@@ -1800,115 +1788,93 @@
   <NODE code="amf_plaf" origin="ipp">
     <NODE code="majoration_plafond_pour_la_majoration" origin="ipp">
       <CODE code="1_enfant" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1974-07-01" valeur="20100"/>
       </CODE>
       <CODE code="2_enfants" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1974-07-01" valeur="24120"/>
       </CODE>
       <CODE code="par_enfant_supplementaire" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1974-07-01" valeur="4010"/>
       </CODE>
     </NODE>
     <NODE code="majoration_plafond_pour_le_droit_a_l_amf" origin="ipp">
       <CODE code="4_enfants" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1974-07-01" valeur="28800"/>
       </CODE>
       <CODE code="5_enfants" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1974-07-01" valeur="34560"/>
       </CODE>
       <CODE code="6_enfants" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1974-07-01" valeur="5760"/>
       </CODE>
     </NODE>
     <CODE code="plafond_de_ressources_pour_la_majoration_0_enfant" format="float" origin="ipp" type="monetary">
-      <END deb="1978-01-01"/>
       <VALUE deb="1974-07-01" valeur="16080"/>
     </CODE>
     <CODE code="plafond_de_ressources_pour_le_droit_a_l_amf_3_enfants" format="float" origin="ipp" type="monetary">
-      <END deb="1978-01-01"/>
       <VALUE deb="1974-07-01" valeur="23040"/>
     </CODE>
   </NODE>
   <NODE code="apn_t_maj" origin="ipp">
     <NODE code="majoration_naissance_ou_adoption" origin="ipp">
       <CODE code="a_partir_du_2e_enfant" format="percent" origin="ipp">
-        <END deb="1985-01-01"/>
         <VALUE deb="1983-01-01" valeur="1.845"/>
         <VALUE deb="1980-07-01" valeur="0"/>
       </CODE>
       <CODE code="a_partir_du_3e_enfant" format="percent" origin="ipp">
-        <END deb="1985-01-01"/>
         <VALUE deb="1983-01-01" valeur="2.13"/>
         <VALUE deb="1980-07-01" valeur="4.57"/>
       </CODE>
       <CODE code="naissances_multiples" format="percent" origin="ipp">
-        <END deb="1983-01-01"/>
         <VALUE deb="1979-09-01" valeur="1.98"/>
       </CODE>
     </NODE>
     <CODE code="nombre_de_fractions_de_versement" origin="ipp">
-      <END deb="1985-01-01"/>
       <VALUE deb="1975-04-25" valeur="3"/>
     </CODE>
     <NODE code="taux" origin="ipp">
       <CODE code="1er_versement" format="percent" origin="ipp">
-        <END deb="1985-01-01"/>
         <VALUE deb="1983-01-01" valeur="1.71"/>
         <VALUE deb="1980-07-01" valeur="1.84"/>
         <VALUE deb="1975-04-25" valeur="1.3"/>
       </CODE>
       <CODE code="dernier_versement" format="percent" origin="ipp">
-        <END deb="1985-01-01"/>
         <VALUE deb="1983-01-01" valeur="0.355"/>
         <VALUE deb="1980-07-01" valeur="0.38"/>
         <VALUE deb="1975-04-25" valeur="0.65"/>
       </CODE>
     </NODE>
     <CODE code="taux_de_la_base_de_calcul_verse" format="percent" origin="ipp">
-      <END deb="1985-01-01"/>
       <VALUE deb="1983-01-01" valeur="2.42"/>
       <VALUE deb="1975-04-25" valeur="2.6"/>
     </CODE>
   </NODE>
   <NODE code="app" origin="ipp">
     <CODE code="duree_maximale_de_l_allocation_annee" origin="ipp">
-      <END deb="2006-06-04"/>
       <VALUE deb="2001-01-01" valeur="1"/>
     </CODE>
     <NODE code="montant_taux_partiel_bmaf" origin="ipp">
       <CODE code="50_duree_legale_couple" format="percent" origin="ipp">
-        <END deb="2006-06-04"/>
         <VALUE deb="2002-04-01" valeur="1.1701"/>
         <VALUE deb="2001-01-01" valeur="0.9427"/>
       </CODE>
       <CODE code="50_duree_legale_seul" format="percent" origin="ipp">
-        <END deb="2006-06-04"/>
         <VALUE deb="2002-04-01" valeur="1.4626"/>
         <VALUE deb="2001-01-01" valeur="1.2444"/>
       </CODE>
       <CODE code="80_duree_legale_couple" format="percent" origin="ipp">
-        <END deb="2006-06-04"/>
         <VALUE deb="2001-01-01" valeur="0.7129"/>
       </CODE>
       <CODE code="80_duree_legale_seul" format="percent" origin="ipp">
-        <END deb="2006-06-04"/>
         <VALUE deb="2001-01-01" valeur="0.9427"/>
       </CODE>
     </NODE>
     <NODE code="montant_taux_plein_bmaf" origin="ipp">
       <CODE code="couple" format="percent" origin="ipp">
-        <END deb="2006-06-04"/>
         <VALUE deb="2002-04-01" valeur="2.3401"/>
         <VALUE deb="2001-01-01" valeur="1.4257"/>
       </CODE>
       <CODE code="seul" format="percent" origin="ipp">
-        <END deb="2006-06-04"/>
         <VALUE deb="2002-04-01" valeur="2.7789"/>
         <VALUE deb="2001-01-01" valeur="1.8854"/>
       </CODE>
@@ -1917,17 +1883,14 @@
   <NODE code="aprn_t" origin="ipp">
     <NODE code="taux_en_de_la_base" origin="ipp">
       <CODE code="1er_examen" format="percent" origin="ipp">
-        <END deb="1985-01-01"/>
         <VALUE deb="1983-01-01" valeur="0.205"/>
         <VALUE deb="1976-08-01" valeur="0.44"/>
       </CODE>
       <CODE code="2e_examen" format="percent" origin="ipp">
-        <END deb="1985-01-01"/>
         <VALUE deb="1983-01-01" valeur="0.205"/>
         <VALUE deb="1976-08-01" valeur="0.88"/>
       </CODE>
       <CODE code="3e_examen" format="percent" origin="ipp">
-        <END deb="1985-01-01"/>
         <VALUE deb="1983-01-01" valeur="0.205"/>
         <VALUE deb="1976-08-01" valeur="0.66"/>
       </CODE>
@@ -1935,6 +1898,7 @@
   </NODE>
   <NODE code="as" origin="ipp">
     <CODE code="allocation_supplementaire_menages" format="float" origin="ipp" type="monetary">
+      <VALUE deb="2017-04-01" valeur="8176.73"/>
       <VALUE deb="2016-04-01" valeur="8152.26"/>
       <VALUE deb="2014-10-01" valeur="8144.1"/>
       <VALUE deb="2013-04-01" valeur="7947.72"/>
@@ -1983,6 +1947,7 @@
       <VALUE deb="1982-07-01" valeur="25400"/>
     </CODE>
     <CODE code="allocation_supplementaire_personnes_isolees" format="float" origin="ipp" type="monetary">
+      <VALUE deb="2017-04-01" valeur="6244.96"/>
       <VALUE deb="2016-04-01" valeur="6226.28"/>
       <VALUE deb="2014-10-01" valeur="6220.05"/>
       <VALUE deb="2013-04-01" valeur="6087.41"/>
@@ -2251,52 +2216,41 @@
   </NODE>
   <NODE code="asu_m" origin="ipp">
     <CODE code="base" format="float" origin="ipp" type="monetary">
-      <END deb="1978-01-01"/>
       <VALUE deb="1976-07-01" valeur="194.5"/>
     </CODE>
     <NODE code="majoration" origin="ipp">
       <CODE code="base" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="388.2"/>
       </CODE>
       <CODE code="montant" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="194.1"/>
       </CODE>
     </NODE>
     <NODE code="montant" origin="ipp">
       <CODE code="1_enfant_plus_de_2_ans" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="97.25"/>
       </CODE>
       <CODE code="2_enfants_plus_de_2_ans" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="77.8"/>
       </CODE>
       <CODE code="3_ou_enfants_plus_de_2_ans" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="97.25"/>
       </CODE>
       <CODE code="au_moins_1_enfant_de_moins_de_2_ans" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="97.25"/>
       </CODE>
     </NODE>
     <NODE code="taux" origin="ipp">
       <CODE code="1_enfant_plus_de_2_ans" format="percent" origin="ipp">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="0.2"/>
       </CODE>
       <CODE code="2_enfants_plus_de_2_ans" format="percent" origin="ipp">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="0.4"/>
       </CODE>
       <CODE code="3_ou_enfants_plus_de_2_ans" format="percent" origin="ipp">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="0.5"/>
       </CODE>
       <CODE code="au_moins_1_enfant_de_moins_de_2_ans" format="percent" origin="ipp">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="0.5"/>
       </CODE>
     </NODE>
@@ -2304,46 +2258,35 @@
   <NODE code="asu_plaf" origin="ipp">
     <NODE code="plafond_de_ressources_pour_la_majoration_du_salaire_unique" origin="ipp">
       <CODE code="1_enfant" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="20100"/>
       </CODE>
       <CODE code="2_enfants" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="24120"/>
       </CODE>
       <CODE code="par_enfant_supplementaire" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="4020"/>
       </CODE>
       <CODE code="sans_enfant" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="16080"/>
       </CODE>
     </NODE>
     <NODE code="plafond_de_ressources_pour_le_droit_au_salaire_unique" origin="ipp">
       <CODE code="1_enfant" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="28800"/>
       </CODE>
       <CODE code="2_enfants" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="34560"/>
       </CODE>
       <CODE code="par_enfant_supplementaire" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="5760"/>
       </CODE>
       <CODE code="sans_enfant" format="float" origin="ipp" type="monetary">
-        <END deb="1978-01-01"/>
         <VALUE deb="1976-07-01" valeur="23040"/>
       </CODE>
     </NODE>
   </NODE>
   <NODE code="ata" origin="ipp">
     <CODE code="montant_journalier" format="float" origin="ipp" type="monetary" description="Montant journalier de l'ATA">
-      <END deb="2015-11-01"/>
-      <VALUE deb="2017-04-01" valeur="11.49"/>
-      <VALUE deb="2016-04-01" valeur="11.46"/>
       <VALUE deb="2015-01-01" valeur="11.45"/>
       <VALUE deb="2014-01-01" valeur="11.35"/>
       <VALUE deb="2013-01-01" valeur="11.2"/>
@@ -2359,6 +2302,7 @@
   <NODE code="avpf" origin="ipp">
     <NODE code="salaire_forfaitaire_de_l_assurance_vieillesse_des_parents_au_foyer_avpf" origin="ipp">
       <CODE code="guadeloupe_guyane_martinique" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2017-01-01" valeur="1634.23"/>
         <VALUE deb="2016-01-01" valeur="1624.09"/>
         <VALUE deb="2015-01-01" valeur="1610.57"/>
         <VALUE deb="2014-01-01" valeur="1594"/>
@@ -2400,6 +2344,7 @@
         <VALUE deb="1978-01-01" valeur="1354.2"/>
       </CODE>
       <CODE code="metropole" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2017-01-01" valeur="1634.23"/>
         <VALUE deb="2016-01-01" valeur="1624.09"/>
         <VALUE deb="2015-01-01" valeur="1610.57"/>
         <VALUE deb="2014-01-01" valeur="1594"/>
@@ -2447,6 +2392,7 @@
         <VALUE deb="1972-07-01" valeur="667.32"/>
       </CODE>
       <CODE code="reunion" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2017-01-01" valeur="1634.23"/>
         <VALUE deb="2016-01-01" valeur="1624.09"/>
         <VALUE deb="2015-01-01" valeur="1610.57"/>
         <VALUE deb="2014-01-01" valeur="1594"/>
@@ -2489,6 +2435,7 @@
       </CODE>
     </NODE>
     <CODE code="taux" format="percent" origin="ipp">
+      <VALUE deb="2017-01-01" valeur="0.1775"/>
       <VALUE deb="2016-01-01" valeur="0.1765"/>
       <VALUE deb="2015-01-01" valeur="0.1745"/>
       <VALUE deb="2014-01-01" valeur="0.1725"/>
@@ -2589,7 +2536,6 @@
       <VALUE deb="1962-04-01" valeur="800"/>
     </CODE>
     <CODE code="plafonds_de_ressources_menages" format="float" origin="ipp" type="monetary">
-      <VALUE deb="2017-04-01" valeur="14963.65"/>
       <VALUE deb="2016-04-01" valeur="14918.9"/>
       <VALUE deb="2014-10-01" valeur="14904"/>
       <VALUE deb="2014-04-01" valeur="14755.32"/>
@@ -2676,7 +2622,6 @@
       <VALUE deb="1962-04-01" valeur="3200"/>
     </CODE>
     <CODE code="plafonds_de_ressources_personnes_seules" format="float" origin="ipp" type="monetary">
-      <VALUE deb="2017-04-01" valeur="9638.42"/>
       <VALUE deb="2016-04-01" valeur="9609.6"/>
       <VALUE deb="2014-10-01" valeur="9600"/>
       <VALUE deb="2014-04-01" valeur="9503.89"/>
@@ -2860,7 +2805,6 @@
   <NODE code="def_biactif" origin="ipp">
     <NODE code="revenu_professionnel_plancher_pour_les_couples_biactifs" origin="ipp">
       <CODE code="en_nombre_de_fois_de_la_bmaf" origin="ipp">
-        <END deb="2011-11-01"/>
         <VALUE deb="1979-01-01" valeur="12"/>
       </CODE>
       <CODE code="en_pourcentage_du_pss" format="percent" origin="ipp">
@@ -2881,11 +2825,9 @@
   </NODE>
   <NODE code="icaf" origin="ipp">
     <CODE code="2_enfants_a_charge" format="float" origin="ipp" type="monetary">
-      <END deb="1978-01-01"/>
       <VALUE deb="1958-01-01" valeur="981"/>
     </CODE>
     <CODE code="par_enfant_supplementaire" format="float" origin="ipp" type="monetary">
-      <END deb="1978-01-01"/>
       <VALUE deb="1958-01-01" valeur="1509"/>
     </CODE>
   </NODE>
@@ -3030,6 +2972,7 @@
         <VALUE deb="2000-01-01" valeur="1"/>
       </CODE>
       <CODE code="montant" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2015-09-01,openfisca_fin=2016-08-31,openfisca_valeur=807.65,ipp_valeur=unknown)" description="Montant mensuel de l'allocation adulte handicapé" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2017-04-01" valeur="810.89"/>
         <VALUE deb="2016-04-01" valeur="808.46"/>
         <VALUE deb="2015-09-01" valeur="807.65"/>
         <VALUE deb="2014-09-01" valeur="800.45"/>
@@ -3083,7 +3026,7 @@
         <VALUE deb="2005-01-01" valeur="219.53"/>
       </CODE>
       <CODE code="mon_seul" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2001-01-01,openfisca_fin=2013-12-31,openfisca_valeur=152.45,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2014-01-01,openfisca_fin=None,openfisca_valeur=152.45,ipp_valeur=unknown)" description="Montant de l'aide pour une personne seule" format="float" origin="ipp" type="monetary">
-        <VALUE deb="2003-01-01" valeur="125.45"/>
+        <VALUE deb="2003-01-01" valeur="152.45"/>
       </CODE>
       <CODE code="tx_2p" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=1998-01-01,openfisca_fin=2013-12-31,openfisca_valeur=.50,ipp_valeur=unknown)" description="Taux pour la seconde personne" format="percent" origin="ipp">
         <VALUE deb="2003-01-01" valeur="0.5"/>
@@ -3097,7 +3040,6 @@
     </NODE>
     <NODE code="api" description="Allocation parent isolé" origin="ipp">
       <CODE code="age_limite" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=1977-10-01,openfisca_fin=2014-12-31,openfisca_valeur=3,ipp_valeur=unknown)" description="Limite d'âge des enfants ouvrant droit" origin="ipp">
-        <END deb="2009-06-01"/>
         <VALUE deb="1976-10-01" valeur="3"/>
       </CODE>
       <CODE code="age_pac" description="Limite d'âge des enfants comptés à charge" format="integer" origin="openfisca" type="age">
@@ -3109,25 +3051,20 @@
         <VALUE deb="1977-01-10" valeur="1.5"/>
       </CODE>
       <CODE code="duree_du_droit_en_mois" origin="ipp">
-        <END deb="2009-06-01"/>
         <VALUE deb="1976-10-01" valeur="12"/>
       </CODE>
       <CODE code="femmes_enceintes_sans_enfant_a_charge" format="percent" origin="ipp">
-        <END deb="2009-06-01"/>
         <VALUE deb="1977-11-27" valeur="1.5"/>
         <VALUE deb="1976-10-01" valeur="1.3"/>
       </CODE>
       <CODE code="limite_de_duree_en_mois_1" origin="ipp">
-        <END deb="2009-06-01"/>
         <VALUE deb="1976-10-01" valeur="18"/>
       </CODE>
       <CODE code="personne_isolee_avec_un_enfant_a_charge" format="percent" origin="ipp">
-        <END deb="2009-06-01"/>
         <VALUE deb="1977-11-27" valeur="2"/>
         <VALUE deb="1976-10-01" valeur="1.74"/>
       </CODE>
       <CODE code="supplement_par_enfant" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=1977-10-01,openfisca_fin=2009-05-31,openfisca_valeur=0.5,ipp_valeur=unknown)" description="Majoration de taux par enfant supplémentaire (en pourcentage de la BMAF)" format="percent" origin="ipp">
-        <END deb="2009-06-01"/>
         <VALUE deb="1977-11-27" valeur="0.5"/>
         <VALUE deb="1976-10-01" valeur="0.44"/>
       </CODE>
@@ -3353,6 +3290,7 @@
         <VALUE deb="2002-01-01" valeur="0.16"/>
       </CODE>
       <CODE code="garantie_ressources" description="Garantie de ressources pour les personnes handicapées (cpltx_1+aah)" format="float" origin="ipp" type="monetary">
+        <VALUE deb="2017-04-01" valeur="990.2"/>
         <VALUE deb="2016-04-01" valeur="987.77"/>
         <VALUE deb="2015-09-01" valeur="986.96"/>
         <VALUE deb="2014-09-01" valeur="979.76"/>
@@ -3381,7 +3319,6 @@
         <VALUE deb="2006-07-01" valeur="179.31"/>
       </CODE>
       <CODE code="taux_du_montant_mensuel_du_complement_aux_adultes_handicape_2" format="percent" origin="ipp">
-        <END deb="2008-09-01"/>
         <VALUE deb="2002-01-01" valeur="0.16"/>
       </CODE>
     </NODE>
@@ -3444,7 +3381,6 @@
         <VALUE deb="1977-10-01" valeur="24"/>
       </CODE>
       <CODE code="condition_d_age_pour_l_allocataire" origin="ipp">
-        <END deb="2009-06-01"/>
         <VALUE deb="1989-01-01" valeur="25"/>
       </CODE>
       <CODE code="duree_min_titre_sejour" description="Durée minimale de titre du séjour permettant de bénéficier du RSA" format="integer" origin="openfisca">
@@ -3471,15 +3407,12 @@
       </NODE>
       <NODE code="forfait_logement_en_du_montant_forfaitaire_du_rmi" origin="ipp">
         <CODE code="1_personne_1" format="percent" origin="ipp">
-          <END deb="2009-06-01"/>
           <VALUE deb="1988-12-14" valeur="0.12"/>
         </CODE>
         <CODE code="2_personnes" format="percent" origin="ipp">
-          <END deb="2009-06-01"/>
           <VALUE deb="1988-12-14" valeur="0.16"/>
         </CODE>
         <CODE code="3_personnes_ou_plus" format="percent" origin="ipp">
-          <END deb="2009-06-01"/>
           <VALUE deb="1988-12-14" valeur="0.165"/>
         </CODE>
       </NODE>
@@ -3501,25 +3434,20 @@
       </NODE>
       <NODE code="majoration_du_montant_maximal_en_de_la_base_de_rmi" origin="ipp">
         <CODE code="celibataire_1_enfant" format="percent" origin="ipp">
-          <END deb="2009-06-01"/>
           <VALUE deb="1988-12-14" valeur="0.5"/>
         </CODE>
         <CODE code="couple_1_enfant_ou_pour_le_deuxieme_enfant_1" format="percent" origin="ipp">
-          <END deb="2009-06-01"/>
           <VALUE deb="1988-12-14" valeur="0.3"/>
         </CODE>
         <CODE code="couples" format="percent" origin="ipp">
-          <END deb="2009-06-01"/>
           <VALUE deb="1988-12-14" valeur="0.5"/>
         </CODE>
         <CODE code="par_enfant_supplementaire" format="percent" origin="ipp">
-          <END deb="2009-06-01"/>
           <VALUE deb="1990-04-01" valeur="0.4"/>
           <VALUE deb="1988-12-14" valeur="0.3"/>
         </CODE>
       </NODE>
       <CODE code="montant_de_base_du_rmi" format="float" origin="ipp" type="monetary">
-        <END deb="2009-06-01"/>
         <VALUE deb="2009-01-01" valeur="454.63"/>
         <VALUE deb="2008-01-01" valeur="447.91"/>
         <VALUE deb="2007-01-01" valeur="440.86"/>
@@ -3547,12 +3475,10 @@
         <VALUE deb="1989-01-01" valeur="2000"/>
       </CODE>
       <CODE code="montant_minimum_verse" format="float" origin="ipp" type="monetary">
-        <END deb="2009-06-01"/>
         <VALUE deb="2002-01-01" valeur="6"/>
         <VALUE deb="1988-12-14" valeur="40"/>
       </CODE>
       <CODE code="nombre_minimal_d_enfant_si_la_condition_d_age_n_est_pas_respectee" origin="ipp">
-        <END deb="2009-06-01"/>
         <VALUE deb="1989-01-01" valeur="1"/>
       </CODE>
       <NODE code="patrimoine" description="Revenus liés au patrimoine" origin="openfisca">
@@ -3668,7 +3594,6 @@
         </CODE>
       </NODE>
       <CODE code="majoration_des_ressources_sur_les_revenus_d_activite" format="percent" origin="ipp">
-        <END deb="2016-01-01"/>
         <VALUE deb="2009-06-01" valeur="0.62"/>
       </CODE>
       <NODE code="majoration_isolement_en_de_la_base_rsa" origin="ipp">
@@ -3704,8 +3629,6 @@
         </CODE>
       </NODE>
       <CODE code="montant_de_base_du_rsa" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2001-01-01,openfisca_fin=2001-12-31,openfisca_valeur=397.6,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2005-01-01,openfisca_fin=2005-12-31,openfisca_valeur=425.4,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2002-01-01,openfisca_fin=2002-12-31,openfisca_valeur=405.62,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2003-01-01,openfisca_fin=2003-12-31,openfisca_valeur=411.7,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2009-01-01,openfisca_fin=2009-12-31,openfisca_valeur=454.63,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2007-01-01,openfisca_fin=2007-12-31,openfisca_valeur=440.86,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2006-01-01,openfisca_fin=2006-12-31,openfisca_valeur=433.06,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2008-01-01,openfisca_fin=2008-12-31,openfisca_valeur=447.91,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2004-01-01,openfisca_fin=2004-12-31,openfisca_valeur=417.88,ipp_valeur=unknown)" description="Rsa socle" format="float" origin="ipp" type="monetary">
-        <VALUE deb="2017-09-01" valeur="545.48"/>
-        <VALUE deb="2017-04-01" valeur="536.78"/>
         <VALUE deb="2016-09-01" valeur="535.17"/>
         <VALUE deb="2016-04-01" valeur="524.68"/>
         <VALUE deb="2015-09-01" valeur="524.16"/>
@@ -3720,7 +3643,6 @@
         <VALUE deb="2009-06-01" valeur="454.63"/>
       </CODE>
       <CODE code="montant_minimum_verse" format="float" origin="ipp" type="monetary">
-        <END deb="2016-01-01"/>
         <VALUE deb="2009-06-01" valeur="6"/>
       </CODE>
       <CODE code="nombre_minimal_d_enfants_1" origin="ipp">
@@ -3757,11 +3679,9 @@
   <NODE code="pd" origin="ipp">
     <NODE code="taux_en_de_la_bmaf" origin="ipp">
       <CODE code="1_enfant" format="percent" origin="ipp">
-        <END deb="1995-01-01"/>
         <VALUE deb="1976-08-01" valeur="2"/>
       </CODE>
       <CODE code="2_enfants" format="percent" origin="ipp">
-        <END deb="1995-01-01"/>
         <VALUE deb="1976-08-01" valeur="2.2"/>
       </CODE>
       <CODE code="3_enfants" format="percent" origin="ipp">
@@ -3774,29 +3694,24 @@
         <VALUE deb="1976-08-01" valeur="2.8"/>
       </CODE>
       <CODE code="jeune_travailleur_salarie" format="percent" origin="ipp">
-        <END deb="1995-01-01"/>
         <VALUE deb="1976-08-01" valeur="1"/>
       </CODE>
       <CODE code="par_enfants_en_plus" format="percent" origin="ipp">
         <VALUE deb="1976-08-01" valeur="0.2"/>
       </CODE>
       <CODE code="personne_agee_ou_infirme" format="percent" origin="ipp">
-        <END deb="1995-01-01"/>
         <VALUE deb="1976-08-01" valeur="2"/>
       </CODE>
     </NODE>
   </NODE>
   <NODE code="pjm_c_plaf" origin="ipp">
     <CODE code="age_moyen_maximum_des_conjoints" origin="ipp">
-      <END deb="1985-05-16"/>
       <VALUE deb="1978-01-01" valeur="26"/>
     </CODE>
     <CODE code="majoration_par_enfant_supplementaire" format="percent" origin="ipp">
-      <END deb="1985-05-16"/>
       <VALUE deb="1978-01-01" valeur="0.25"/>
     </CODE>
     <CODE code="plafond_de_ressources_sans_enfant_1" format="float" origin="ipp" type="monetary">
-      <END deb="1985-05-16"/>
       <VALUE deb="1984-07-01" valeur="63323"/>
       <VALUE deb="1983-07-01" valeur="57935"/>
       <VALUE deb="1983-01-01" valeur="53564"/>
@@ -3808,7 +3723,6 @@
       <VALUE deb="1978-01-01" valeur="36560"/>
     </CODE>
     <CODE code="smic_de_l_annee_de_reference_n_2" format="float" origin="ipp" type="monetary">
-      <END deb="1983-01-01"/>
       <VALUE deb="1982-07-01" valeur="19.64"/>
       <VALUE deb="1981-07-01" valeur="16.72"/>
       <VALUE deb="1980-07-01" valeur="14"/>
@@ -3845,6 +3759,7 @@
           <VALUE deb="2006-01-01" valeur="1.8221"/>
         </CODE>
         <CODE code="6e_categorie_1" format="float" origin="ipp" type="monetary">
+          <VALUE deb="2017-04-01" valeur="1107.49"/>
           <VALUE deb="2016-04-01" valeur="1104.18"/>
           <VALUE deb="2014-04-01" valeur="1103.08"/>
           <VALUE deb="2013-04-01" valeur="1096.5"/>
@@ -3901,40 +3816,32 @@
     </NODE>
     <NODE code="aes" origin="ipp">
       <CODE code="age_maximum_de_l_enfant" origin="ipp">
-        <END deb="2006-01-01"/>
         <VALUE deb="1976-08-01" valeur="20"/>
       </CODE>
       <CODE code="base" format="percent" origin="ipp">
-        <END deb="2006-01-01"/>
         <VALUE deb="1976-08-01" valeur="0.32"/>
       </CODE>
       <NODE code="complement_d_allocation" origin="ipp">
         <CODE code="1ere_categorie" format="percent" origin="ipp">
-          <END deb="2006-01-01"/>
           <VALUE deb="1991-10-01" valeur="0.24"/>
           <VALUE deb="1984-01-01" valeur="0.72"/>
           <VALUE deb="1976-08-01" valeur="0.48"/>
         </CODE>
         <CODE code="2e_categorie" format="percent" origin="ipp">
-          <END deb="2006-01-01"/>
           <VALUE deb="2002-04-01" valeur="0.65"/>
           <VALUE deb="1991-10-01" valeur="0.72"/>
           <VALUE deb="1976-08-01" valeur="0.24"/>
         </CODE>
         <CODE code="3e_categorie" format="percent" origin="ipp">
-          <END deb="2006-01-01"/>
           <VALUE deb="2002-04-01" valeur="0.92"/>
         </CODE>
         <CODE code="4e_categorie" format="percent" origin="ipp">
-          <END deb="2006-01-01"/>
           <VALUE deb="2002-04-01" valeur="1.4257"/>
         </CODE>
         <CODE code="5e_categorie" format="percent" origin="ipp">
-          <END deb="2006-01-01"/>
           <VALUE deb="2002-04-01" valeur="1.8221"/>
         </CODE>
         <CODE code="6e_categorie_2" format="float" origin="ipp" type="monetary">
-          <END deb="2006-01-01"/>
           <VALUE deb="2005-01-01" valeur="964.78"/>
           <VALUE deb="2004-04-01" valeur="945.87"/>
           <VALUE deb="2003-04-01" valeur="930.05"/>
@@ -3956,49 +3863,42 @@
         </CODE>
         <NODE code="majoration_a_partir_du_deuxieme_enfant_en_de_la_bmaf_dom" origin="ipp">
           <CODE code="taux_2eme_enfant" format="percent" origin="ipp">
-            <END deb="1999-01-01"/>
             <VALUE deb="1993-01-01" valeur="0.2788"/>
             <VALUE deb="1992-07-01" valeur="0.2715"/>
             <VALUE deb="1992-02-12" valeur="0.2594"/>
             <VALUE deb="1991-08-06" valeur="0.2463"/>
           </CODE>
           <CODE code="taux_3eme_enfant" format="percent" origin="ipp">
-            <END deb="1999-01-01"/>
             <VALUE deb="1993-01-01" valeur="0.3236"/>
             <VALUE deb="1992-07-01" valeur="0.3084"/>
             <VALUE deb="1992-02-12" valeur="0.283"/>
             <VALUE deb="1991-08-06" valeur="0.2572"/>
           </CODE>
           <CODE code="taux_4eme_enfant" format="percent" origin="ipp">
-            <END deb="1999-01-01"/>
             <VALUE deb="1993-01-01" valeur="0.3457"/>
             <VALUE deb="1992-07-01" valeur="0.3344"/>
             <VALUE deb="1992-02-12" valeur="0.3155"/>
             <VALUE deb="1991-08-06" valeur="0.2978"/>
           </CODE>
           <CODE code="taux_5eme_enfant" format="percent" origin="ipp">
-            <END deb="1999-01-01"/>
             <VALUE deb="1993-01-01" valeur="0.2806"/>
             <VALUE deb="1992-07-01" valeur="0.2578"/>
             <VALUE deb="1992-02-12" valeur="0.2197"/>
             <VALUE deb="1991-08-06" valeur="0.1812"/>
           </CODE>
           <CODE code="taux_6eme_enfant_et_plus" format="percent" origin="ipp">
-            <END deb="1999-01-01"/>
             <VALUE deb="1993-01-01" valeur="0.2576"/>
             <VALUE deb="1992-07-01" valeur="0.2307"/>
             <VALUE deb="1992-02-12" valeur="0.1859"/>
             <VALUE deb="1991-08-06" valeur="0.1411"/>
           </CODE>
           <CODE code="taux_de_majoration_de_la_1ere_tranche_d_age" format="percent" origin="ipp">
-            <END deb="1999-01-01"/>
             <VALUE deb="1993-01-01" valeur="0.0674"/>
             <VALUE deb="1992-07-01" valeur="0.0634"/>
             <VALUE deb="1992-02-12" valeur="0.0567"/>
             <VALUE deb="1991-08-06" valeur="0.0505"/>
           </CODE>
           <CODE code="taux_de_majoration_de_la_2eme_tranche_d_age" format="percent" origin="ipp">
-            <END deb="1999-01-01"/>
             <VALUE deb="1993-01-01" valeur="0.1161"/>
             <VALUE deb="1992-07-01" valeur="0.1083"/>
             <VALUE deb="1992-02-12" valeur="0.0954"/>
@@ -4033,9 +3933,9 @@
       <CODE code="bmaf" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2001-01-01,openfisca_fin=2001-12-31,openfisca_valeur=334.84,ipp_valeur=2196.38),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2011-01-01,openfisca_fin=2012-03-31,openfisca_valeur=395.04,ipp_valeur=unknown),children:openfisca-not-fully-included-in-ipp(openfisca_deb=2014-04-01,openfisca_fin=2016-03-31,openfisca_valeur=406.21,ipp_valeur=406.21274)" description="Base mensuelle des allocations familiales" format="float" origin="ipp" type="monetary">
         <VALUE deb="2017-04-01" valeur="407.84"/>
         <VALUE deb="2016-04-01" valeur="406.62"/>
-        <VALUE deb="2014-04-01" valeur="406.21"/>
+        <VALUE deb="2014-04-01" valeur="406.21274"/>
         <VALUE deb="2013-04-01" valeur="403.79"/>
-        <VALUE deb="2012-01-01" valeur="399"/>
+        <VALUE deb="2012-04-01" valeur="399"/>
         <VALUE deb="2011-01-01" valeur="395.04"/>
         <VALUE deb="2009-01-01" valeur="389.2"/>
         <VALUE deb="2008-01-01" valeur="377.86"/>
@@ -4080,8 +3980,38 @@
         <VALUE deb="1976-08-01" valeur="694.5"/>
         <VALUE deb="1975-08-01" valeur="632"/>
         <VALUE deb="1975-04-01" valeur="592"/>
+        <VALUE deb="1974-08-01" valeur="553"/>
+        <VALUE deb="1973-08-01" valeur="490"/>
+        <VALUE deb="1973-01-01" valeur="458.2"/>
+        <VALUE deb="1972-08-01" valeur="440.5"/>
+        <VALUE deb="1971-08-01" valeur="415.5"/>
+        <VALUE deb="1970-08-01" valeur="394.5"/>
+        <VALUE deb="1969-08-01" valeur="377.5"/>
+        <VALUE deb="1968-02-01" valeur="343"/>
+        <VALUE deb="1967-08-01" valeur="328"/>
+        <VALUE deb="1966-08-01" valeur="313.5"/>
+        <VALUE deb="1965-08-01" valeur="300"/>
+        <VALUE deb="1964-08-01" valeur="288"/>
+        <VALUE deb="1963-08-01" valeur="276.5"/>
+        <VALUE deb="1962-11-01" valeur="264.5"/>
+        <VALUE deb="1962-08-01" valeur="253"/>
+        <VALUE deb="1962-01-01" valeur="243"/>
         <VALUE deb="1961-08-01" valeur="234"/>
-        <VALUE deb="1961-01-01" valeur="220.5"/>
+        <VALUE deb="1961-01-01" valeur="227"/>
+        <VALUE deb="1960-08-01" valeur="220.5"/>
+        <VALUE deb="1959-08-01" valeur="210"/>
+        <VALUE deb="1958-01-01" valeur="190"/>
+        <VALUE deb="1955-01-01" valeur="180"/>
+        <VALUE deb="1951-10-01" valeur="172.5"/>
+        <VALUE deb="1951-04-01" valeur="150"/>
+        <VALUE deb="1950-12-01" valeur="144"/>
+        <VALUE deb="1948-09-01" valeur="120"/>
+        <VALUE deb="1948-01-01" valeur="105"/>
+        <VALUE deb="1947-12-01" valeur="85"/>
+        <VALUE deb="1947-08-01" valeur="70"/>
+        <VALUE deb="1947-07-01" valeur="62.5"/>
+        <VALUE deb="1947-02-01" valeur="62.15"/>
+        <VALUE deb="1946-07-01" valeur="56.5"/>
       </CODE>
       <CODE code="crds" description="Taux de crds" format="percent" origin="openfisca">
         <VALUE deb="1996-01-01" valeur="0.005"/>
@@ -4122,13 +4052,11 @@
             <VALUE deb="1984-01-01" valeur="0.09"/>
           </CODE>
           <CODE code="taux_de_la_tranche_2" format="percent" origin="ipp">
-            <END deb="2008-05-01"/>
             <VALUE deb="1984-01-01" valeur="0.16"/>
           </CODE>
         </NODE>
         <NODE code="tranches_d_age" origin="ipp">
           <CODE code="age_debut_de_la_deuxieme_tranche" origin="ipp">
-            <END deb="2008-05-01"/>
             <VALUE deb="1984-01-01" valeur="16"/>
           </CODE>
           <CODE code="age_debut_de_la_premiere_tranche" origin="ipp">
@@ -4174,17 +4102,14 @@
       <NODE code="plafond_1998" origin="ipp">
         <NODE code="majoration_plafond" origin="ipp">
           <CODE code="couples_biactifs_et_parents_isoles" format="float" origin="ipp" type="monetary">
-            <END deb="1999-01-01"/>
             <VALUE deb="1998-03-01" valeur="84000"/>
           </CODE>
           <CODE code="par_enfant_supplementaire" format="float" origin="ipp" type="monetary">
-            <END deb="1999-01-01"/>
             <VALUE deb="1998-03-01" valeur="60000"/>
           </CODE>
         </NODE>
         <NODE code="plafond_de_ressources" origin="ipp">
           <CODE code="0_enfant_couples_monoactifs" format="float" origin="ipp" type="monetary">
-            <END deb="1999-01-01"/>
             <VALUE deb="1998-03-01" valeur="180000"/>
           </CODE>
         </NODE>
@@ -4206,7 +4131,29 @@
           <VALUE deb="2002-01-01" valeur="0.41"/>
         </CODE>
       </NODE>
-    </NODE>
+    <NODE code="bmaf_ipp" origin="ipp">
+        <CODE code="bmaf_regimes_agricoles" origin="ipp" format="float" type="monetary">
+          <VALUE deb="1952-04-01" valeur="172.5"/>
+          <VALUE deb="1951-10-01" valeur="119.6"/>
+          <VALUE deb="1951-04-01" valeur="104"/>
+          <VALUE deb="1950-12-01" valeur="96"/>
+          <VALUE deb="1950-07-01" valeur="80"/>
+          <VALUE deb="1947-07-01" valeur="62.5"/>
+          <VALUE deb="1946-07-01" valeur="56.5"/>
+        </CODE>
+        <CODE code="bmaf_e_t_i" origin="ipp" format="float" type="monetary">
+          <VALUE deb="1953-01-01" valeur="172.5"/>
+          <VALUE deb="1951-10-01" valeur="151.8"/>
+          <VALUE deb="1951-04-01" valeur="132"/>
+          <VALUE deb="1950-12-01" valeur="120"/>
+          <VALUE deb="1950-10-01" valeur="100"/>
+          <VALUE deb="1950-04-01" valeur="90"/>
+          <VALUE deb="1949-10-01" valeur="75"/>
+          <VALUE deb="1947-07-01" valeur="62.5"/>
+          <VALUE deb="1946-07-01" valeur="56.5"/>
+        </CODE>
+      </NODE>
+      </NODE>
     <NODE code="afeama" description="Aide à la famille pour l'emploi d'une assistante maternelle agréée" origin="openfisca">
       <CODE code="age1" description="Limite d'âge (stricte) pour bénéficier de l'AFEAMA" format="integer" origin="openfisca" type="age">
         <END deb="2007-01-01"/>
@@ -4323,12 +4270,10 @@
     </NODE>
     <NODE code="apje" description="Allocation pour jeune enfant (APJE)" origin="ipp">
       <CODE code="age_max_dernier_enf" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2000-01-01,openfisca_fin=2006-06-30,openfisca_valeur=3,ipp_valeur=unknown)" description="Âge limite inférieur" origin="ipp">
-        <END deb="2004-01-01"/>
         <VALUE deb="1985-01-01" valeur="3"/>
       </CODE>
       <NODE code="majoration_en_ou_en_en_du_plafond_de_ressources_avec_0_enfant" origin="ipp">
         <CODE code="biactifs_et_parents_isoles_1" format="float" origin="ipp" type="monetary">
-          <END deb="2007-01-01"/>
           <VALUE deb="2005-07-01" valeur="5869"/>
           <VALUE deb="2004-07-01" valeur="5771"/>
           <VALUE deb="2003-07-01" valeur="5663"/>
@@ -4342,7 +4287,6 @@
         </CODE>
       </NODE>
       <CODE code="mois_de_grossesse_ou_ouverture_des_droits_1" origin="ipp">
-        <END deb="2004-01-01"/>
         <VALUE deb="1996-07-01" valeur="4"/>
         <VALUE deb="1985-01-01" valeur="3"/>
       </CODE>
@@ -4365,7 +4309,6 @@
         <VALUE deb="2000-07-01" valeur="5394"/>
       </CODE>
       <CODE code="plafond_de_ressources_0_enfant" format="float" origin="ipp" type="monetary">
-        <END deb="2007-01-01"/>
         <VALUE deb="2005-07-01" valeur="14602"/>
         <VALUE deb="2004-07-01" valeur="14358"/>
         <VALUE deb="2003-07-01" valeur="14090"/>
@@ -4378,15 +4321,12 @@
         <VALUE deb="1996-07-01" valeur="84526"/>
       </CODE>
       <CODE code="taux" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2000-01-01,openfisca_fin=2006-06-30,openfisca_valeur=0.4595,ipp_valeur=unknown)" description="Taux de l'APJE" format="percent" origin="ipp">
-        <END deb="2004-01-01"/>
         <VALUE deb="1985-01-01" valeur="0.4595"/>
       </CODE>
       <CODE code="taux_enfant_1_et_2" description="Majoration du plafond pour les 2 premiers enfants" format="percent" origin="ipp">
-        <END deb="2007-01-01"/>
         <VALUE deb="1996-07-01" valeur="0.25"/>
       </CODE>
       <CODE code="taux_enfant_3_et_plus" description="Majoration du plafond à partir du 3ème enfant" format="percent" origin="ipp">
-        <END deb="2007-01-01"/>
         <VALUE deb="1996-07-01" valeur="0.3"/>
       </CODE>
     </NODE>
@@ -4476,18 +4416,14 @@
         </CODE>
       </NODE>
       <CODE code="taux_1_parent" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2016-04-01,openfisca_fin=None,openfisca_valeur=0.2589,ipp_valeur=unknown)" description="Montant de l'ASF, en pourcentage de la BMAF, pour un enfant orphelin de père ou de mère (un seul parent manquant) ou dans une situation assimilée: beaux parents ou pension alimentaire non versée" format="percent" origin="ipp">
-        <VALUE deb="2018-04-01" valeur="0.2813"/>
         <VALUE deb="2017-04-01" valeur="0.2702"/>
-        <VALUE deb="2016-04-01" valeur="0.2589"/>
         <VALUE deb="2015-04-01" valeur="0.2476"/>
         <VALUE deb="2014-04-01" valeur="0.2363"/>
         <VALUE deb="1978-01-01" valeur="0.225"/>
         <VALUE deb="1970-12-26" valeur="0.16"/>
       </CODE>
       <CODE code="taux_2_parents" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2016-04-01,openfisca_fin=None,openfisca_valeur=0.3450,ipp_valeur=unknown)" description="Montant de l'ASF, en pourcentage de la BMAF, pour un enfant orphelin (de père et de mère), ou situation assimilée." format="percent" origin="ipp">
-        <VALUE deb="2018-04-01" valeur="0.375"/>
         <VALUE deb="2017-04-01" valeur="0.36"/>
-        <VALUE deb="2016-04-01" valeur="0.345"/>
         <VALUE deb="2015-04-01" valeur="0.33"/>
         <VALUE deb="2014-04-01" valeur="0.315"/>
         <VALUE deb="1970-12-26" valeur="0.3"/>
@@ -4597,7 +4533,6 @@
         <VALUE deb="1978-01-01" valeur="0.4475"/>
       </CODE>
       <CODE code="taux_cf_majore" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2002-01-01,openfisca_fin=2014-03-31,openfisca_valeur=0.4165,ipp_valeur=unknown)" description="Taux du complément familial majoré" format="percent" origin="ipp">
-        <VALUE deb="2018-04-01" valeur="0.6248"/>
         <VALUE deb="2017-04-01" valeur="0.5833"/>
         <VALUE deb="2016-04-01" valeur="0.5416"/>
         <VALUE deb="2015-04-01" valeur="0.4999"/>
@@ -4667,8 +4602,8 @@
         </NODE>
         <NODE code="avant_2014" origin="ipp">
           <CODE code="majoration_biact_parent_isoles" description="Majoration pour biactifs et isolés" format="float" origin="ipp" type="monetary">
-            <VALUE deb="2016-01-01" valeur="11534"/>
-            <VALUE deb="2015-01-01" valeur="11488"/>
+            <VALUE deb="2016-01-01" valeur="9703"/>
+            <VALUE deb="2015-01-01" valeur="9664"/>
             <VALUE deb="2014-01-01" valeur="11408"/>
             <VALUE deb="2013-01-01" valeur="11195"/>
             <VALUE deb="2012-01-01" valeur="10965"/>
@@ -4712,32 +4647,26 @@
           <VALUE deb="2004-01-01" valeur="3"/>
         </CODE>
         <CODE code="avecab_tx_inactif" description="Taux pour les personnes inactives percevant l'allocation de base de la PAJE" format="percent" origin="ipp">
-          <END deb="2018-01-01"/>
           <VALUE deb="2004-01-01" valeur="0.9662"/>
         </CODE>
         <CODE code="avecab_tx_partiel1" description="Taux pour les personnes à temps partiel inf. à 50% percevant l'allocation de base de la PAJE" format="percent" origin="ipp">
-          <END deb="2018-01-01"/>
           <VALUE deb="2004-01-01" valeur="0.6246"/>
         </CODE>
         <CODE code="avecab_tx_partiel2" description="Taux pour les personnes à temps partiel 50pc-80pc percevant l'allocation de base de la PAJE" format="percent" origin="ipp">
-          <END deb="2018-01-01"/>
           <VALUE deb="2004-01-01" valeur="0.3603"/>
         </CODE>
         <CODE code="duree1" description="Durée (en mois) de versement pour le premier enfant" format="integer" origin="openfisca" type="months">
           <VALUE deb="2004-01-01" valeur="6"/>
         </CODE>
         <CODE code="sansab_tx_inactif" description="Taux pour les personnes inactives ne percevant pas l'allocation de base de la PAJE" format="percent" origin="ipp">
-          <END deb="2018-01-01"/>
           <VALUE deb="2014-04-01" valeur="0.9662"/>
           <VALUE deb="2004-01-01" valeur="1.4257"/>
         </CODE>
         <CODE code="sansab_tx_partiel1" description="Taux pour les personnes à temps partiel inf. à 50% ne percevant pas l'allocation de base de la PAJE" format="percent" origin="ipp">
-          <END deb="2018-01-01"/>
           <VALUE deb="2014-04-01" valeur="0.6246"/>
           <VALUE deb="2004-01-01" valeur="1.0841"/>
         </CODE>
         <CODE code="sansab_tx_partiel2" description="Taux pour les personnes à temps partiel 50%-80% ne percevant pas l'allocation de base de la PAJE" format="percent" origin="ipp">
-          <END deb="2018-01-01"/>
           <VALUE deb="2014-04-01" valeur="0.3603"/>
           <VALUE deb="2004-01-01" valeur="0.8198"/>
         </CODE>
@@ -4864,7 +4793,6 @@
           <VALUE deb="2004-01-01" valeur="5791"/>
         </CODE>
         <CODE code="taux_recours_emploi_1er_plafond" conflicts="children:openfisca-not-fully-included-in-ipp(openfisca_deb=2001-01-01,openfisca_fin=2013-12-31,openfisca_valeur=1.1404,ipp_valeur=unknown)" description="Taux pour recours à un emploi direct avant le premier plafond" format="percent" origin="ipp">
-          <VALUE deb="2012-06-01" valeur="1.0067"/>
           <VALUE deb="2008-05-01" valeur="1.1404"/>
           <VALUE deb="2004-01-01" valeur="1.0067"/>
         </CODE>
@@ -4880,7 +4808,6 @@
           <VALUE deb="2004-01-01" valeur="1"/>
         </CODE>
         <CODE code="avecab" description="Taux de la prestation en cas de perception de l'allocation de base de la PAJE" format="percent" origin="ipp">
-          <END deb="2018-01-01"/>
           <VALUE deb="2004-01-01" valeur="1.5793"/>
         </CODE>
         <CODE code="sansab" description="Taux de la prestation en cas de non perception de l'allocation de base de la PAJE" format="percent" origin="openfisca">
@@ -4986,6 +4913,17 @@
           <VALUE deb="2004-01-01" valeur="2.2975"/>
         </CODE>
       </NODE>
-    </NODE>
+    <NODE code="paje_plaf" origin="ipp">
+        <NODE code="deuxieme_plafond_ne_ou_adopte_avant_le_1er_apres_2014" origin="ipp">
+          <CODE code="plafond_de_ressources_0_enfant" origin="ipp" format="float" type="monetary">
+            <VALUE deb="2016-01-01" valeur="29403"/>
+            <VALUE deb="2015-01-01" valeur="29286"/>
+          </CODE>
+        </NODE>
+        <CODE code="majoration_pour_enfant_supplementaire" origin="ipp" format="percent">
+          <VALUE deb="2015-01-01" valeur="0.22"/>
+        </CODE>
+      </NODE>
+      </NODE>
   </NODE>
 </NODE>
