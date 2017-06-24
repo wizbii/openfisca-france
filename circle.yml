@@ -10,7 +10,7 @@ dependencies:
     - pip install --upgrade pip wheel  # pip >= 8.0 needed to be compatible with "manylinux" wheels, used by numpy >= 1.11
     - pip install twine
     - pip install .[test] --upgrade
-    - pip install git+https://github.com/guillett/openfisca-core.git@8c8e123c8f712d8712747b665d1aca53cd5fd2c9#egg=OpenFisca-Core --upgrade
+    - pip install git+https://github.com/guillett/openfisca-core.git@5e3a11eb762978a7f14e85de970460bf36ae9771#egg=OpenFisca-Core --upgrade
 test:
   pre:
     - git fetch
