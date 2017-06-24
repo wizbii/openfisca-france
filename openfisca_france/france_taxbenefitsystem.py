@@ -35,6 +35,7 @@ class FranceTaxBenefitSystem(TaxBenefitSystem):
     def __init__(self):
         TaxBenefitSystem.__init__(self, entities)
         self.Scenario = scenarios.Scenario
+        self.load_introspection_data = False
 
         param_files = [
             '__root__.xml',
