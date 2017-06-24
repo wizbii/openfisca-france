@@ -52,12 +52,12 @@ setup(
     install_requires = [
         'Biryani[datetimeconv] >= 0.10.4',
         'numpy >= 1.11, < 1.13',
-        'OpenFisca-Core == 20.0.0-hack',
+        'OpenFisca-Core-FAST == 20.0.0-hack',
         'PyYAML >= 3.10',
         'requests >= 2.8',
         ],
     dependency_links=[
-        'git+https://github.com/guillett/openfisca-core.git@8c8e123c8f712d8712747b665d1aca53cd5fd2c9#egg=OpenFisca-Core-20.0.0-hack'
+        'git+https://github.com/guillett/openfisca-core.git@8c8e123c8f712d8712747b665d1aca53cd5fd2c9#egg=OpenFisca-Core-FAST-20.0.0-hack'
     ],
     message_extractors = {'openfisca_france': [
         ('**.py', 'python', None),
