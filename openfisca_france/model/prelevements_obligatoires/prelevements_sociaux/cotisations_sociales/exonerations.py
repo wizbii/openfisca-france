@@ -22,13 +22,10 @@ class exoneration_cotisations_employeur_geographiques(Variable):
     reference = "https://www.apce.com/pid815/aides-au-recrutement.html?espace=1&tp=1"
     definition_period = MONTH
 
-    def formula(self, simulation, period):
-        exoneration_cotisations_employeur_zfu = simulation.calculate_add('exoneration_cotisations_employeur_zfu',
-            period)
-        exoneration_cotisations_employeur_zrd = simulation.calculate_add('exoneration_cotisations_employeur_zrd',
-            period)
-        exoneration_cotisations_employeur_zrr = simulation.calculate_add('exoneration_cotisations_employeur_zrr',
-            period)
+    def formula(individu, period, parameters):
+        exoneration_cotisations_employeur_zfu = individu('exoneration_cotisations_employeur_zfu', period, options = [ADD])
+        exoneration_cotisations_employeur_zrd = individu('exoneration_cotisations_employeur_zrd', period, options = [ADD])
+        exoneration_cotisations_employeur_zrr = individu('exoneration_cotisations_employeur_zrr', period, options = [ADD])
 
         exonerations_geographiques = (exoneration_cotisations_employeur_zfu + exoneration_cotisations_employeur_zrd +
             exoneration_cotisations_employeur_zrr)
@@ -43,15 +40,15 @@ class exoneration_cotisations_employeur_jei(Variable):
     reference = "http://www.apce.com/pid1653/jeune-entreprise-innovante.html?pid=1653&pagination=2"
     definition_period = MONTH
 
-    def formula(self, simulation, period):
-        assiette_allegement = simulation.calculate('assiette_allegement', period)
-        jei_date_demande = simulation.calculate('jei_date_demande', period)
-        jeune_entreprise_innovante = simulation.calculate('jeune_entreprise_innovante', period)
-        plafond_securite_sociale = simulation.calculate('plafond_securite_sociale', period)
-        smic_proratise = simulation.calculate('smic_proratise', period)
-        categorie_salarie = simulation.calculate('categorie_salarie', period)
+    def formula(individu, period, parameters):
+        assiette_allegement = individu('assiette_allegement', period)
+        jei_date_demande = individu('jei_date_demande', period)
+        jeune_entreprise_innovante = individu('jeune_entreprise_innovante', period)
+        plafond_securite_sociale = individu('plafond_securite_sociale', period)
+        smic_proratise = individu('smic_proratise', period)
+        categorie_salarie = individu('categorie_salarie', period)
 
-        bareme_by_type_sal_name = simulation.parameters_at(period.start).cotsoc.cotisations_employeur
+        bareme_by_type_sal_name = parameters(period).cotsoc.cotisations_employeur
         bareme_names = ['vieillesse_deplafonnee', 'vieillesse_plafonnee', 'maladie', 'famille']
 
         exoneration = smic_proratise * 0.0
@@ -75,7 +72,7 @@ class exoneration_cotisations_employeur_jei(Variable):
             5: 1,
             6: 1,
             7: 1,
-            }  # TODO: move to legislation parameters file
+            }  # TODO: move to parameters file
         for year_passed, rate in rate_by_year_passed.iteritems():
             condition_on_year_passed = exoneration_relative_year_passed == timedelta64(year_passed, 'Y')
             if condition_on_year_passed.any():
@@ -143,30 +140,30 @@ class exoneration_cotisations_employeur_zfu(Variable):
 # territoriales) ne peut dépasser le plafond des aides de minimis, fixé à 200 000 euros sur une période glissante de 36
 # mois (100 000 euros pour les entreprises de transport routier).
 
-    def formula(self, simulation, period):
-        assiette_allegement = simulation.calculate('assiette_allegement', period)
-        contrat_de_travail_duree = simulation.calculate('contrat_de_travail_duree', period)  # 0: CDI, 1:CDD
-        contrat_de_travail_debut = simulation.calculate('contrat_de_travail_debut', period)
-        contrat_de_travail_fin = simulation.calculate('contrat_de_travail_fin', period)
-        effectif_entreprise = simulation.calculate('effectif_entreprise', period)
-        entreprise_chiffre_affaire = simulation.calculate('entreprise_chiffre_affaire', period)
-        entreprise_bilan = simulation.calculate('entreprise_bilan', period)
-        taux_versement_transport = simulation.calculate('taux_versement_transport', period)
+    def formula(individu, period, parameters):
+        assiette_allegement = individu('assiette_allegement', period)
+        contrat_de_travail_duree = individu('contrat_de_travail_duree', period)  # 0: CDI, 1:CDD
+        contrat_de_travail_debut = individu('contrat_de_travail_debut', period)
+        contrat_de_travail_fin = individu('contrat_de_travail_fin', period)
+        effectif_entreprise = individu('effectif_entreprise', period)
+        entreprise_chiffre_affaire = individu('entreprise_chiffre_affaire', period)
+        entreprise_bilan = individu('entreprise_bilan', period)
+        taux_versement_transport = individu('taux_versement_transport', period)
 
-        # TODO: move to legislation parameters file
+        # TODO: move to parameters file
         entreprise_eligible = (entreprise_chiffre_affaire <= 1e7) | (entreprise_bilan <= 1e7)
 
-        smic_proratise = simulation.calculate('smic_proratise', period)
-        zone_franche_urbaine = simulation.calculate('zone_franche_urbaine', period)
+        smic_proratise = individu('smic_proratise', period)
+        zone_franche_urbaine = individu('zone_franche_urbaine', period)
 
         duree_cdd_eligible = (contrat_de_travail_fin > contrat_de_travail_debut + timedelta64(365, 'D'))
-        # TODO: move to legislation parameters file
+        # TODO: move to parameters file
         contrat_de_travail_eligible = (contrat_de_travail_debut <= datetime64("2014-12-31")) * (
             (contrat_de_travail_duree == 0) + (
                 (contrat_de_travail_duree == 1) * (duree_cdd_eligible)
                 )
             )
-        # TODO: move to legislation parameters file
+        # TODO: move to parameters file
 
         eligible = (
             contrat_de_travail_eligible *
@@ -174,7 +171,7 @@ class exoneration_cotisations_employeur_zfu(Variable):
             zone_franche_urbaine *
             entreprise_eligible
             )
-        bareme_by_name = simulation.parameters_at(period.start).cotsoc.cotisations_employeur['prive_non_cadre']
+        bareme_by_name = parameters(period).cotsoc.cotisations_employeur['prive_non_cadre']
         taux_max = (
             bareme_by_name['vieillesse_deplafonnee'].rates[0] +
             bareme_by_name['vieillesse_plafonnee'].rates[0] +
@@ -184,7 +181,7 @@ class exoneration_cotisations_employeur_zfu(Variable):
             bareme_by_name['fnal2'].rates[0] * (effectif_entreprise >= 20) +
             taux_versement_transport
             )
-        # TODO: move to legislation parameters file : voir http://www.urssaf.fr/images/ref_lc2009-077.pdf
+        # TODO: move to parameters file : voir http://www.urssaf.fr/images/ref_lc2009-077.pdf
         seuil_max = 2
         seuil_min = 1.4
 
@@ -199,7 +196,7 @@ class exoneration_cotisations_employeur_zfu(Variable):
             5: .60,
             6: .40,
             7: .20,
-            }  # TODO: move to legislation parameters file
+            }  # TODO: move to parameters file
         small_rate_by_year_passed = {
             0: 1,
             1: 1,
@@ -215,7 +212,7 @@ class exoneration_cotisations_employeur_zfu(Variable):
             11: .40,
             12: .20,
             13: .20,
-            }  # TODO: move to legislation parameters file
+            }  # TODO: move to parameters file
         large_taux_exoneration = eligible * 0.0
         small_taux_exoneration = eligible * 0.0
         for year_passed, rate in large_rate_by_year_passed.iteritems():
@@ -242,14 +239,14 @@ class exoneration_cotisations_employeur_zrd(Variable):
     reference = "http://www.apce.com/pid11668/exoneration-dans-les-zrd.html?espace=1&tp=1"
     definition_period = MONTH
 
-    def formula(self, simulation, period):
-        assiette_allegement = simulation.calculate('assiette_allegement', period)
-        entreprise_creation = simulation.calculate('entreprise_creation', period)
-        smic_proratise = simulation.calculate('smic_proratise', period)
-        zone_restructuration_defense = simulation.calculate('zone_restructuration_defense', period)
+    def formula(individu, period, parameters):
+        assiette_allegement = individu('assiette_allegement', period)
+        entreprise_creation = individu('entreprise_creation', period)
+        smic_proratise = individu('smic_proratise', period)
+        zone_restructuration_defense = individu('zone_restructuration_defense', period)
 
         eligible = zone_restructuration_defense
-        taux_max = .281  # TODO: move to legislation parameters file
+        taux_max = .281  # TODO: move to parameters file
         seuil_max = 2.4
         seuil_min = 1.4
         taux_exoneration = compute_taux_exoneration(assiette_allegement, smic_proratise, taux_max, seuil_max, seuil_min)
@@ -261,7 +258,7 @@ class exoneration_cotisations_employeur_zrd(Variable):
             2: 1,
             3: 2 / 3,
             4: 1 / 3,
-            }  # TODO: move to legislation parameters file
+            }  # TODO: move to parameters file
         ratio = eligible * 0.0
         for year_passed, rate in rate_by_year_passed.iteritems():
             condition_on_year_passed = exoneration_relative_year_passed == timedelta64(year_passed, 'Y')
@@ -293,17 +290,17 @@ class exoneration_cotisations_employeur_zrr(Variable):
     #
     # L'employeur ne doit avoir procédé à aucun licenciement économique durant les 12 mois précédant l'embauche.
 
-    def formula(self, simulation, period):
-        assiette_allegement = simulation.calculate('assiette_allegement', period)
-        contrat_de_travail_duree = simulation.calculate('contrat_de_travail_duree', period)  # 0: CDI, 1:CDD
-        contrat_de_travail_debut = simulation.calculate('contrat_de_travail_debut', period)
-        contrat_de_travail_fin = simulation.calculate('contrat_de_travail_fin', period)
-        effectif_entreprise = simulation.calculate('effectif_entreprise', period)
-        smic_proratise = simulation.calculate('smic_proratise', period)
-        zone_revitalisation_rurale = simulation.calculate('zone_revitalisation_rurale', period)
+    def formula(individu, period, parameters):
+        assiette_allegement = individu('assiette_allegement', period)
+        contrat_de_travail_duree = individu('contrat_de_travail_duree', period)  # 0: CDI, 1:CDD
+        contrat_de_travail_debut = individu('contrat_de_travail_debut', period)
+        contrat_de_travail_fin = individu('contrat_de_travail_fin', period)
+        effectif_entreprise = individu('effectif_entreprise', period)
+        smic_proratise = individu('smic_proratise', period)
+        zone_revitalisation_rurale = individu('zone_revitalisation_rurale', period)
 
         duree_cdd_eligible = contrat_de_travail_fin > contrat_de_travail_debut + timedelta64(365, 'D')
-        # TODO: move to legislation parameters file
+        # TODO: move to parameters file
         contrat_de_travail_eligible = (
             contrat_de_travail_duree == 0) + (
             (contrat_de_travail_duree == 1) * (duree_cdd_eligible)
@@ -319,7 +316,7 @@ class exoneration_cotisations_employeur_zrr(Variable):
             zone_revitalisation_rurale *
             duree_validite
             )
-        taux_max = .281 if period.start.year < 2015 else .2655  # TODO: move to legislation parameters file
+        taux_max = .281 if period.start.year < 2015 else .2655  # TODO: move to parameters file
         seuil_max = 2.4
         seuil_min = 1.5
         taux_exoneration = compute_taux_exoneration(assiette_allegement, smic_proratise, taux_max, seuil_max, seuil_min)
@@ -337,22 +334,22 @@ class exoneration_is_creation_zrr(Variable):
     definition_period = YEAR
     calculate_output = calculate_output_divide
 
-    def formula(self, simulation, period):
+    def formula(individu, period, parameters):
         decembre = period.first_month.offset(11, 'month')
-        effectif_entreprise = simulation.calculate('effectif_entreprise', decembre)
-        entreprise_benefice = simulation.calculate_add('entreprise_benefice', period)
+        effectif_entreprise = individu('effectif_entreprise', decembre)
+        entreprise_benefice = individu('entreprise_benefice', period, options = [ADD])
         # TODO: MODIFIER avec création d'entreprise
-        contrat_de_travail_duree = simulation.calculate('contrat_de_travail_duree', decembre)  # 0: CDI, 1:CDD
+        contrat_de_travail_duree = individu('contrat_de_travail_duree', decembre)  # 0: CDI, 1:CDD
 
-        contrat_de_travail_debut = simulation.calculate('contrat_de_travail_debut', decembre)
-        contrat_de_travail_fin = simulation.calculate('contrat_de_travail_fin', decembre)
+        contrat_de_travail_debut = individu('contrat_de_travail_debut', decembre)
+        contrat_de_travail_fin = individu('contrat_de_travail_fin', decembre)
         duree_eligible = contrat_de_travail_fin > contrat_de_travail_debut + timedelta64(365, 'D')
-        # TODO: move to legislation parameters file
+        # TODO: move to parameters file
         contrat_de_travail_eligible = (
             contrat_de_travail_duree == 0) + (
             (contrat_de_travail_duree == 1) * (duree_eligible)
             )
-        zone_revitalisation_rurale = simulation.calculate('zone_revitalisation_rurale', decembre)
+        zone_revitalisation_rurale = individu('zone_revitalisation_rurale', decembre)
         eligible = (
             contrat_de_travail_eligible *
             (effectif_entreprise <= 50) *
@@ -368,7 +365,7 @@ class exoneration_is_creation_zrr(Variable):
             5: .75,
             6: .50,
             7: .25,
-            }  # TODO: move to legislation parameters file
+            }  # TODO: move to parameters file
         taux_exoneraion = eligible * 0.0
         for year_passed, rate in rate_by_year_passed.iteritems():
             condition_on_year_passed = exoneration_relative_year_passed == timedelta64(year_passed, 'Y')
@@ -386,8 +383,8 @@ class exoneration_is_creation_zrr(Variable):
 #     # Actuellement, deux régions sont concernées : Champagne-Ardenne (zone d'emploi de la Vallée de la Meuse)
 #     # et Midi-Pyrénées (zone d'emploi de Lavelanet).
 #
-#     def formula(self, simulation, period):
-#         effectif_entreprise = simulation.calculate('effectif_entreprise', period)
+#     def formula(individu, period, parameters):
+#         effectif_entreprise = individu('effectif_entreprise', period)
 #         return (effectif_entreprise >= 1) * False
 
 class jeune_entreprise_innovante(Variable):
@@ -396,7 +393,7 @@ class jeune_entreprise_innovante(Variable):
     label = u"L'entreprise est une jeune entreprise innovante"
     definition_period = MONTH
 
-    def formula(self, simulation, period):
+    def formula(individu, period, parameters):
         # Toute entreprise existante au 1er janvier 2004 ou créée entre le 1er janvier 2004 et le 31 décembre 2016 à
         # condition de remplir les conditions suivantes :
         #
@@ -429,13 +426,13 @@ class jeune_entreprise_innovante(Variable):
         #
         # réaliser des dépenses de R§D représentant au moins 15 % des charges fiscalement déductibles au titre du même
         # exercice.
-        effectif_entreprise = simulation.calculate('effectif_entreprise', period)
-        entreprise_bilan = simulation.calculate('entreprise_bilan', period)
-        entreprise_chiffre_affaire = simulation.calculate('entreprise_chiffre_affaire', period)
-        entreprise_creation = simulation.calculate('entreprise_creation', period)
-        # entreprise_depenses_rd =  simulation.calculate('entreprise_depenses_rd', period)
-        jei_date_demande = simulation.calculate('jei_date_demande', period)
-        # TODO: move to legislation parameters file
+        effectif_entreprise = individu('effectif_entreprise', period)
+        entreprise_bilan = individu('entreprise_bilan', period)
+        entreprise_chiffre_affaire = individu('entreprise_chiffre_affaire', period)
+        entreprise_creation = individu('entreprise_creation', period)
+        # entreprise_depenses_rd =  individu('entreprise_depenses_rd', period)
+        jei_date_demande = individu('jei_date_demande', period)
+        # TODO: move to parameters file
         # entreprise_depenses_rd > .15 TODO
         independance = True
         jeune_entreprise_innovante = (
@@ -461,8 +458,8 @@ class bassin_emploi_redynamiser(Variable):
     # et Midi-Pyrénées (zone d'emploi de Lavelanet).
     definition_period = MONTH
 
-    def formula(self, simulation, period):
-        effectif_entreprise = simulation.calculate('effectif_entreprise', period)
+    def formula(individu, period, parameters):
+        effectif_entreprise = individu('effectif_entreprise', period)
 
         return (effectif_entreprise >= 1) * False
 
@@ -474,8 +471,8 @@ class zone_restructuration_defense(Variable):
     definition_period = MONTH
     set_input = set_input_dispatch_by_period
 
-    def formula(self, simulation, period):
-        effectif_entreprise = simulation.calculate('effectif_entreprise', period)
+    def formula(individu, period, parameters):
+        effectif_entreprise = individu('effectif_entreprise', period)
         return (effectif_entreprise >= 1) * False
 
 
@@ -486,8 +483,8 @@ class zone_franche_urbaine(Variable):
     definition_period = MONTH
     set_input = set_input_dispatch_by_period
 
-    def formula(self, simulation, period):
-        effectif_entreprise = simulation.calculate('effectif_entreprise', period)
+    def formula(individu, period, parameters):
+        effectif_entreprise = individu('effectif_entreprise', period)
         return (effectif_entreprise >= 1) * False
 
 
@@ -498,8 +495,8 @@ class zone_revitalisation_rurale(Variable):
     definition_period = MONTH
     set_input = set_input_dispatch_by_period
 
-    def formula(self, simulation, period):
-        effectif_entreprise = simulation.calculate('effectif_entreprise', period)
+    def formula(individu, period, parameters):
+        effectif_entreprise = individu('effectif_entreprise', period)
         return (effectif_entreprise >= 1) * False
 
 
