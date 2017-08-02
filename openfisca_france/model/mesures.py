@@ -114,7 +114,7 @@ class revenu_net(Variable):
     entity = Menage
     label = u"Revenu net du ménage"
     column = FloatCol
-    reference = u"http://impotsurlerevenu.org/definitions/115-revenu-net-imposable.php",
+    reference = u"http://impotsurlerevenu.org/definitions/115-revenu-net-imposable.php"
     definition_period = YEAR
 
     def formula(menage, period):
