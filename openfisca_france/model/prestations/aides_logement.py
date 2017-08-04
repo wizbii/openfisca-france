@@ -310,6 +310,20 @@ class aide_logement_base_ressources(Variable):
         return ressources
 
 
+class aide_logement_base_ressources_accession(Variable):
+    column = FloatCol
+    entity = Famille
+    label = u"Base ressources des allocations logement en accession"
+    reference = u"article R. 351-7-1 du CCH ; articles D. 542-10 et D. 831-2 du CSS"
+    definition_period = MONTH
+
+    def formula(famille, period, legislation):
+        base_ressources = famille('aide_logement_base_ressources', period)
+        Pr = legislation(period).prestations.aides_logement.ressources
+
+        return max_(base_ressources, famille.demandeur.menage('loyer', period) * Pr.dar_3)
+
+
 class aide_logement_loyer_plafond(Variable):
     column = FloatCol
     entity = Famille
@@ -813,7 +827,7 @@ class aide_logement_accession_loyer_minimum(Variable):
 
     def formula(famille, period, legislation):
         al_param = legislation(period).prestations.al_param
-        R = famille('aide_logement_base_ressources', period)
+        R = famille('aide_logement_base_ressources_accession', period)
         bareme = al_param.bareme
 
         N = famille('aide_logement_accession_nb_parts', period)
@@ -881,7 +895,7 @@ class aide_logement_accession(Variable):
         al_param_accal = legislation(period).prestations.al_param_accal
         N = famille('aide_logement_accession_nb_parts', period)
         L = min_(famille.demandeur.menage('loyer', period), famille('aide_logement_accession_loyer_plafond', period))
-        R = famille('aide_logement_base_ressources', period)
+        R = famille('aide_logement_base_ressources_accession', period)
         K = al_param_accal.constante_du_coefficient_k - max_(0, R / ( al_param_accal.multiplicateur_de_n * N ))
         C = famille('aide_logement_charges', period)
         Lo = famille('aide_logement_accession_loyer_minimum', period)
@@ -931,7 +945,7 @@ class aide_logement_apl_accession_loyer_minimum(Variable):
         al_param_accapl = legislation(period).prestations.al_param_accapl
 
         N = famille('aide_logement_apl_accession_nb_parts', period)
-        R = famille('aide_logement_base_ressources', period)
+        R = famille('aide_logement_base_ressources_accession', period)
         Cste = al_param_accapl.majoration_du_loyer_minimum_lo * N
         return (N * al_param_accapl.bareme.calc(R / N) + Cste) / 12
 
@@ -956,7 +970,7 @@ class aide_logement_apl_accession(Variable):
         al_param_accapl = legislation(period).prestations.al_param_accapl
 
         L = min_(famille.demandeur.menage('loyer', period), famille('aide_logement_apl_accession_loyer_plafond', period))
-        R = famille('aide_logement_base_ressources', period)
+        R = famille('aide_logement_base_ressources_accession', period)
         N = famille('aide_logement_apl_accession_nb_parts', period)
         K = al_param_accapl.constante_du_coefficient_k - (R / ( al_param_accapl.multiplicateur_de_n.dans_la_formule_de_ka * N ))
         C = famille('aide_logement_charges', period)
