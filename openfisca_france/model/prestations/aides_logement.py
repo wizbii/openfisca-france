@@ -778,7 +778,7 @@ class aide_logement_non_calculable(Variable):
     def formula(famille, period):
         statut_occupation_logement = famille.demandeur.menage('statut_occupation_logement', period)
 
-        return (statut_occupation_logement == 1) * 1 + (statut_occupation_logement == 7) * 2
+        return (statut_occupation_logement == 7) * 2
 
 class aide_logement_al_accession_nb_part(Variable):
     column = FloatCol
@@ -787,9 +787,21 @@ class aide_logement_al_accession_nb_part(Variable):
     definition_period = MONTH
 
     def formula(famille, period, legislation):
-        al_param_accal = legislation(period).prestations.al_param_accal
+        couple = famille('al_couple', period)
+        al_nb_pac = famille('al_nb_personnes_a_charge', period)
+        al_param = legislation(period).prestations.al_param
+        al_param_n = al_param.parametre_n
 
-        return ( al_param_accal.n_0_personnes_a_charge.isole ) * famille.demandeur.menage('loyer', period) / famille.demandeur.menage('loyer', period)
+
+        return (
+            al_param_n.isole_0_personne_a_charge * not_(couple) * (al_nb_pac == 0) +
+            al_param_n.menage_0_personnes_a_charge * couple * (al_nb_pac == 0) +
+            al_param_n['1_personne_a_charge'] * (al_nb_pac == 1) +
+            al_param_n['2_personnes_a_charge'] * (al_nb_pac == 2) +
+            al_param_n['3_personnes_a_charge'] * (al_nb_pac == 3) +
+            al_param_n['4_personnes_a_charge'] * (al_nb_pac == 4) +
+            al_param.majoration_n_par_personne_a_charge_supplementaire * (al_nb_pac >= 5) * (al_nb_pac - 4)
+        )
 
 
 class aide_logement_al_accession_loyer_minimum(Variable):
@@ -815,11 +827,46 @@ class aide_logement_al_accession_loyer_plafond(Variable):
 
     def formula(famille, period, legislation):
         zone_apl = famille.demandeur.menage('zone_apl', period)
-        al_plaf_acc = legislation(period).prestations.al_plaf_acc
-        plafond_accession_by_zone = [0] + [al_plaf_acc['plafond_pour_accession_a_la_propriete_zone_' + str(zone)].personne_isolee_sans_enfant for zone in range(1, 4)]
-        plafond_accession = take(plafond_accession_by_zone, zone_apl)
+        al = legislation(period).prestations.al_plaf_acc
+        couple = famille('al_couple', period)
+        al_nb_pac = famille('al_nb_personnes_a_charge', period)
 
-        return plafond_accession
+        zone_categories = [
+            'personne_isolee_sans_enfant',
+            'menage_seul',
+            'menage_ou_isole_avec_1_enfant',
+            'menage_ou_isole_avec_2_enfants',
+            'menage_ou_isole_avec_3_enfants',
+            'menage_ou_isole_avec_4_enfants',
+            'menage_ou_isole_avec_5_enfants',
+            'menage_ou_isole_par_enfant_en_plus'
+        ]
+
+        # Preprocessing pour pouvoir accéder aux paramètres dynamiquement par zone.
+        plafonds_by_zone = [
+            [0] +
+            [al['plafond_pour_accession_a_la_propriete_zone_' + str(zone)][i]
+            for zone in range(1, 4)]
+            for i in zone_categories
+        ]
+
+        plafond_personne_seule = take(plafonds_by_zone[0], zone_apl)
+        plafond_couple = take(plafonds_by_zone[1], zone_apl)
+        plafond_menage_ou_isole_avec_1_enfant = take(plafonds_by_zone[2], zone_apl)
+        plafond_menage_ou_isole_avec_2_enfants = take(plafonds_by_zone[3], zone_apl)
+        plafond_menage_ou_isole_avec_3_enfants = take(plafonds_by_zone[4], zone_apl)
+        plafond_menage_ou_isole_avec_4_enfants = take(plafonds_by_zone[5], zone_apl)
+        plafond_menage_ou_isole_avec_5_enfants_et_plus = take(plafonds_by_zone[6], zone_apl) + (al_nb_pac > 5) * (al_nb_pac - 5) * take(plafonds_by_zone[7], zone_apl)
+
+        return (
+            plafond_personne_seule * not_(couple) * (al_nb_pac == 0) +
+            plafond_couple * couple * (al_nb_pac == 0) +
+            plafond_menage_ou_isole_avec_1_enfant * (al_nb_pac == 1) +
+            plafond_menage_ou_isole_avec_2_enfants * (al_nb_pac == 2) +
+            plafond_menage_ou_isole_avec_3_enfants * (al_nb_pac == 3) +
+            plafond_menage_ou_isole_avec_4_enfants * (al_nb_pac == 4) +
+            plafond_menage_ou_isole_avec_5_enfants_et_plus * (al_nb_pac >= 5)
+        )
 
 
 class aide_logement_al_accession(Variable):
@@ -844,6 +891,30 @@ class aide_logement_al_accession(Variable):
         return aide - max_(0, depense_nette_minimale - depense_nette)
 
 
+class aide_logement_apl_accession_nb_part(Variable):
+    column = FloatCol
+    entity = Famille
+    label = u"Loyer minimum dans le calcul des aides au logement en accession (Lo)"
+    definition_period = MONTH
+
+    def formula(famille, period, legislation):
+        couple = famille('al_couple', period)
+        al_nb_pac = famille('al_nb_personnes_a_charge', period)
+        al_param_accapl = legislation(period).prestations.al_param_accapl
+        al_param = legislation(period).prestations.al_param
+        al_param_n = al_param.parametre_n
+
+        return (
+            al_param_accapl.n_0_personnes_a_charge.isole * not_(couple) * (al_nb_pac == 0) +
+            al_param_accapl.n_0_personnes_a_charge.menage * couple * (al_nb_pac == 0) +
+            al_param_n['1_personne_a_charge'] * (al_nb_pac == 1) +
+            al_param_n['2_personnes_a_charge'] * (al_nb_pac == 2) +
+            al_param_n['3_personnes_a_charge'] * (al_nb_pac == 3) +
+            al_param_n['4_personnes_a_charge'] * (al_nb_pac == 4) +
+            al_param.majoration_n_par_personne_a_charge_supplementaire * (al_nb_pac >= 5) * (al_nb_pac - 4)
+        )
+
+
 class aide_logement_apl_accession_loyer_minimum(Variable):
     column = FloatCol
     entity = Famille
@@ -857,7 +928,7 @@ class aide_logement_apl_accession_loyer_minimum(Variable):
     def formula(famille, period, legislation):
         al_param_accapl = legislation(period).prestations.al_param_accapl
 
-        N = al_param_accapl.n_0_personnes_a_charge.isole
+        N = famille('aide_logement_apl_accession_nb_part', period)
         R = famille('aide_logement_base_ressources', period)
         Cste = al_param_accapl.majoration_du_loyer_minimum_lo * N
         return (N * al_param_accapl.bareme.calc(R / N) + Cste) / 12
@@ -884,7 +955,8 @@ class aide_logement_apl_accession(Variable):
 
         L = min_(famille.demandeur.menage('loyer', period), famille('aide_logement_apl_accession_loyer_plafond', period))
         R = famille('aide_logement_base_ressources', period)
-        K = al_param_accapl.constante_du_coefficient_k - (R / ( al_param_accapl.multiplicateur_de_n.dans_la_formule_de_ka * al_param_accapl.n_0_personnes_a_charge.isole ))
+        N = famille('aide_logement_apl_accession_nb_part', period)
+        K = al_param_accapl.constante_du_coefficient_k - (R / ( al_param_accapl.multiplicateur_de_n.dans_la_formule_de_ka * N ))
         C = famille('aide_logement_charges', period)
         Lo = famille('aide_logement_apl_accession_loyer_minimum', period)
 
