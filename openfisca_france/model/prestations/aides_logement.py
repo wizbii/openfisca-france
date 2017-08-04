@@ -800,7 +800,12 @@ class aide_logement_al_accession_loyer_minimum(Variable):
 
     def formula(famille, period, legislation):
         al_param = legislation(period).prestations.al_param
-        return al_param.majoration_du_loyer_minimum_lo * famille.demandeur.menage('loyer', period) / famille.demandeur.menage('loyer', period)
+        R = famille('aide_logement_base_ressources', period)
+        bareme = al_param.bareme
+
+        N = famille('aide_logement_al_accession_nb_part', period)
+
+        return (N * bareme.calc(R / N) + al_param.majoration_du_loyer_minimum_lo) / 12
 
 class aide_logement_al_accession_loyer_plafond(Variable):
     column = FloatCol
@@ -847,7 +852,11 @@ class aide_logement_apl_accession_loyer_minimum(Variable):
 
     def formula(famille, period, legislation):
         al_param_accapl = legislation(period).prestations.al_param_accapl
-        return al_param_accapl.majoration_du_loyer_minimum_lo * al_param_accapl.n_0_personnes_a_charge.isole / 12 * famille.demandeur.menage('loyer', period) / famille.demandeur.menage('loyer', period)
+
+        N = al_param_accapl.n_0_personnes_a_charge.isole
+        R = famille('aide_logement_base_ressources', period)
+        Cste = al_param_accapl.majoration_du_loyer_minimum_lo * N
+        return (N * al_param_accapl.bareme.calc(R / N) + Cste) / 12
 
 
 class aide_logement_apl_accession_loyer_plafond(Variable):
