@@ -837,7 +837,11 @@ class aide_logement_al_accession(Variable):
         K = al_param_accal.constante_du_coefficient_k - max_(0, R / ( al_param_accal.multiplicateur_de_n * N ))
         C = famille('aide_logement_charges', period)
         Lo = famille('aide_logement_al_accession_loyer_minimum', period)
-        return K * (L + C - Lo)
+
+        aide = K * (L + C - Lo)
+        depense_nette = L + C - aide
+        depense_nette_minimale = R * 0.0234
+        return aide - max_(0, depense_nette_minimale - depense_nette)
 
 
 class aide_logement_apl_accession_loyer_minimum(Variable):
@@ -883,7 +887,11 @@ class aide_logement_apl_accession(Variable):
         K = al_param_accapl.constante_du_coefficient_k - (R / ( al_param_accapl.multiplicateur_de_n.dans_la_formule_de_ka * al_param_accapl.n_0_personnes_a_charge.isole ))
         C = famille('aide_logement_charges', period)
         Lo = famille('aide_logement_apl_accession_loyer_minimum', period)
-        return K * (L + C - Lo)
+
+        aide = K * (L + C - Lo)
+        depense_nette = L + C - aide
+        depense_nette_minimale = R * 0.0234
+        return aide - max_(0, depense_nette_minimale - depense_nette)
 
 class aide_logement(Variable):
     column = FloatCol
