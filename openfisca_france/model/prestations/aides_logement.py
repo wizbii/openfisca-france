@@ -780,10 +780,11 @@ class aide_logement_non_calculable(Variable):
 
         return (statut_occupation_logement == 7) * 2
 
-class aide_logement_al_accession_nb_part(Variable):
+class aide_logement_accession_nb_parts(Variable):
     column = FloatCol
     entity = Famille
-    label = u"Loyer minimum dans le calcul des aides au logement en accession (Lo)"
+    label = u"Nombre de parts dans le calcul des aides au logement en acession (N)"
+    reference = u"https://www.legifrance.gouv.fr/affichCodeArticle.do;jsessionid=8FD8BB65E037513EA8AA8672BBE3C951.tpdila22v_1?idArticle=LEGIARTI000032852785&cidTexte=LEGITEXT000006073189&dateTexte=20170803"
     definition_period = MONTH
 
     def formula(famille, period, legislation):
@@ -804,10 +805,10 @@ class aide_logement_al_accession_nb_part(Variable):
         )
 
 
-class aide_logement_al_accession_loyer_minimum(Variable):
+class aide_logement_accession_loyer_minimum(Variable):
     column = FloatCol
     entity = Famille
-    label = u"Loyer minimum dans le calcul des aides au logement en accession (Lo)"
+    label = u"Loyer minimum dans le calcul des aides au logement en accession"
     definition_period = MONTH
 
     def formula(famille, period, legislation):
@@ -815,14 +816,14 @@ class aide_logement_al_accession_loyer_minimum(Variable):
         R = famille('aide_logement_base_ressources', period)
         bareme = al_param.bareme
 
-        N = famille('aide_logement_al_accession_nb_part', period)
+        N = famille('aide_logement_accession_nb_parts', period)
 
         return (N * bareme.calc(R / N) + al_param.majoration_du_loyer_minimum_lo) / 12
 
-class aide_logement_al_accession_loyer_plafond(Variable):
+class aide_logement_accession_loyer_plafond(Variable):
     column = FloatCol
     entity = Famille
-    label = u"Aide au logement (AL accession)"
+    label = u"Loyer plafond dans le calcul des aides au logement en accesion"
     definition_period = MONTH
 
     def formula(famille, period, legislation):
@@ -869,21 +870,21 @@ class aide_logement_al_accession_loyer_plafond(Variable):
         )
 
 
-class aide_logement_al_accession(Variable):
+class aide_logement_accession(Variable):
     column = FloatCol
     entity = Famille
-    label = u"Aide au logement (AL accession)"
-    reference = u'https://www.legifrance.gouv.fr/affichCodeArticle.do;jsessionid=8FD8BB65E037513EA8AA8672BBE3C951.tpdila22v_1?idArticle=LEGIARTI000032852785&cidTexte=LEGITEXT000006073189&dateTexte=20170803'
+    label = u"Montant de l'aide au logement en accession (ALF & ALS)"
+    reference = u"https://www.legifrance.gouv.fr/affichCodeArticle.do;jsessionid=8FD8BB65E037513EA8AA8672BBE3C951.tpdila22v_1?idArticle=LEGIARTI000032852785&cidTexte=LEGITEXT000006073189&dateTexte=20170803"
     definition_period = MONTH
 
     def formula(famille, period, legislation):
         al_param_accal = legislation(period).prestations.al_param_accal
-        N = famille('aide_logement_al_accession_nb_part', period)
-        L = min_(famille.demandeur.menage('loyer', period), famille('aide_logement_al_accession_loyer_plafond', period))
+        N = famille('aide_logement_accession_nb_parts', period)
+        L = min_(famille.demandeur.menage('loyer', period), famille('aide_logement_accession_loyer_plafond', period))
         R = famille('aide_logement_base_ressources', period)
         K = al_param_accal.constante_du_coefficient_k - max_(0, R / ( al_param_accal.multiplicateur_de_n * N ))
         C = famille('aide_logement_charges', period)
-        Lo = famille('aide_logement_al_accession_loyer_minimum', period)
+        Lo = famille('aide_logement_accession_loyer_minimum', period)
 
         aide = K * (L + C - Lo)
         depense_nette = L + C - aide
@@ -891,10 +892,11 @@ class aide_logement_al_accession(Variable):
         return aide - max_(0, depense_nette_minimale - depense_nette)
 
 
-class aide_logement_apl_accession_nb_part(Variable):
+class aide_logement_apl_accession_nb_parts(Variable):
     column = FloatCol
     entity = Famille
-    label = u"Loyer minimum dans le calcul des aides au logement en accession (Lo)"
+    label = u"Nombre de parts dans le calcul des aides personnalisées au logement en acession (N)"
+    reference = u"https://www.legifrance.gouv.fr/affichCodeArticle.do;jsessionid=03FA0437CFC994DB567737DC75CBF185.tpdila22v_1?cidTexte=LEGITEXT000006074096&idArticle=LEGIARTI000006899002&dateTexte=20170807&categorieLien=cid#LEGIARTI000006899002"
     definition_period = MONTH
 
     def formula(famille, period, legislation):
@@ -922,13 +924,13 @@ class aide_logement_apl_accession_loyer_minimum(Variable):
     reference = u'https://www.legifrance.gouv.fr/affichCodeArticle.do;jsessionid=7E85A460FEE8B3660B073206C352A86F.tpdila22v_1?cidTexte=LEGITEXT000006074096&idArticle=LEGIARTI000006899012&dateTexte=20170804&categorieLien=cid#LEGIARTI000006899012'
     definition_period = MONTH
 
-    # https://www.legifrance.gouv.fr/affichCodeArticle.do;jsessionid=7E85A460FEE8B3660B073206C352A86F.tpdila22v_1?cidTexte=LEGITEXT000006074096&idArticle=LEGIARTI000006899012&dateTexte=20170804&categorieLien=cid#LEGIARTI000006899012
+    # Source du barème
     # https://www.legifrance.gouv.fr/affichTexteArticle.do;jsessionid=7E85A460FEE8B3660B073206C352A86F.tpdila22v_1?idArticle=LEGIARTI000006831961&cidTexte=JORFTEXT000000486568&categorieLien=id&dateTexte=
 
     def formula(famille, period, legislation):
         al_param_accapl = legislation(period).prestations.al_param_accapl
 
-        N = famille('aide_logement_apl_accession_nb_part', period)
+        N = famille('aide_logement_apl_accession_nb_parts', period)
         R = famille('aide_logement_base_ressources', period)
         Cste = al_param_accapl.majoration_du_loyer_minimum_lo * N
         return (N * al_param_accapl.bareme.calc(R / N) + Cste) / 12
@@ -937,7 +939,7 @@ class aide_logement_apl_accession_loyer_minimum(Variable):
 class aide_logement_apl_accession_loyer_plafond(Variable):
     column = FloatCol
     entity = Famille
-    label = u"Aide au logement (APL accession)"
+    label = u"Loyer plafond dans le calcul des aides personnalisées au logement en accesion"
     definition_period = MONTH
 
     def formula(famille, period, legislation):
@@ -955,7 +957,7 @@ class aide_logement_apl_accession(Variable):
 
         L = min_(famille.demandeur.menage('loyer', period), famille('aide_logement_apl_accession_loyer_plafond', period))
         R = famille('aide_logement_base_ressources', period)
-        N = famille('aide_logement_apl_accession_nb_part', period)
+        N = famille('aide_logement_apl_accession_nb_parts', period)
         K = al_param_accapl.constante_du_coefficient_k - (R / ( al_param_accapl.multiplicateur_de_n.dans_la_formule_de_ka * N ))
         C = famille('aide_logement_charges', period)
         Lo = famille('aide_logement_apl_accession_loyer_minimum', period)
