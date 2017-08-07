@@ -624,6 +624,25 @@ class aide_logement_montant_brut_avant_degressivite(Variable):
         participation_personnelle = famille('aide_logement_participation_personnelle', period)
 
         montant_locataire = max_(0, loyer_retenu + charges_retenues - participation_personnelle)
+        montant_accedants = 0  # TODO: APL pour les accédants à la propriété
+
+        montant = select([locataire, accedant], [montant_locataire, montant_accedants])
+
+        montant = montant * (montant >= al.al_min.montant_min_mensuel.montant_min_apl_al)  # Montant minimal de versement
+
+        return montant
+
+    def formula_2007_07_01(famille, period, legislation):
+        al = legislation(period).prestations.aides_logement
+        statut_occupation_logement = famille.demandeur.menage('statut_occupation_logement', period)
+        locataire = ((3 <= statut_occupation_logement) * (5 >= statut_occupation_logement)) + (statut_occupation_logement == 7)
+        accedant = (statut_occupation_logement == 1)
+
+        loyer_retenu = famille('aide_logement_loyer_retenu', period)
+        charges_retenues = famille('aide_logement_charges', period)
+        participation_personnelle = famille('aide_logement_participation_personnelle', period)
+
+        montant_locataire = max_(0, loyer_retenu + charges_retenues - participation_personnelle)
         montant_accedants = famille('aide_logement_apl_accession', period)
 
         montant = select([locataire, accedant], [montant_locataire, montant_accedants])
