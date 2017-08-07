@@ -1,4 +1,12 @@
 # Changelog
+ 
+### 18.8.0 - [#781](https://github.com/openfisca/openfisca-france/pull/781)
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : toutes
+* Zones impactées : `prestations/aides_logement`
+* Détails :
+  - Corrige les aides logement pour les accédants
 
 ## 18.7.0 - [#797](https://github.com/openfisca/openfisca-france/pull/797)
 
