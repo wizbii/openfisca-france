@@ -877,29 +877,24 @@ class aide_logement_accession_loyer_plafond(Variable):
         ]
 
         # Preprocessing pour pouvoir accéder aux paramètres dynamiquement par zone.
-        plafonds_by_zone = [
-            [0] +
-            [al['plafond_pour_accession_a_la_propriete_zone_' + str(zone)][i]
-            for zone in range(1, 4)]
-            for i in zone_categories
-        ]
-
-        plafond_personne_seule = take(plafonds_by_zone[0], zone_apl)
-        plafond_couple = take(plafonds_by_zone[1], zone_apl)
-        plafond_menage_ou_isole_avec_1_enfant = take(plafonds_by_zone[2], zone_apl)
-        plafond_menage_ou_isole_avec_2_enfants = take(plafonds_by_zone[3], zone_apl)
-        plafond_menage_ou_isole_avec_3_enfants = take(plafonds_by_zone[4], zone_apl)
-        plafond_menage_ou_isole_avec_4_enfants = take(plafonds_by_zone[5], zone_apl)
-        plafond_menage_ou_isole_avec_5_enfants_et_plus = take(plafonds_by_zone[6], zone_apl) + (al_nb_pac > 5) * (al_nb_pac - 5) * take(plafonds_by_zone[7], zone_apl)
+        plafonds_by_zone = {
+            category: [0,
+            al.plafond_pour_accession_a_la_propriete_zone_1[category],
+            al.plafond_pour_accession_a_la_propriete_zone_2[category],
+            al.plafond_pour_accession_a_la_propriete_zone_3[category]
+            ]
+        for category in zone_categories
+        }
 
         return (
-            plafond_personne_seule * not_(couple) * (al_nb_pac == 0) +
-            plafond_couple * couple * (al_nb_pac == 0) +
-            plafond_menage_ou_isole_avec_1_enfant * (al_nb_pac == 1) +
-            plafond_menage_ou_isole_avec_2_enfants * (al_nb_pac == 2) +
-            plafond_menage_ou_isole_avec_3_enfants * (al_nb_pac == 3) +
-            plafond_menage_ou_isole_avec_4_enfants * (al_nb_pac == 4) +
-            plafond_menage_ou_isole_avec_5_enfants_et_plus * (al_nb_pac >= 5)
+            take(plafonds_by_zone['personne_isolee_sans_enfant'         ], zone_apl) * not_(couple) * (al_nb_pac == 0) +
+            take(plafonds_by_zone['menage_seul'                         ], zone_apl) * couple * (al_nb_pac == 0) +
+            take(plafonds_by_zone['menage_ou_isole_avec_1_enfant'       ], zone_apl) * (al_nb_pac == 1) +
+            take(plafonds_by_zone['menage_ou_isole_avec_2_enfants'      ], zone_apl) * (al_nb_pac == 2) +
+            take(plafonds_by_zone['menage_ou_isole_avec_3_enfants'      ], zone_apl) * (al_nb_pac == 3) +
+            take(plafonds_by_zone['menage_ou_isole_avec_4_enfants'      ], zone_apl) * (al_nb_pac == 4) +
+            take(plafonds_by_zone['menage_ou_isole_avec_5_enfants'      ], zone_apl) * (al_nb_pac >= 5) + 
+            take(plafonds_by_zone['menage_ou_isole_par_enfant_en_plus'  ], zone_apl) * (al_nb_pac > 5) * (al_nb_pac - 5)
         )
 
 
