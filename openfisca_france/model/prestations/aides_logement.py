@@ -830,10 +830,10 @@ class aide_logement_accession_nb_parts(Variable):
         return (
             al_param_n.isole_0_personne_a_charge * not_(couple) * (al_nb_pac == 0) +
             al_param_n.menage_0_personnes_a_charge * couple * (al_nb_pac == 0) +
-            al_param_n['1_personne_a_charge'] * (al_nb_pac == 1) +
-            al_param_n['2_personnes_a_charge'] * (al_nb_pac == 2) +
-            al_param_n['3_personnes_a_charge'] * (al_nb_pac == 3) +
-            al_param_n['4_personnes_a_charge'] * (al_nb_pac == 4) +
+            al_param_n.avec_1_personne_a_charge * (al_nb_pac == 1) +
+            al_param_n.avec_2_personnes_a_charge * (al_nb_pac == 2) +
+            al_param_n.avec_3_personnes_a_charge * (al_nb_pac == 3) +
+            al_param_n.avec_4_personnes_a_charge * (al_nb_pac == 4) +
             al_param.majoration_n_par_personne_a_charge_supplementaire * (al_nb_pac >= 5) * (al_nb_pac - 4)
         )
 
@@ -937,10 +937,10 @@ class aide_logement_apl_accession_nb_parts(Variable):
         return (
             al_param_accapl.n_0_personnes_a_charge.isole * not_(couple) * (al_nb_pac == 0) +
             al_param_accapl.n_0_personnes_a_charge.menage * couple * (al_nb_pac == 0) +
-            al_param_n['1_personne_a_charge'] * (al_nb_pac == 1) +
-            al_param_n['2_personnes_a_charge'] * (al_nb_pac == 2) +
-            al_param_n['3_personnes_a_charge'] * (al_nb_pac == 3) +
-            al_param_n['4_personnes_a_charge'] * (al_nb_pac == 4) +
+            al_param_n.avec_1_personne_a_charge * (al_nb_pac == 1) +
+            al_param_n.avec_2_personnes_a_charge * (al_nb_pac == 2) +
+            al_param_n.avec_3_personnes_a_charge * (al_nb_pac == 3) +
+            al_param_n.avec_4_personnes_a_charge * (al_nb_pac == 4) +
             al_param.majoration_n_par_personne_a_charge_supplementaire * (al_nb_pac >= 5) * (al_nb_pac - 4)
         )
 
