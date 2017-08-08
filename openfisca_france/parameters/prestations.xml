@@ -875,18 +875,18 @@
       <VALUE deb="1986-01-01" valeur="139680" />
     </CODE>
     <NODE code="parametre_n" origin="ipp">
-      <CODE code="1_personne_a_charge" origin="ipp">
+      <CODE code="avec_1_personne_a_charge" origin="ipp">
         <VALUE deb="1992-07-01" valeur="2.5" />
         <VALUE deb="1988-07-01" valeur="2.3" />
         <VALUE deb="1986-01-01" valeur="1.4" />
       </CODE>
-      <CODE code="2_personnes_a_charge" origin="ipp">
+      <CODE code="avec_2_personnes_a_charge" origin="ipp">
         <VALUE deb="1988-07-01" valeur="3" />
       </CODE>
-      <CODE code="3_personnes_a_charge" origin="ipp">
+      <CODE code="avec_3_personnes_a_charge" origin="ipp">
         <VALUE deb="1988-07-01" valeur="3.7" />
       </CODE>
-      <CODE code="4_personnes_a_charge" origin="ipp">
+      <CODE code="avec_4_personnes_a_charge" origin="ipp">
         <VALUE deb="1988-07-01" valeur="4.3" />
       </CODE>
       <CODE code="isole_0_personne_a_charge" origin="ipp">
