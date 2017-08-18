@@ -11,7 +11,7 @@ setup(
     author = 'OpenFisca Team',
     author_email = 'contact@openfisca.fr',
     classifiers = [
-        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: GNU Affero General Public License v3",
         "Operating System :: POSIX",
         "Programming Language :: Python",
