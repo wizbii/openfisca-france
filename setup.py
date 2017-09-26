@@ -7,7 +7,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = 'OpenFisca-France',
-    version = '11.2.0',
+    version = '18.9.11',
     author = 'OpenFisca Team',
     author_email = 'contact@openfisca.fr',
     classifiers = [
@@ -23,13 +23,17 @@ setup(
     url = 'https://github.com/openfisca/openfisca-france',
 
     data_files = [
-        ('share/locale/fr/LC_MESSAGES', ['openfisca_france/i18n/fr/LC_MESSAGES/openfisca-france.mo']),
-        ('share/openfisca/openfisca-france', ['CHANGELOG.md', 'LICENSE', 'README.md']),
+        ('share/openfisca/openfisca-france', ['CHANGELOG.md', 'LICENSE.AGPL.txt', 'README.md']),
         ],
-    entry_points = {
-        'console_scripts': ['openfisca-run-test=openfisca_france.tests.test_yaml:main'],
-        },
     extras_require = {
+        'api': [
+            'OpenFisca-Web-API >= 6.2.1, < 7.0',
+            ],
+        'baremes_ipp': [
+            'xlrd >= 1.0.0',
+            'lxml >= 3.8.0, < 4.0',
+            'Biryani[datetimeconv] >= 0.10.4',
+            ],
         'inversion_revenus': [
             'scipy >= 0.17',
             ],
@@ -41,14 +45,14 @@ setup(
             ],
         'test': [
             'nose',
+            'flake8',
+            'scipy >= 0.17', # Only used to test de_net_a_brut reform
             ],
         },
     include_package_data = True,  # Will read MANIFEST.in
     install_requires = [
-        'Babel >= 0.9.4',
-        'Biryani[datetimeconv] >= 0.10.4',
-        'numpy >= 1.11',
-        'OpenFisca-Core >= 4.1.5, < 5.0',
+        'numpy >= 1.11, < 1.13',
+        'OpenFisca-Core >= 17.2.0, < 18.0',
         'PyYAML >= 3.10',
         'requests >= 2.8',
         ],

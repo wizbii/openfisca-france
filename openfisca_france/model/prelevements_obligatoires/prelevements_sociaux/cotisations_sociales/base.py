@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from openfisca_france.model.base import CAT
+from openfisca_france.model.base import CATEGORIE_SALARIE
 
 def apply_bareme_for_relevant_type_sal(
         bareme_by_type_sal_name,
@@ -16,11 +16,13 @@ def apply_bareme_for_relevant_type_sal(
     assert base is not None
     assert plafond_securite_sociale is not None
     def iter_cotisations():
-        for type_sal_name, type_sal_index in CAT:
+        for type_sal_name, type_sal_index in CATEGORIE_SALARIE:
             if type_sal_name not in bareme_by_type_sal_name:  # to deal with public_titulaire_militaire
                 continue
-            bareme = bareme_by_type_sal_name[type_sal_name].get(bareme_name)  # TODO; should have better warnings
-            if bareme is not None:
+
+            node = bareme_by_type_sal_name[type_sal_name]
+            if bareme_name in node._children:
+                bareme = getattr(node, bareme_name)
                 yield bareme.calc(
                     base * (categorie_salarie == type_sal_index),
                     factor = plafond_securite_sociale,
@@ -30,7 +32,7 @@ def apply_bareme_for_relevant_type_sal(
 
 
 def apply_bareme(simulation, period, cotisation_type = None, bareme_name = None, variable_name = None):
-    # period = period.this_month
+    # period = period.first_month
     cotisation_mode_recouvrement = simulation.calculate('cotisation_sociale_mode_recouvrement', period)
     cotisation = (
         # en fin d'année
@@ -58,7 +60,7 @@ def apply_bareme(simulation, period, cotisation_type = None, bareme_name = None,
 def compute_cotisation(simulation, period, cotisation_type = None, bareme_name = None):
 
     assert cotisation_type is not None
-    law = simulation.legislation_at(period.start)
+    law = simulation.parameters_at(period.start)
     if cotisation_type == "employeur":
         bareme_by_type_sal_name = law.cotsoc.cotisations_employeur
     elif cotisation_type == "salarie":
@@ -67,7 +69,7 @@ def compute_cotisation(simulation, period, cotisation_type = None, bareme_name =
 
     assiette_cotisations_sociales = simulation.calculate_add('assiette_cotisations_sociales', period)
     plafond_securite_sociale = simulation.calculate_add('plafond_securite_sociale', period)
-    categorie_salarie = simulation.calculate('categorie_salarie', period)
+    categorie_salarie = simulation.calculate_add('categorie_salarie', period)
 
     cotisation = apply_bareme_for_relevant_type_sal(
         bareme_by_type_sal_name = bareme_by_type_sal_name,
@@ -95,7 +97,7 @@ def compute_cotisation_anticipee(simulation, period, cotisation_type = None, bar
     if period.start.month < 12:
         return compute_cotisation(
             simulation,
-            period.this_month,
+            period.first_month,
             cotisation_type = cotisation_type,
             bareme_name = bareme_name,
             )

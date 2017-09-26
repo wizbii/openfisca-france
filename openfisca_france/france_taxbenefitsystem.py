@@ -1,28 +1,27 @@
 # -*- coding: utf-8 -*-
 
-import os, itertools, glob
+import os
+import glob
 
 from openfisca_core.taxbenefitsystems import TaxBenefitSystem
 
-from . import entities
+from .entities import entities
 from . import decompositions, scenarios
-from .model import datatrees
+
 from .model.prelevements_obligatoires.prelevements_sociaux.cotisations_sociales import preprocessing
 from .conf.cache_blacklist import cache_blacklist as conf_cache_blacklist
 
 
 COUNTRY_DIR = os.path.dirname(os.path.abspath(__file__))
-EXTENSIONS_PATH = os.path.join(COUNTRY_DIR, 'extensions')
-EXTENSIONS_DIRECTORIES = glob.glob(os.path.join(EXTENSIONS_PATH, '*/'))
+
 
 class FranceTaxBenefitSystem(TaxBenefitSystem):
     """French tax benefit system"""
     CURRENCY = u"€"
     DATA_SOURCES_DIR = os.path.join(COUNTRY_DIR, 'data', 'sources')
-    DECOMP_DIR = os.path.dirname(os.path.abspath(decompositions.__file__))
-    DEFAULT_DECOMP_FILE = decompositions.DEFAULT_DECOMP_FILE
-    preprocess_legislation = staticmethod(preprocessing.preprocess_legislation)
-    columns_name_tree_by_entity = datatrees.columns_name_tree_by_entity
+    decomposition_file_path = os.path.join(
+        os.path.dirname(os.path.abspath(decompositions.__file__)), 'decomp.xml')
+    preprocess_parameters = staticmethod(preprocessing.preprocess_parameters)
 
     REFORMS_DIR = os.path.join(COUNTRY_DIR, 'reformes')
     REV_TYP = None  # utils.REV_TYP  # Not defined for France
@@ -34,9 +33,10 @@ class FranceTaxBenefitSystem(TaxBenefitSystem):
     }
 
     def __init__(self):
-        TaxBenefitSystem.__init__(self, entities.entities)
+        TaxBenefitSystem.__init__(self, entities)
         self.Scenario = scenarios.Scenario
 
+<<<<<<< HEAD
         param_files = [
             '__root__.xml',
             'bouclier_fiscal.xml',
@@ -55,12 +55,13 @@ class FranceTaxBenefitSystem(TaxBenefitSystem):
         for param_file in param_files:
             param_path = os.path.join(COUNTRY_DIR, 'parameters', param_file)
             self.add_legislation_params(param_path)
+=======
+        param_dir = os.path.join(COUNTRY_DIR, 'parameters')
+        self.load_parameters(param_dir)
+>>>>>>> master
 
         self.add_variables_from_directory(os.path.join(COUNTRY_DIR, 'model'))
         self.cache_blacklist = conf_cache_blacklist
-        for extension_dir in EXTENSIONS_DIRECTORIES:
-            self.load_extension(extension_dir)
-
 
     def prefill_cache(self):
         # Compute one "zone APL" variable, to pre-load CSV of "code INSEE commune" to "Zone APL".
