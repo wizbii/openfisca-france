@@ -1,5 +1,11 @@
 # Changelog
 
+### 18.10.3
+
+* Amélioration technique
+* Détails :
+  - Migre la quasi-totalité des formules vers la syntaxe introduite par OpenFisca-Core 4
+
 ### 18.10.2
 
 * Amélioration technique
