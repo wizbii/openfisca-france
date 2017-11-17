@@ -266,7 +266,8 @@ def build_reform(tax_benefit_system):
                     taux_csg_remplacement = taux_csg_remplacement,
                     target_name = 'retraite_imposable',
                     period = period,
-                    individu = individu individu) - retraite_imposable_pour_inversion
+                    individu = individu,
+                    ) - retraite_imposable_pour_inversion
             return fsolve(solve_function, retraite_imposable_pour_inversion)
 
     return Reform()
