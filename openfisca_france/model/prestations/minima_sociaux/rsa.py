@@ -526,10 +526,7 @@ class rsa_revenu_activite_individu(Variable):
             for type_revenu in types_revenus_activite
             ) / 3
 
-        revenus_tns_annualises = (
-            + individu('ppa_rsa_derniers_revenus_tns_annuels_connus', mois_demande.this_year)
-            + individu('rpns_individu', mois_demande.this_year) / 12
-            )
+        revenus_tns_annualises = individu('ppa_rsa_derniers_revenus_tns_annuels_connus', mois_demande.this_year)
 
         revenus_non_moyennes = (
             individu('primes_salaires_net', mois_courant) +
@@ -569,7 +566,7 @@ class rsa_revenu_activite_individu(Variable):
                 not_(has_ressources_substitution)
                 )
             for type_revenu in types_revenus_activite
-            ) / 3 + individu('rpns_individu', period.this_year) / 12
+            ) / 3
 
 
 class rsa_fictif(Variable):
