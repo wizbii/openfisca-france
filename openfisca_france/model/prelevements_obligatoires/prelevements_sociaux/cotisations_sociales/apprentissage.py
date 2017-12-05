@@ -146,11 +146,10 @@ class exoneration_cotisations_salariales_apprenti(Variable):
 
     def formula(self, simulation, period):
         apprenti = simulation.calculate('apprenti', period)
-        # cotisations_salariales_contributives = simulation.calculate('cotisations_salariales_contributives', period)
-        # cotisations_salariales_non_contributives = simulation.calculate(
-        #     'cotisations_salariales_non_contributives', period)
-        # return - (cotisations_salariales_contributives + cotisations_salariales_non_contributives) * apprenti
-        return - 0 * apprenti
+        cotisations_salariales_contributives = simulation.calculate('cotisations_salariales_contributives', period)
+        cotisations_salariales_non_contributives = simulation.calculate(
+            'cotisations_salariales_non_contributives', period)
+        return - (cotisations_salariales_contributives + cotisations_salariales_non_contributives) * apprenti
 
 
 class prime_apprentissage(Variable):

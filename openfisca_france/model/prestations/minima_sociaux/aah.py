@@ -217,12 +217,12 @@ class aah(Variable):
     definition_period = MONTH
     set_input = set_input_divide_by_period
 
-    # def formula(individu, period, parameters):
-    #     aah_base = individu('aah_base', period)
-    #     # caah
-    #     # mva
+    def formula(individu, period, parameters):
+        aah_base = individu('aah_base', period)
+        # caah
+        # mva
 
-    #     return aah_base
+        return aah_base
 
 
 class caah(Variable):
@@ -295,7 +295,7 @@ class caah(Variable):
         elig_cpl = ((aah > 0) | (benef_asi > 0))
         # TODO: & logement indépendant & inactif 12 derniers mois
         # & capa de travail < 5% & taux d'incapacité >= 80%
-        compl_ress = elig_cpl * max_(garantie_ressources - aah_montant, 0) * 0
+        compl_ress = elig_cpl * max_(garantie_ressources - aah_montant, 0)
 
         elig_mva = (al > 0) * ((aah > 0) | (benef_asi > 0))
         # TODO: & logement indépendant & pas de revenus professionnels
