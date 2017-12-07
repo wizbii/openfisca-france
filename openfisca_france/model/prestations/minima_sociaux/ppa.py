@@ -310,7 +310,7 @@ class ppa_forfait_logement(Variable):
         avantage_al = aide_logement > 0
         
         params = parameters(period).prestations.minima_sociaux.rsa
-        montant_base = famille('ppa_montant_forfaitaire_familial_non_majore', period)
+        montant_base = famille('ppa_montant_forfaitaire_familial_non_majore', period, extra_params = [period])
         montant_forfait = montant_base * (
             (np_pers == 1) * params.forfait_logement.taux_1_personne +
             (np_pers == 2) * params.forfait_logement.taux_2_personnes +
