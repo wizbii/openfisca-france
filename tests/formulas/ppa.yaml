@@ -308,15 +308,15 @@
     rsa_majore_eligibilite: False
     rsa: 0
 
-- name: "PPA forfait logement 1 personne"
-  period: 2016-01
+- name: "PPA/RSA forfait logement 1 personne"
+  period: 2017-10
   absolute_error_margin: 0.005
   input_variables:
     statut_occupation_logement: proprietaire
     age: 40
   output_variables:
-    ppa_forfait_logement:
-      2016-01: 62.90
+    ppa_forfait_logement: 63.15
+    rsa_forfait_logement: 65.46
 
 - name: "PPA forfait logement 2 personnes"
   period: 2016-01
