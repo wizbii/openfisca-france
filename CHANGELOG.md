@@ -1,5 +1,13 @@
 # Changelog
 
+### 19.0.1
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : à partir du 01/01/2016.
+* Zones impactées : `/prestations/ppa`.
+* Détails :
+  - Améliore l'implémentation de la prime d'activité en utilisant le bon montant forfaitaire
+
 ## 19.0.0 - [#846](https://github.com/openfisca/openfisca-france/pull/846)
 
 * Amélioration technique
@@ -101,8 +109,7 @@ Lors du calcul d'une variable Enum en Python, l'output est un array de membres E
 > - a un attribut `name` qui contient sa clé (e.g. `nulle`)
 > - a un attribut `value` qui contient sa description (e.g. `u"Nulle, pas d'exposition de l'employé à un facteur de pénibilité"`)
 
-  
-### 18.11.0
+## 18.11.0
 
 * Amélioration technique
 * Détails :
