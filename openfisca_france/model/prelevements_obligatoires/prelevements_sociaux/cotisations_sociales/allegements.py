@@ -52,9 +52,8 @@ class coefficient_proratisation(Variable):
         #   forfait_heures_annee
         #   forfait_jours_annee ]
 
-        # TODO - find a more elegant way here
-        contrat_de_travail_debut = simulation.calculate('contrat_de_travail_debut', '2099-01')
-        contrat_de_travail_fin = simulation.calculate('contrat_de_travail_fin', '1870-01')
+        contrat_de_travail_debut = simulation.calculate('contrat_de_travail_debut', period)
+        contrat_de_travail_fin = simulation.calculate('contrat_de_travail_fin', period)
 
         # Volume des heures rémunérées à un forfait heures
         forfait_heures_remunerees_volume = simulation.calculate('forfait_heures_remunerees_volume', period)
