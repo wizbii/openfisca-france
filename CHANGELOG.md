@@ -1,5 +1,12 @@
 # Changelog
 
+## 19.1.0 - #867
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : à partir du 01/01/2018.
+* Détails :
+  - Mise à jour des règles des cotisations sociales sur les salaires pour 2018
+
 ### 19.0.1
 
 * Évolution du système socio-fiscal.
