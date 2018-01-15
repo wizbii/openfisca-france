@@ -1,6 +1,14 @@
 # Changelog
 
-### 19.0.4
+### 19.0.5 [#875](https://github.com/openfisca/openfisca-france/pull/875)
+
+* Évolution du système socio-fiscal.
+* Périodes concernées : toutes.
+* Zones impactées : `prestations/aides_logement.py`
+* Détails :
+- Garantie que l'aide au logement pour un foyer primo-accédant est nulle si le prêt est déjà remboursé.
+
+### 19.0.4 [#870](https://github.com/openfisca/openfisca-france/pull/870)
 
 * Amélioration technique.
 * Périodes concernées : toutes.
